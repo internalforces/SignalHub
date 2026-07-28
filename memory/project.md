@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Project: Signal Hub
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-07-28_
 
 ## Summary
 
@@ -15,9 +15,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: v0.1.0-dev (no code written yet — only the plan and this Harness exist)
-- **Phase**: Initial setup — implementation plan written, Harness bootstrapped, no tasks started
-- **Next milestone**: M1 — MVP (see `roadmap.md`)
+- **Version**: v0.1.0-dev (M1 MVP implemented locally)
+- **Phase**: M1 MVP complete — CSV → Core → Detector → Signal → CLI is implemented and tested
+- **Next milestone**: M2 — Beta (see `roadmap.md`)
 - **Overall health**: 🟢 Good
 
 ## Tech Summary
@@ -47,6 +47,7 @@ SignalHub/
 | 2026-07-27 | Signal Hub MVP implementation plan written (`docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`) |
 | 2026-07-27 | AI Development Harness v1.1 (Standard tier) initial setup |
 | 2026-07-27 | Surveyed prior project `internalforces/Future-Signal` for reusable engine code; findings in `memory/reuse-candidates.md` |
+| 2026-07-28 | Completed M1 implementation (TASK-001 through TASK-010): pnpm monorepo, contracts, SQLite storage, detectors, CSV connector, Core, and CLI |
 
 ## Constraints
 

@@ -20,16 +20,16 @@ Not a full analytics platform, not a distributed system, not an AI system.
 
 Full task breakdown: [`docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`](../docs/superpowers/plans/2026-07-27-signal-hub-mvp.md)
 
-- [ ] Monorepo & tooling bootstrap (pnpm + Turborepo + tsconfig)
-- [ ] Shared types package (`DataPoint`, `Signal`, `Detector`, `Connector`)
-- [ ] Connector SDK validation utilities
-- [ ] SQLite storage layer (repository pattern)
-- [ ] Percentage change detector
-- [ ] Threshold detector
-- [ ] Signal scoring engine
-- [ ] CSV connector
-- [ ] Core pipeline engine + output formatter
-- [ ] CLI application (`signal-hub analyze <file>`)
+- [x] Monorepo & tooling bootstrap (pnpm + Turborepo + tsconfig)
+- [x] Shared types package (`DataPoint`, `Signal`, `Detector`, `Connector`)
+- [x] Connector SDK validation utilities
+- [x] SQLite storage layer (repository pattern)
+- [x] Percentage change detector
+- [x] Threshold detector
+- [x] Signal scoring engine
+- [x] CSV connector
+- [x] Core pipeline engine + output formatter
+- [x] CLI application (`signal-hub analyze <file>`)
 
 ### M2 — Beta
 

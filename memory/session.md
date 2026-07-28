@@ -23,7 +23,7 @@ Harness Version: 1.1
 
 ## Current Work
 
-- [ ] TASK-010 — CLI application is next.
+- [x] M1 implementation plan (TASK-001 through TASK-010) is complete.
 
 ## Completed This Session
 
@@ -40,6 +40,7 @@ Harness Version: 1.1
 - [x] Completed TASK-007: added immutable signal scoring and finalized the analysis package exports; 16 analysis tests, build, and typecheck passed.
 - [x] Completed TASK-008: added the strict CSV connector with ISO timestamp normalization; 6 tests, build, and typecheck passed.
 - [x] Completed TASK-009: added the Core orchestration pipeline and JSON formatter; 6 tests, build, and typecheck passed.
+- [x] Completed TASK-010: added the CLI entry point and end-to-end coverage for CSV analysis, score filtering, threshold detection, and usage errors; 5 tests, build, and typecheck passed.
 
 ## Issues Found / Decisions Made
 
@@ -48,7 +49,9 @@ Harness Version: 1.1
 
 ## Next Session: To-Do
 
-1. Execute TASK-010 — CLI application and end-to-end test.
+1. Review and merge the M1 implementation branch.
+2. Plan TASK-012 (GitHub Actions CI) or M2's GitHub connector before starting either.
+3. Before any M2/M3 work, read `memory/reuse-candidates.md` and obtain approval for deferred scope.
 2. Before every task, move it to `tasks/active.md`; after verification, archive it in `tasks/completed.md`.
 3. Commit each completed task on branch `codex/m1-task-001-bootstrap`.
 4. When M2/M3 work is planned (TASK-011/013/014), read `memory/reuse-candidates.md` first and cite the specific Future-Signal source function being ported.

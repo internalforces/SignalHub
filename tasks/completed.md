@@ -22,3 +22,4 @@ _Last updated: 2026-07-28_
 | TASK-007 | Signal Scoring Engine | 2026-07-28 | Implementer | Immutable score normalization and public analysis exports; 16 analysis tests pass |
 | TASK-008 | CSV Connector | 2026-07-28 | Implementer | Strict CSV parsing with timestamp normalization and line-level validation errors; 6 tests pass |
 | TASK-009 | Core Pipeline Engine + Output Formatter | 2026-07-28 | Implementer | Validation, persistence, per-metric detection, score filtering, sorting, and JSON output; 6 tests pass |
+| TASK-010 | CLI Application (End-to-End) | 2026-07-28 | Implementer | `signal-hub analyze` command with score and threshold flags; 5 end-to-end tests pass |

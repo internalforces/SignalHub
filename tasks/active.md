@@ -13,7 +13,7 @@ _Last updated: 2026-07-27_
 
 | ID | Task | Owner | Started | Due |
 |----|------|-------|---------|-----|
-| — | (none — see `tasks/completed.md` and `tasks/backlog.md`) | — | — | — |
+| — | (none — M1 implementation is complete; see `tasks/completed.md`) | — | — | — |
 
 ## Task Detail Template
 
