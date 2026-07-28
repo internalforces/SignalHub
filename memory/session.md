@@ -23,7 +23,7 @@ Harness Version: 1.1
 
 ## Current Work
 
-- [ ] TASK-009 — Core pipeline and output formatter is next.
+- [ ] TASK-010 — CLI application is next.
 
 ## Completed This Session
 
@@ -39,6 +39,7 @@ Harness Version: 1.1
 - [x] Completed TASK-006: added the stateless threshold-crossing detector; 5 tests, build, and typecheck passed.
 - [x] Completed TASK-007: added immutable signal scoring and finalized the analysis package exports; 16 analysis tests, build, and typecheck passed.
 - [x] Completed TASK-008: added the strict CSV connector with ISO timestamp normalization; 6 tests, build, and typecheck passed.
+- [x] Completed TASK-009: added the Core orchestration pipeline and JSON formatter; 6 tests, build, and typecheck passed.
 
 ## Issues Found / Decisions Made
 
@@ -47,7 +48,7 @@ Harness Version: 1.1
 
 ## Next Session: To-Do
 
-1. Execute TASK-009 — Core pipeline engine and output formatter.
+1. Execute TASK-010 — CLI application and end-to-end test.
 2. Before every task, move it to `tasks/active.md`; after verification, archive it in `tasks/completed.md`.
 3. Commit each completed task on branch `codex/m1-task-001-bootstrap`.
 4. When M2/M3 work is planned (TASK-011/013/014), read `memory/reuse-candidates.md` first and cite the specific Future-Signal source function being ported.

@@ -21,3 +21,4 @@ _Last updated: 2026-07-28_
 | TASK-006 | Threshold Detector | 2026-07-28 | Implementer | Stateless crossing-only threshold detection with normalized excess percentage; 5 tests pass |
 | TASK-007 | Signal Scoring Engine | 2026-07-28 | Implementer | Immutable score normalization and public analysis exports; 16 analysis tests pass |
 | TASK-008 | CSV Connector | 2026-07-28 | Implementer | Strict CSV parsing with timestamp normalization and line-level validation errors; 6 tests pass |
+| TASK-009 | Core Pipeline Engine + Output Formatter | 2026-07-28 | Implementer | Validation, persistence, per-metric detection, score filtering, sorting, and JSON output; 6 tests pass |
