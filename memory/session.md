@@ -23,7 +23,7 @@ Harness Version: 1.1
 
 ## Current Work
 
-- [ ] TASK-002 — Shared Types Package (`@signal-hub/types`) is next.
+- [ ] TASK-003 — Connector SDK validation utilities is next.
 
 ## Completed This Session
 
@@ -32,6 +32,7 @@ Harness Version: 1.1
 - [x] AI Development Harness v1.1 (Standard tier) initial setup, seeded from the plan's content (not placeholders)
 - [x] Cloned and surveyed prior project `internalforces/Future-Signal` (read-only, scratchpad); documented 6 reuse candidates in `memory/reuse-candidates.md`, mapped to Signal Hub packages/milestones
 - [x] Completed TASK-001: configured the pnpm/Turborepo workspace; dependency installation, lockfile validation, root build, test, and typecheck all passed.
+- [x] Completed TASK-002: added `@signal-hub/types` with the canonical `DataPoint`, `Signal`, `Detector`, and `Connector` contracts; 4 tests, build, and typecheck passed.
 
 ## Issues Found / Decisions Made
 
@@ -40,7 +41,7 @@ Harness Version: 1.1
 
 ## Next Session: To-Do
 
-1. Execute TASK-002 — Shared Types Package (`@signal-hub/types`).
+1. Execute TASK-003 — Connector SDK validation utilities.
 2. Before every task, move it to `tasks/active.md`; after verification, archive it in `tasks/completed.md`.
 3. Commit each completed task on branch `codex/m1-task-001-bootstrap`.
 4. When M2/M3 work is planned (TASK-011/013/014), read `memory/reuse-candidates.md` first and cite the specific Future-Signal source function being ported.
