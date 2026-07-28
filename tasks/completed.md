@@ -19,3 +19,4 @@ _Last updated: 2026-07-28_
 | TASK-004 | SQLite Storage Layer (`@signal-hub/storage`) | 2026-07-28 | Implementer | In-memory SQLite repositories support ordered retrieval and idempotent point inserts; 4 tests pass |
 | TASK-005 | Percentage Change Detector | 2026-07-28 | Implementer | Stateless consecutive-point increase/decrease detection with configurable minimum change; 5 tests pass |
 | TASK-006 | Threshold Detector | 2026-07-28 | Implementer | Stateless crossing-only threshold detection with normalized excess percentage; 5 tests pass |
+| TASK-007 | Signal Scoring Engine | 2026-07-28 | Implementer | Immutable score normalization and public analysis exports; 16 analysis tests pass |

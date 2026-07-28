@@ -23,7 +23,7 @@ Harness Version: 1.1
 
 ## Current Work
 
-- [ ] TASK-007 — Signal scoring engine is next.
+- [ ] TASK-008 — CSV connector is next.
 
 ## Completed This Session
 
@@ -37,6 +37,7 @@ Harness Version: 1.1
 - [x] Completed TASK-004: added `@signal-hub/storage` with SQLite-backed data-point and signal repositories; 4 tests, build, and typecheck passed.
 - [x] Completed TASK-005: added the stateless percentage-change detector; 5 tests, build, and typecheck passed.
 - [x] Completed TASK-006: added the stateless threshold-crossing detector; 5 tests, build, and typecheck passed.
+- [x] Completed TASK-007: added immutable signal scoring and finalized the analysis package exports; 16 analysis tests, build, and typecheck passed.
 
 ## Issues Found / Decisions Made
 
@@ -45,7 +46,7 @@ Harness Version: 1.1
 
 ## Next Session: To-Do
 
-1. Execute TASK-007 — Signal scoring engine and analysis package entrypoint.
+1. Execute TASK-008 — CSV connector.
 2. Before every task, move it to `tasks/active.md`; after verification, archive it in `tasks/completed.md`.
 3. Commit each completed task on branch `codex/m1-task-001-bootstrap`.
 4. When M2/M3 work is planned (TASK-011/013/014), read `memory/reuse-candidates.md` first and cite the specific Future-Signal source function being ported.
