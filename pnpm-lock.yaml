@@ -18,6 +18,22 @@ importers:
         specifier: ^2.0.5
         version: 2.1.9(@types/node@26.1.2)
 
+  connectors/csv:
+    dependencies:
+      '@signal-hub/connector-sdk':
+        specifier: workspace:*
+        version: link:../../packages/connector-sdk
+      '@signal-hub/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+    devDependencies:
+      typescript:
+        specifier: ^5.5.4
+        version: 5.9.3
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.9(@types/node@26.1.2)
+
   packages/analysis:
     dependencies:
       '@signal-hub/types':
