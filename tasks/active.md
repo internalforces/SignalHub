@@ -13,7 +13,7 @@ _Last updated: 2026-07-27_
 
 | ID | Task | Owner | Started | Due |
 |----|------|-------|---------|-----|
-| — | (none — execution has not started; see `tasks/backlog.md`) | — | — | — |
+| — | (none — see `tasks/completed.md` and `tasks/backlog.md`) | — | — | — |
 
 ## Task Detail Template
 

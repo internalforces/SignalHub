@@ -7,9 +7,10 @@ Harness Version: 1.1
 
 # Completed Tasks — Signal Hub
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-07-28_
 
 | ID | Task | Completed | Owner | Notes |
 |----|------|-----------|-------|-------|
 | — | Signal Hub MVP implementation plan written | 2026-07-27 | Planner | `docs/superpowers/plans/2026-07-27-signal-hub-mvp.md` |
 | — | AI Development Harness v1.1 initial setup | 2026-07-27 | — | Standard tier |
+| TASK-001 | Monorepo & Tooling Bootstrap | 2026-07-28 | Implementer | pnpm workspace, Turbo, TypeScript, Vitest configured; install and root checks pass |
