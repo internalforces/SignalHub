@@ -16,3 +16,4 @@ _Last updated: 2026-07-28_
 | TASK-001 | Monorepo & Tooling Bootstrap | 2026-07-28 | Implementer | pnpm workspace, Turbo, TypeScript, Vitest configured; install and root checks pass |
 | TASK-002 | Shared Types Package (`@signal-hub/types`) | 2026-07-28 | Implementer | Canonical data, signal, detector, and connector contracts implemented; 4 tests pass |
 | TASK-003 | Connector SDK — Validation Utilities | 2026-07-28 | Implementer | `isValidDataPoint` validation and contract re-exports implemented; 4 tests pass |
+| TASK-004 | SQLite Storage Layer (`@signal-hub/storage`) | 2026-07-28 | Implementer | In-memory SQLite repositories support ordered retrieval and idempotent point inserts; 4 tests pass |
