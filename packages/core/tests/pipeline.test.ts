@@ -76,4 +76,18 @@ describe("runPipeline", () => {
 
     expect(stored).toHaveLength(1);
   });
+
+  it("does not persist duplicate signals when the same input is processed twice", async () => {
+    const storage = new SqliteStorage(":memory:");
+    const connector = fakeConnector([
+      { metricId: "m1", timestamp: "2026-07-27T00:00:00.000Z", value: 100 },
+      { metricId: "m1", timestamp: "2026-07-27T01:00:00.000Z", value: 150 },
+    ]);
+
+    await runPipeline(connector, storage, { detectors: [new PercentageChangeDetector()] });
+    await runPipeline(connector, storage, { detectors: [new PercentageChangeDetector()] });
+
+    expect(storage.signals.getAll()).toHaveLength(1);
+    storage.close();
+  });
 });

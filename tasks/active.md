@@ -7,13 +7,13 @@ Harness Version: 1.1
 
 # Active Tasks — Signal Hub
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-07-29_
 
 ## In Progress
 
 | ID | Task | Owner | Started | Due |
 |----|------|-------|---------|-----|
-| — | (none — M1 implementation is complete; see `tasks/completed.md`) | — | — | — |
+| — | (none — review fixes are complete; see `tasks/completed.md`) | — | — | — |
 
 ## Task Detail Template
 

@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Architecture — Signal Hub
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-07-29_
 
 ## System Overview
 
@@ -37,7 +37,7 @@ CSV file
   → isValidDataPoint() filter       (connector-sdk; drops malformed points)
   → SqliteStorage.dataPoints        (insert + dedupe by `${metricId}::${timestamp}`)
   → per metric: Detector.detect()   (PercentageChangeDetector, ThresholdDetector — stateless)
-  → scoreSignals()                  (score = clamp(round(abs(changePercent) * 2), 0, 100))
+  → scoreSignals()                  (score = clamp(round(abs(changePercent) * 2), 0, 100); deterministic signal IDs)
   → filter by minScore, sort desc
   → SqliteStorage.signals           (persist)
   → formatSignals()                 (pretty JSON)
@@ -60,6 +60,7 @@ CSV file
 - `storage` may import only `types` — never `analysis`
 - Only `core` may import `storage`, `analysis`, and `connector-sdk` together
 - Detectors are stateless: `detect(series: DataPoint[]): Signal[]`, no side effects, no I/O
+- Signal IDs are derived deterministically from detector configuration and signal inputs, so repeated analysis is stable and persisted signals are idempotent
 - All persisted state lives in one SQLite file (`data.db`); no other storage mechanism is permitted in the MVP
 - Timestamps are always ISO 8601 UTC strings by the time they reach `DataPoint`
 

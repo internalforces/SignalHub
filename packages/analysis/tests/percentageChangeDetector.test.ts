@@ -43,6 +43,23 @@ describe("PercentageChangeDetector", () => {
     expect(new PercentageChangeDetector().detect(zeroSeries)).toHaveLength(0);
   });
 
+  it("does not emit a signal when the value is unchanged", () => {
+    const unchangedSeries: DataPoint[] = [
+      { metricId: "m1", timestamp: "t0", value: 10 },
+      { metricId: "m1", timestamp: "t1", value: 10 },
+    ];
+
+    expect(new PercentageChangeDetector().detect(unchangedSeries)).toEqual([]);
+  });
+
+  it("generates the same signal id for the same series", () => {
+    const detector = new PercentageChangeDetector();
+
+    expect(detector.detect(series.slice(0, 2))[0].id).toBe(
+      detector.detect(series.slice(0, 2))[0].id,
+    );
+  });
+
   it("returns no signals for a series with fewer than two points", () => {
     const detector = new PercentageChangeDetector();
 

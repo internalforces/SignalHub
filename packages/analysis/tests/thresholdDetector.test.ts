@@ -52,4 +52,14 @@ describe("ThresholdDetector", () => {
 
     expect(new ThresholdDetector(100).detect(series)).toHaveLength(2);
   });
+
+  it("generates the same signal id for the same series", () => {
+    const detector = new ThresholdDetector(100);
+    const series: DataPoint[] = [
+      { metricId: "m1", timestamp: "t0", value: 90 },
+      { metricId: "m1", timestamp: "t1", value: 105 },
+    ];
+
+    expect(detector.detect(series)[0].id).toBe(detector.detect(series)[0].id);
+  });
 });

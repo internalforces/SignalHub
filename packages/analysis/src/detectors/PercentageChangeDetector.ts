@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import type { DataPoint, Detector, Signal } from "@signal-hub/types";
 
 export class PercentageChangeDetector implements Detector {
@@ -20,12 +19,12 @@ export class PercentageChangeDetector implements Detector {
 
       const changePercent =
         ((current.value - previous.value) / Math.abs(previous.value)) * 100;
-      if (Math.abs(changePercent) < this.minChangePercent) {
+      if (changePercent === 0 || Math.abs(changePercent) < this.minChangePercent) {
         continue;
       }
 
       signals.push({
-        id: randomUUID(),
+        id: JSON.stringify([this.id, current.metricId, current.timestamp, current.value, changePercent]),
         metricId: current.metricId,
         type: changePercent > 0 ? "increase" : "decrease",
         score: 0,

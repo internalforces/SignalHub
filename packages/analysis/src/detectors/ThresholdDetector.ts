@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import type { DataPoint, Detector, Signal } from "@signal-hub/types";
 
 export class ThresholdDetector implements Detector {
@@ -24,7 +23,14 @@ export class ThresholdDetector implements Detector {
       const changePercent =
         ((current.value - this.threshold) / (Math.abs(this.threshold) || 1)) * 100;
       signals.push({
-        id: randomUUID(),
+        id: JSON.stringify([
+          this.id,
+          this.threshold,
+          current.metricId,
+          current.timestamp,
+          current.value,
+          changePercent,
+        ]),
         metricId: current.metricId,
         type: "threshold",
         score: 0,

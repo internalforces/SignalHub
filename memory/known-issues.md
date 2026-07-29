@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Known Issues — Signal Hub
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-07-29_
 
 ## Active Bugs
 
@@ -26,6 +26,9 @@ _Last updated: 2026-07-27_
 
 | ID | Description | Resolved | Method |
 |----|-------------|----------|--------|
+| ISS-001 | Percentage-change detector emitted a decrease signal for unchanged adjacent values | 2026-07-29 | Explicitly suppress zero-percent changes; added regression test |
+| ISS-002 | Random signal IDs made repeated analysis non-deterministic and allowed duplicate signal persistence | 2026-07-29 | Deterministic IDs derived from detector configuration and signal inputs; added persistence regression test |
+| ISS-003 | CLI accepted malformed or unknown flags silently | 2026-07-29 | Validate supported flags, values, and missing arguments; added regression tests |
 | — | — | — | — |
 
 ## Issue Template

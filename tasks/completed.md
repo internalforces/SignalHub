@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Completed Tasks — Signal Hub
 
-_Last updated: 2026-07-28_
+_Last updated: 2026-07-29_
 
 | ID | Task | Completed | Owner | Notes |
 |----|------|-----------|-------|-------|
@@ -23,3 +23,4 @@ _Last updated: 2026-07-28_
 | TASK-008 | CSV Connector | 2026-07-28 | Implementer | Strict CSV parsing with timestamp normalization and line-level validation errors; 6 tests pass |
 | TASK-009 | Core Pipeline Engine + Output Formatter | 2026-07-28 | Implementer | Validation, persistence, per-metric detection, score filtering, sorting, and JSON output; 6 tests pass |
 | TASK-010 | CLI Application (End-to-End) | 2026-07-28 | Implementer | `signal-hub analyze` command with score and threshold flags; 5 end-to-end tests pass |
+| TASK-015 | Address PR #1 review findings | 2026-07-29 | Implementer | Deterministic signals, zero-change suppression, and strict CLI flag validation; 32 focused tests pass |

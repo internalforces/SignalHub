@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-07-29_
 
 ## Template
 
@@ -94,3 +94,17 @@ not a copy-paste; `reuse-candidates.md` should not be read as "code that will ju
 **Consequences**: `AGENTS.md`'s Context Loading Order now includes `memory/reuse-candidates.md`
 for M2+ work; `tasks/backlog.md` TASK-011 (GitHub connector) and future Polymarket/CoinGecko
 connector tasks should cite the relevant candidate before design starts.
+
+---
+
+### ADR-005: Deterministic Signal Identity
+
+- **Date**: 2026-07-29
+- **Status**: Accepted
+- **Decided by**: Implementer, addressing PR #1 review findings
+
+**Context**: Random signal IDs made equal input produce different CLI output and prevented SQLite's primary-key deduplication from suppressing repeated signal persistence.
+**Decision**: Derive each signal ID from its detector configuration and signal inputs. Percentage-change signals use detector ID, metric, timestamp, value, and change; threshold signals additionally include the threshold.
+**Rationale**: The project goal requires deterministic transformation, and stable IDs make repeated analysis idempotent without changing the database schema.
+**Trade-offs**: IDs are descriptive serialized strings rather than opaque UUIDs.
+**Consequences**: Detectors must not generate random IDs; tests cover repeatability and duplicate-persistence prevention.

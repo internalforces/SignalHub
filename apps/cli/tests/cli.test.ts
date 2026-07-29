@@ -69,4 +69,11 @@ describe("runCli", () => {
   it("throws a usage error for an unknown command", async () => {
     await expect(runCli(["bogus", "data.csv"])).rejects.toThrow(/Usage/);
   });
+
+  it("throws a usage error for invalid flags and values", async () => {
+    await expect(runCli(["analyze", "data.csv", "--unknown", "1"])).rejects.toThrow(/Usage/);
+    await expect(runCli(["analyze", "data.csv", "--threshold"])).rejects.toThrow(/Usage/);
+    await expect(runCli(["analyze", "data.csv", "--min-score", "nope"])).rejects.toThrow(/Usage/);
+    await expect(runCli(["analyze", "data.csv", "--min-score", ""])).rejects.toThrow(/Usage/);
+  });
 });

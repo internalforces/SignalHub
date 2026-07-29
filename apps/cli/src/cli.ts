@@ -9,20 +9,28 @@ const USAGE = "Usage: signal-hub analyze <file.csv> [--min-score <n>] [--thresho
 
 export async function runCli(args: string[]): Promise<string> {
   const [command, filePath, ...rest] = args;
-  if (command !== "analyze" || !filePath) {
+  if (command !== "analyze" || !filePath || filePath.startsWith("--")) {
     throw new Error(USAGE);
   }
 
   let minScore: number | undefined;
   let threshold: number | undefined;
-  for (let index = 0; index < rest.length; index += 1) {
-    if (rest[index] === "--min-score") {
-      minScore = Number(rest[index + 1]);
-      index += 1;
+  for (let index = 0; index < rest.length; index += 2) {
+    const flag = rest[index];
+    const rawValue = rest[index + 1];
+    if ((flag !== "--min-score" && flag !== "--threshold") || rawValue === undefined) {
+      throw new Error(USAGE);
     }
-    if (rest[index] === "--threshold") {
-      threshold = Number(rest[index + 1]);
-      index += 1;
+
+    const value = Number(rawValue);
+    if (rawValue.trim().length === 0 || !Number.isFinite(value)) {
+      throw new Error(USAGE);
+    }
+
+    if (flag === "--min-score") {
+      minScore = value;
+    } else {
+      threshold = value;
     }
   }
 
