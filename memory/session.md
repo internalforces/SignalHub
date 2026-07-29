@@ -15,7 +15,7 @@ Harness Version: 1.1
 
 - **Date**: 2026-07-29
 - **Agent Role**: Implementer
-- **Session Goal**: Address PR #1 review findings, commit and push the fixes, then re-review the pull request.
+- **Session Goal**: Complete TASK-012 CI after infrastructure approval, then prepare the M2 GitHub connector plan.
 
 ## Previous Session Summary
 
@@ -23,7 +23,9 @@ Harness Version: 1.1
 
 ## Current Work
 
-- [x] TASK-015 — Address PR #1 review findings is complete.
+- [x] M2 GitHub connector plan prepared at `docs/2026-07-29-signal-hub-m2-plan.md`.
+- [x] TASK-012 — GitHub Actions CI is complete on `codex/task-012-ci`.
+- [x] Fixed the PR CI build failure by declaring `@types/node` for the workspace and refreshing the lockfile.
 
 ## Completed This Session
 
@@ -42,17 +44,19 @@ Harness Version: 1.1
 - [x] Completed TASK-009: added the Core orchestration pipeline and JSON formatter; 6 tests, build, and typecheck passed.
 - [x] Completed TASK-010: added the CLI entry point and end-to-end coverage for CSV analysis, score filtering, threshold detection, and usage errors; 5 tests, build, and typecheck passed.
 - [x] Completed TASK-015: made signal IDs deterministic, suppressed zero-change pseudo-signals, and rejected malformed CLI flags; full build, test, and typecheck passed.
+- [x] Completed TASK-012: added the Node 20 GitHub Actions PR workflow with frozen install, build, test, and typecheck; workflow YAML and all local checks passed.
+- [x] Fixed ISS-004: CI's clean installation lacked declared Node built-in module types; added `@types/node` ^20.19.43, then passed frozen install, build, test, and typecheck.
 
 ## Issues Found / Decisions Made
 
 - See `memory/decisions.md` ADR-002 (MVP scope), ADR-003 (monorepo tooling), and ADR-004 (Future-Signal reuse survey) — recorded here.
 - See `memory/known-issues.md` DEBT-001 and DEBT-002 for two known limitations baked into the plan (CSV parser has no RFC 4180 support; no linter configured yet).
+- See `memory/known-issues.md` ISS-004 for the resolved CI type-resolution failure.
 
 ## Next Session: To-Do
 
-1. Review and merge the M1 implementation branch.
-2. Plan TASK-012 (GitHub Actions CI) or M2's GitHub connector before starting either.
-3. Before any M2/M3 work, read `memory/reuse-candidates.md` and obtain approval for deferred scope.
+1. Obtain approval for the M2 GitHub connector before implementing the plan at `docs/2026-07-29-signal-hub-m2-plan.md`.
+2. Before M2 implementation, re-read `memory/reuse-candidates.md` and follow its skip-reason-audited normalization guidance.
 
 ## Important Context
 
