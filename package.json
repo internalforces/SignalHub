@@ -1,0 +1,16 @@
+{
+  "name": "signal-hub",
+  "private": true,
+  "packageManager": "pnpm@9.7.0",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "turbo": "^2.0.9",
+    "vitest": "^2.0.5"
+  }
+}

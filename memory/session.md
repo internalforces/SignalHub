@@ -13,9 +13,9 @@ Harness Version: 1.1
 
 ## Session Info
 
-- **Date**: 2026-07-27
-- **Agent Role**: Planner / Architect (plan authoring + Harness bootstrap)
-- **Session Goal**: Turn the pasted Signal Hub design draft into a concrete, TDD-style implementation plan for the Phase 1 vertical slice, then bootstrap the AI Development Harness from that plan.
+- **Date**: 2026-07-29
+- **Agent Role**: Implementer
+- **Session Goal**: Address PR #1 review findings, commit and push the fixes, then re-review the pull request.
 
 ## Previous Session Summary
 
@@ -23,7 +23,7 @@ Harness Version: 1.1
 
 ## Current Work
 
-- [ ] None started yet — the implementation plan (Tasks 1-10) is written but not executed
+- [x] TASK-015 — Address PR #1 review findings is complete.
 
 ## Completed This Session
 
@@ -31,6 +31,17 @@ Harness Version: 1.1
 - [x] Wrote the full implementation plan: `docs/superpowers/plans/2026-07-27-signal-hub-mvp.md` (10 tasks, TDD steps, exact code)
 - [x] AI Development Harness v1.1 (Standard tier) initial setup, seeded from the plan's content (not placeholders)
 - [x] Cloned and surveyed prior project `internalforces/Future-Signal` (read-only, scratchpad); documented 6 reuse candidates in `memory/reuse-candidates.md`, mapped to Signal Hub packages/milestones
+- [x] Completed TASK-001: configured the pnpm/Turborepo workspace; dependency installation, lockfile validation, root build, test, and typecheck all passed.
+- [x] Completed TASK-002: added `@signal-hub/types` with the canonical `DataPoint`, `Signal`, `Detector`, and `Connector` contracts; 4 tests, build, and typecheck passed.
+- [x] Completed TASK-003: added `@signal-hub/connector-sdk` with `isValidDataPoint` and the connector contract re-exports; 4 tests, build, and typecheck passed.
+- [x] Completed TASK-004: added `@signal-hub/storage` with SQLite-backed data-point and signal repositories; 4 tests, build, and typecheck passed.
+- [x] Completed TASK-005: added the stateless percentage-change detector; 5 tests, build, and typecheck passed.
+- [x] Completed TASK-006: added the stateless threshold-crossing detector; 5 tests, build, and typecheck passed.
+- [x] Completed TASK-007: added immutable signal scoring and finalized the analysis package exports; 16 analysis tests, build, and typecheck passed.
+- [x] Completed TASK-008: added the strict CSV connector with ISO timestamp normalization; 6 tests, build, and typecheck passed.
+- [x] Completed TASK-009: added the Core orchestration pipeline and JSON formatter; 6 tests, build, and typecheck passed.
+- [x] Completed TASK-010: added the CLI entry point and end-to-end coverage for CSV analysis, score filtering, threshold detection, and usage errors; 5 tests, build, and typecheck passed.
+- [x] Completed TASK-015: made signal IDs deterministic, suppressed zero-change pseudo-signals, and rejected malformed CLI flags; full build, test, and typecheck passed.
 
 ## Issues Found / Decisions Made
 
@@ -39,13 +50,12 @@ Harness Version: 1.1
 
 ## Next Session: To-Do
 
-1. Get the user's execution choice: Subagent-Driven (`superpowers:subagent-driven-development`) vs. Inline Execution (`superpowers:executing-plans`) for the 10-task plan.
-2. Execute Task 1 (Monorepo & Tooling Bootstrap) first — nothing else can start until the workspace exists.
-3. Move Task 1 from `tasks/backlog.md` to `tasks/active.md` when it starts.
-4. When M2/M3 work is planned (TASK-011/013/014), read `memory/reuse-candidates.md` first and cite the specific Future-Signal source function being ported.
+1. Review and merge the M1 implementation branch.
+2. Plan TASK-012 (GitHub Actions CI) or M2's GitHub connector before starting either.
+3. Before any M2/M3 work, read `memory/reuse-candidates.md` and obtain approval for deferred scope.
 
 ## Important Context
 
-- The implementation plan (`docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`) is the single source of truth for exact file paths, code, and test commands for Tasks 1-10 — this Harness's `memory/` and `tasks/` files summarize and index it, they don't replace it.
+- The implementation plan (`docs/2026-07-27-signal-hub-mvp.md`) is the single source of truth for exact file paths, code, and test commands for Tasks 1-10 — this Harness's `memory/` and `tasks/` files summarize and index it, they don't replace it. Some older Harness references retain the former `docs/superpowers/plans/` path.
 - The user's original design draft (pasted in chat, not saved as a separate file) already did most of the MVP-vs-DEFER scoping decisions; `memory/architecture.md`'s DEFER list and `roadmap.md`'s "Out of Scope" section are both taken directly from it.
 - `internalforces/Future-Signal` is the user's own prior project (same domain: signal detection over time-series-like data, different stack: Python/FastAPI/PostgreSQL). It was cloned read-only into the session scratchpad for inspection, not added to this repo. `memory/reuse-candidates.md` is the index of what's worth porting and when — nothing from it has been ported yet.
