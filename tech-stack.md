@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # tech-stack.md — Signal Hub Technology Stack
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-07-29_
 
 ## Stack Overview
 
@@ -18,7 +18,7 @@ _Last updated: 2026-07-27_
 | Database | SQLite via `better-sqlite3` | ^11.3.0 | Zero-ops embedded storage matching the MVP's "no distributed system" philosophy; synchronous API keeps the pipeline simple |
 | Infrastructure | None (local execution) | — | No cloud infra in the MVP; `signal-hub` is planned for npm publish only, not yet executed |
 | Package Manager | pnpm workspaces + Turborepo | pnpm@9.7.0 / turbo ^2.0.9 | Workspace `workspace:*` deps + `dependsOn: ["^build"]` gives correct cross-package build ordering with minimal config |
-| CI/CD | GitHub Actions | — | Standard for OSS projects; runs `pnpm install && pnpm build && pnpm test` per PR (not yet wired up — see `tasks/backlog.md`) |
+| CI/CD | GitHub Actions | Node 20 | PR workflow runs frozen `pnpm install`, build, test, and typecheck |
 | Test Runner | Vitest | ^2.0.5 | Zero-config TS test runner, in-memory SQLite friendly |
 
 ## Architecture Patterns

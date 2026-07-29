@@ -13,7 +13,7 @@ _Last updated: 2026-07-29_
 
 | ID | Task | Owner | Started | Due |
 |----|------|-------|---------|-----|
-| — | (none — review fixes are complete; see `tasks/completed.md`) | — | — | — |
+| — | (none — TASK-012 CI is complete; see `tasks/completed.md`) | — | — | — |
 
 ## Task Detail Template
 
