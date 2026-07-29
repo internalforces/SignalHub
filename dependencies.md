@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # dependencies.md — Signal Hub Dependencies
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-07-29_
 
 ## Core Dependencies
 
@@ -22,6 +22,7 @@ _Last updated: 2026-07-27_
 | typescript | ^5.5.4 | Compilation and type checking for every package |
 | vitest | ^2.0.5 | Test runner (used in every package's `tests/`) |
 | turbo | ^2.0.9 | Monorepo build/test/typecheck orchestration |
+| @types/node | ^20.19.43 | Node 20 built-in module type definitions for workspace compilation |
 | @types/better-sqlite3 | ^7.6.11 | Type definitions for `better-sqlite3` (used in `@signal-hub/storage`) |
 
 ## External Services / APIs
