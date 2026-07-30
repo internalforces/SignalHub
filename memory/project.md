@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Project: Signal Hub
 
-_Last updated: 2026-07-28_
+_Last updated: 2026-07-30_
 
 ## Summary
 
@@ -15,9 +15,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: v0.1.0-dev (M1 MVP implemented locally)
-- **Phase**: M1 MVP complete — CSV → Core → Detector → Signal → CLI is implemented and tested
-- **Next milestone**: M2 — Beta (see `roadmap.md`)
+- **Version**: v0.2.0-dev (M2 Beta implemented locally)
+- **Phase**: M2 complete — the GitHub connector validates real-world commit data against the existing pipeline contracts
+- **Next milestone**: M3 — v1.0 (see `roadmap.md`)
 - **Overall health**: 🟢 Good
 
 ## Tech Summary
@@ -33,11 +33,11 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ```
 SignalHub/
-├── docs/superpowers/plans/2026-07-27-signal-hub-mvp.md   # the implementation plan (source of truth for Tasks 1-10)
-├── signal-hub-harness/                                   # this Harness
-├── packages/{types,connector-sdk,storage,analysis,core}/ # not yet created — see Task 1-9
-├── connectors/csv/                                        # not yet created — see Task 8
-└── apps/cli/                                               # not yet created — see Task 10
+├── docs/2026-07-27-signal-hub-mvp.md                      # M1 implementation plan
+├── docs/2026-07-29-signal-hub-m2-plan.md                  # M2 GitHub connector plan
+├── packages/{types,connector-sdk,storage,analysis,core}/ # shared pipeline packages
+├── connectors/{csv,github}/                                # local CSV and GitHub commit connectors
+└── apps/cli/                                               # CSV analysis CLI
 ```
 
 ## Recent Changes
@@ -48,11 +48,13 @@ SignalHub/
 | 2026-07-27 | AI Development Harness v1.1 (Standard tier) initial setup |
 | 2026-07-27 | Surveyed prior project `internalforces/Future-Signal` for reusable engine code; findings in `memory/reuse-candidates.md` |
 | 2026-07-28 | Completed M1 implementation (TASK-001 through TASK-010): pnpm monorepo, contracts, SQLite storage, detectors, CSV connector, Core, and CLI |
+| 2026-07-30 | Completed M2 implementation (TASK-011): GitHub commit connector with serial pagination, UTC daily aggregation, transient diagnostics, and a token-free public smoke test |
 
 ## Constraints
 
 - Only `percentage-change` and `threshold` detectors ship in the MVP — no spike/anomaly/trend/change-point detection
 - No YAML config loader (`config` package) until a second data source exists
-- Only the CSV connector ships in the MVP; GitHub/CoinGecko/Polymarket/REST connectors are deferred
+- GitHub commit ingestion is available as a connector package; CLI integration remains deferred because it changes the public CLI surface
+- CoinGecko, Polymarket, and generic REST connectors remain deferred
 - Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, types`
 - Timestamps must be normalized to ISO 8601 UTC by connectors before returning `DataPoint`s

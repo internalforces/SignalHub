@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Architecture — Signal Hub
 
-_Last updated: 2026-07-29_
+_Last updated: 2026-07-30_
 
 ## System Overview
 
@@ -26,14 +26,16 @@ signal-hub/
 │   ├── storage/               # SqliteStorage: DataPointRepository, SignalRepository
 │   ├── analysis/              # PercentageChangeDetector, ThresholdDetector, scoreSignals
 │   └── core/                  # runPipeline(), formatSignals() — the orchestration layer
-└── connectors/csv/            # CsvConnector: raw CSV rows → DataPoint[]
+└── connectors/
+    ├── csv/                   # CsvConnector: raw CSV rows → DataPoint[]
+    └── github/                # GitHubConnector: commit records → daily commit-count DataPoint[]
 ```
 
 ## Data Flow
 
 ```
-CSV file
-  → CsvConnector.fetch()            (raw rows → DataPoint[], ISO 8601 UTC timestamps)
+CSV file or GitHub commits endpoint
+  → CsvConnector.fetch() / GitHubConnector.fetch()  (raw input → DataPoint[], ISO 8601 UTC timestamps)
   → isValidDataPoint() filter       (connector-sdk; drops malformed points)
   → SqliteStorage.dataPoints        (insert + dedupe by `${metricId}::${timestamp}`)
   → per metric: Detector.detect()   (PercentageChangeDetector, ThresholdDetector — stateless)
@@ -53,6 +55,7 @@ CSV file
 | Harness adoption | AI Development Harness v1.1, Standard tier | 2026-07-27 |
 | MVP scope | Vertical slice only: CSV connector + 2 rule-based detectors + CLI; everything else deferred | 2026-07-27 |
 | Monorepo tooling | pnpm workspaces + Turborepo + per-package `tsc` (no bundler) | 2026-07-27 |
+| GitHub connector | Serial paginated commit ingestion with UTC-day aggregation and transient diagnostics | 2026-07-30 |
 
 ## Architecture Constraints
 
@@ -69,7 +72,7 @@ CSV file
 Do not implement without a new plan and human approval:
 
 - Detectors: spike, anomaly, trend classification, change-point detection (ML-like — deferred)
-- Connectors: GitHub (Phase 2), CoinGecko, Polymarket, generic REST (Phase 3)
+- Connectors: CoinGecko, Polymarket, generic REST (Phase 3)
 - `config` package: YAML config loader + env interpolation (deferred until a 2nd data source exists)
 - Dashboard, alert system, marketplace, MCP server, distributed/multi-node scheduling
 - Multi-provider LLM explanation (MVP explanation, if ever added, is template-only)
