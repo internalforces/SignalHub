@@ -7,13 +7,14 @@ Harness Version: 1.1
 
 # Known Issues — Signal Hub
 
-_Last updated: 2026-07-29_
+_Last updated: 2026-07-30_
 
 ## Active Bugs
 
 | ID | Severity | Description | Found | Owner |
 |----|----------|-------------|-------|-------|
-| — | — | (none — no code has been written yet) | — | — |
+| ISS-005 | High | CLI directly imports and depends on `analysis` and `storage`, violating the constitution's fixed `apps/cli → core, connectors/csv, types` package direction | 2026-07-30 | Architect / Implementer |
+| ISS-006 | Medium | README quick-start command fails with `Command "signal-hub" not found` after a successful build | 2026-07-30 | Implementer / Documenter |
 
 ## Technical Debt
 

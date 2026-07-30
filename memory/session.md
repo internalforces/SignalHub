@@ -13,9 +13,9 @@ Harness Version: 1.1
 
 ## Session Info
 
-- **Date**: 2026-07-29
-- **Agent Role**: Implementer
-- **Session Goal**: Complete TASK-012 CI after infrastructure approval, then prepare the M2 GitHub connector plan.
+- **Date**: 2026-07-30
+- **Agent Role**: Reviewer
+- **Session Goal**: Review the merged M1 MVP and CI for correctness, standards compliance, and project-constitution compliance.
 
 ## Previous Session Summary
 
@@ -23,9 +23,10 @@ Harness Version: 1.1
 
 ## Current Work
 
-- [x] M2 GitHub connector plan prepared at `docs/2026-07-29-signal-hub-m2-plan.md`.
-- [x] TASK-012 — GitHub Actions CI is complete on `codex/task-012-ci`.
-- [x] Fixed the PR CI build failure by declaring `@types/node` for the workspace and refreshing the lockfile.
+- [x] Reviewed the M1 MVP and CI at `e72c26e`.
+- [x] Recorded the Request Changes verdict in `reports/review-2026-07-30-m1-mvp.md`.
+- [x] Verified frozen install, build, all 50 tests, and typecheck.
+- [x] Recorded ISS-005 (CLI package-boundary violation) and ISS-006 (broken README quick start).
 
 ## Completed This Session
 
@@ -52,11 +53,14 @@ Harness Version: 1.1
 - See `memory/decisions.md` ADR-002 (MVP scope), ADR-003 (monorepo tooling), and ADR-004 (Future-Signal reuse survey) — recorded here.
 - See `memory/known-issues.md` DEBT-001 and DEBT-002 for two known limitations baked into the plan (CSV parser has no RFC 4180 support; no linter configured yet).
 - See `memory/known-issues.md` ISS-004 for the resolved CI type-resolution failure.
+- See `memory/known-issues.md` ISS-005 for the CLI's direct dependencies on `analysis` and `storage`, contrary to the constitution's fixed dependency direction.
+- See `memory/known-issues.md` ISS-006 for the README quick-start command that cannot find the CLI binary.
 
 ## Next Session: To-Do
 
-1. Obtain approval for the M2 GitHub connector before implementing the plan at `docs/2026-07-29-signal-hub-m2-plan.md`.
-2. Before M2 implementation, re-read `memory/reuse-candidates.md` and follow its skip-reason-audited normalization guidance.
+1. Prepare a Core-owned composition API and obtain human approval before changing the public API to resolve ISS-005.
+2. Correct and smoke-test the README quick-start command to resolve ISS-006.
+3. Re-review both fixes before proceeding with M2.
 
 ## Important Context
 
