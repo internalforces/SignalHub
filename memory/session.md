@@ -13,9 +13,9 @@ Harness Version: 1.1
 
 ## Session Info
 
-- **Date**: 2026-07-29
+- **Date**: 2026-07-30
 - **Agent Role**: Implementer
-- **Session Goal**: Complete TASK-012 CI after infrastructure approval, then prepare the M2 GitHub connector plan.
+- **Session Goal**: Implement the approved M2 GitHub connector plan.
 
 ## Previous Session Summary
 
@@ -26,6 +26,7 @@ Harness Version: 1.1
 - [x] M2 GitHub connector plan prepared at `docs/2026-07-29-signal-hub-m2-plan.md`.
 - [x] TASK-012 — GitHub Actions CI is complete on `codex/task-012-ci`.
 - [x] Fixed the PR CI build failure by declaring `@types/node` for the workspace and refreshing the lockfile.
+- [x] TASK-011 — GitHub connector is complete on `codex/m2-github-connector`.
 
 ## Completed This Session
 
@@ -46,17 +47,20 @@ Harness Version: 1.1
 - [x] Completed TASK-015: made signal IDs deterministic, suppressed zero-change pseudo-signals, and rejected malformed CLI flags; full build, test, and typecheck passed.
 - [x] Completed TASK-012: added the Node 20 GitHub Actions PR workflow with frozen install, build, test, and typecheck; workflow YAML and all local checks passed.
 - [x] Fixed ISS-004: CI's clean installation lacked declared Node built-in module types; added `@types/node` ^20.19.43, then passed frozen install, build, test, and typecheck.
+- [x] Completed TASK-011: added `@signal-hub/connector-github` with public/private requests, serial `Link` pagination, UTC-day aggregation in ascending order, transient malformed-record diagnostics, and request-level errors.
+- [x] Ran the token-free public smoke test against `octocat/Hello-World`: 3 daily points and zero diagnostics.
 
 ## Issues Found / Decisions Made
 
 - See `memory/decisions.md` ADR-002 (MVP scope), ADR-003 (monorepo tooling), and ADR-004 (Future-Signal reuse survey) — recorded here.
 - See `memory/known-issues.md` DEBT-001 and DEBT-002 for two known limitations baked into the plan (CSV parser has no RFC 4180 support; no linter configured yet).
 - See `memory/known-issues.md` ISS-004 for the resolved CI type-resolution failure.
+- Recorded ADR-006 for M2's aggregation and diagnostics choices.
 
 ## Next Session: To-Do
 
-1. Obtain approval for the M2 GitHub connector before implementing the plan at `docs/2026-07-29-signal-hub-m2-plan.md`.
-2. Before M2 implementation, re-read `memory/reuse-candidates.md` and follow its skip-reason-audited normalization guidance.
+1. Obtain a separate public-API approval before wiring GitHub analysis into the CLI.
+2. Plan M3 connectors only after a dedicated design and approval pass.
 
 ## Important Context
 

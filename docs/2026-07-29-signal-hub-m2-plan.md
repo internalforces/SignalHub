@@ -18,7 +18,8 @@ SQLite schema, or introducing a scheduler.
 - Use Node 20's built-in `fetch`; do not add an HTTP client dependency.
 - Fetch the GitHub REST `GET /repos/{owner}/{repo}/commits` endpoint sequentially, following the
   endpoint's `Link` header for pagination. Request up to 100 records per page.
-- Convert each valid commit timestamp to a UTC day bucket and emit one data point per day:
+- Convert each valid `commit.committer.date` timestamp to a UTC day bucket and emit one data point per day,
+  ordered by UTC day ascending:
   `{ metricId: "github:<owner>/<repo>:commits", timestamp: "<day>T00:00:00.000Z", value: <count> }`.
   Daily aggregation prevents multiple commits with the same timestamp from colliding with the
   existing `${metricId}::${timestamp}` storage key.
@@ -62,7 +63,7 @@ serial requests and consuming pagination links rather than hand-building page UR
 ## Acceptance Criteria
 
 - A public repository can produce deterministic, daily GitHub commit-count data points.
-- The same mocked API sequence yields the same ordered points and diagnostics on every run.
+- The same mocked API sequence yields the same UTC-day-ascending points and diagnostics on every run.
 - Pagination is serial and driven by response `Link` values.
 - A bad record does not discard valid records; a request-level failure is visible to the caller.
 - No secret reaches source control, output, errors, or project memory.
