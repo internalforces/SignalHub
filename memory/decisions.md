@@ -122,3 +122,17 @@ connector tasks should cite the relevant candidate before design starts.
 **Rationale**: One point per day avoids the storage key collision caused by multiple commits at the same timestamp while preserving deterministic inputs for the existing detectors.
 **Trade-offs**: The connector is not exposed through the CLI yet; it has no persisted ETag, retry, or cooldown state.
 **Consequences**: The connector imports only `connector-sdk` and `types`; public-repository use is token-free, while a caller may supply a private-repository token directly to the constructor.
+
+---
+
+### ADR-007: CLI Composition Dependencies
+
+- **Date**: 2026-08-03
+- **Status**: Accepted
+- **Decided by**: User (ISS-005 resolution approval)
+
+**Context**: The MVP plan's architecture summary described the CLI as depending only on Core, while Task 10 and the implemented CLI directly construct the CSV connector, SQLite storage, and detectors. This left the documented dependency graph inconsistent with the intended composition root.
+**Decision**: The CLI may directly depend on `core`, `connectors/csv`, `analysis`, `storage`, and `types` to compose a pipeline. It must delegate pipeline execution to Core and must not contain pipeline logic.
+**Rationale**: The composition root needs concrete connector, detector, and storage instances; requiring a Core API refactor merely to hide those dependencies would enlarge the public API without improving the current design.
+**Trade-offs**: The CLI package has a wider direct dependency set, so reviews must continue to ensure it does not absorb Core responsibilities.
+**Consequences**: The MVP plan, project summary, and architecture constraints all record the same dependency direction. No source-code or public-interface change is required.

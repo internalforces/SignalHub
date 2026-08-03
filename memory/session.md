@@ -14,8 +14,8 @@ Harness Version: 1.1
 ## Session Info
 
 - **Date**: 2026-08-03
-- **Agent Role**: Reviewer
-- **Session Goal**: Address PR #4 review feedback and resolve its merge conflict with `main`.
+- **Agent Role**: Implementer
+- **Session Goal**: Resolve ISS-005 through ISS-008 after PR #4 merged.
 
 ## Previous Session Summary
 
@@ -29,6 +29,7 @@ Harness Version: 1.1
 - [x] TASK-011 — GitHub connector is complete on `codex/m2-github-connector`.
 - [x] Merged `main` into PR #4 and resolved the session-record conflict while retaining the M2 handoff.
 - [x] Updated the M1 review to classify ISS-005 as a plan inconsistency and recorded ISS-007 and ISS-008 from the review feedback.
+- [x] Resolved ISS-005 through ISS-008 on `codex/fix-post-merge-followups`.
 
 ## Completed This Session
 
@@ -51,6 +52,10 @@ Harness Version: 1.1
 - [x] Fixed ISS-004: CI's clean installation lacked declared Node built-in module types; added `@types/node` ^20.19.43, then passed frozen install, build, test, and typecheck.
 - [x] Completed TASK-011: added `@signal-hub/connector-github` with public/private requests, serial `Link` pagination, UTC-day aggregation in ascending order, transient malformed-record diagnostics, and request-level errors.
 - [x] Ran the token-free public smoke test against `octocat/Hello-World`: 3 daily points and zero diagnostics.
+- [x] Completed TASK-016: preserve CSV physical source-line numbers through blank lines, including a regression test.
+- [x] Completed TASK-016: document `node apps/cli/dist/index.js analyze data.csv` as the repository quick start and test the built executable.
+- [x] Completed TASK-016: adopted ADR-007, synchronizing CLI composition dependencies across project documents without a Core API change.
+- [x] Completed TASK-016: add `pnpm audit --prod --audit-level=high` to pull-request CI; local production audit passes.
 
 ## Issues Found / Decisions Made
 
@@ -58,13 +63,13 @@ Harness Version: 1.1
 - See `memory/known-issues.md` DEBT-001 and DEBT-002 for two known limitations baked into the plan (CSV parser has no RFC 4180 support; no linter configured yet).
 - See `memory/known-issues.md` ISS-004 for the resolved CI type-resolution failure.
 - Recorded ADR-006 for M2's aggregation and diagnostics choices.
+- Recorded ADR-007 for CLI composition dependencies.
+- Full dependency audit reported critical/high development-only Vitest/Vite vulnerabilities; tracked as ISS-009 because dependency upgrades remain out of this task's approved scope.
 
 ## Next Session: To-Do
 
-1. Reconcile the CLI dependency guidance between the architecture summary and Task 10 before requesting any Core API refactor (ISS-005).
-2. Correct and smoke-test the README quick-start command (ISS-006).
-3. Obtain approval before changing CI configuration to add dependency vulnerability scanning (ISS-007).
-4. Preserve CSV physical line numbers through blank lines and add a regression test (ISS-008).
+1. Obtain approval to upgrade the vulnerable Vitest/Vite development dependencies and resolve ISS-009.
+2. Plan M3 only after a dedicated design proposal and explicit approval for each deferred connector or configuration feature.
 
 ## Important Context
 

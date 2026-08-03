@@ -10,26 +10,29 @@ export class CsvConnector implements Connector {
 
   async fetch(): Promise<DataPoint[]> {
     const raw = await readFile(this.filePath, "utf-8");
-    const lines = raw.split(/\r?\n/).filter((line) => line.trim().length > 0);
+    const lines = raw
+      .split(/\r?\n/)
+      .map((line, index) => ({ line, lineNumber: index + 1 }))
+      .filter(({ line }) => line.trim().length > 0);
 
     if (lines.length === 0) {
       throw new Error(`CSV file is empty: ${this.filePath}`);
     }
 
-    const header = lines[0].split(",").map((column) => column.trim().toLowerCase());
+    const header = lines[0].line.split(",").map((column) => column.trim().toLowerCase());
     if (
       header.length !== 3 ||
       !EXPECTED_HEADER.every((column, index) => header[index] === column)
     ) {
       throw new Error(
-        `Invalid CSV header. Expected "metricId,timestamp,value", got "${lines[0]}"`,
+        `Invalid CSV header. Expected "metricId,timestamp,value", got "${lines[0].line}"`,
       );
     }
 
     const points: DataPoint[] = [];
     for (let index = 1; index < lines.length; index += 1) {
-      const lineNumber = index + 1;
-      const columns = lines[index].split(",");
+      const { line, lineNumber } = lines[index];
+      const columns = line.split(",");
       if (columns.length !== 3) {
         throw new Error(
           `Invalid row at line ${lineNumber}: expected 3 columns, got ${columns.length}`,

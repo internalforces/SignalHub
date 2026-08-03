@@ -4,7 +4,7 @@
 
 **Goal:** Build the Phase 1 vertical slice of Signal Hub: `CSV → Core → Detector → Signal → CLI`, so that `signal-hub analyze data.csv` prints ranked JSON signals.
 
-**Architecture:** A pnpm/Turborepo monorepo with strict one-directional dependencies (`cli → core → {storage, analysis, connector-sdk}`, `connectors/csv → connector-sdk`). The CSV connector maps raw rows to canonical `DataPoint`s. Core validates and deduplicates them into SQLite, runs stateless detectors per metric, scores the resulting signals, persists them, and returns them sorted for the CLI to print.
+**Architecture:** A pnpm/Turborepo monorepo with strict one-directional dependencies (`cli → {core, connectors/csv, analysis, storage, types}`, `core → {storage, analysis, connector-sdk, types}`, `connectors/csv → {connector-sdk, types}`). The CSV connector maps raw rows to canonical `DataPoint`s. The CLI composes the connector, storage, and detectors; Core validates and deduplicates them into SQLite, runs stateless detectors per metric, scores the resulting signals, persists them, and returns them sorted for the CLI to print.
 
 **Tech Stack:** TypeScript (strict, Node >=20, ESM/NodeNext), pnpm workspaces, Turborepo, Vitest, better-sqlite3.
 
@@ -17,7 +17,7 @@
 - Only two detectors ship in this plan: `percentage-change` and `threshold`. Spike/anomaly/trend/change-point detection are explicitly deferred.
 - No YAML config loader in this phase — the CLI uses flags (`--min-score`, `--threshold`) and sensible defaults. The `config` package and multi-source YAML wiring are deferred until a second data source exists.
 - Storage: `better-sqlite3`, one SQLite file, repository pattern (`DataPointRepository`, `SignalRepository`) — no other package may talk to the database directly.
-- Dependency direction is enforced by workspace deps only: `connectors/* → connector-sdk, types`; `storage → types`; `analysis → types`; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, types`. Connectors must never import `core`; `storage` must never import `analysis`.
+- Dependency direction is enforced by workspace deps only: `connectors/* → connector-sdk, types`; `storage → types`; `analysis → types`; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, analysis, storage, types`. The CLI composes pipeline dependencies and must not contain pipeline logic. Connectors must never import `core`; `storage` must never import `analysis`.
 - Timestamps: connectors normalize to ISO 8601 UTC via `new Date(x).toISOString()` before returning `DataPoint`s.
 - Out of scope for this plan (deferred to later plans): GitHub/CoinGecko/Polymarket/REST connectors, dashboard, alerting, LLM explainer, MCP server, distributed scheduling, config YAML loader.
 
@@ -1550,7 +1550,8 @@ git commit -m "feat(core): add runPipeline and formatSignals"
     "@signal-hub/analysis": "workspace:*",
     "@signal-hub/connector-csv": "workspace:*",
     "@signal-hub/core": "workspace:*",
-    "@signal-hub/storage": "workspace:*"
+    "@signal-hub/storage": "workspace:*",
+    "@signal-hub/types": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.5.4",

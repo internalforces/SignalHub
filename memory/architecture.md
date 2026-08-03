@@ -62,6 +62,7 @@ CSV file or GitHub commits endpoint
 - `connectors/*` may import only `connector-sdk` and `types` — never `core`
 - `storage` may import only `types` — never `analysis`
 - Only `core` may import `storage`, `analysis`, and `connector-sdk` together
+- `apps/cli` may import `core`, `connectors/csv`, `analysis`, `storage`, and `types` to compose a pipeline, but it must not contain pipeline logic
 - Detectors are stateless: `detect(series: DataPoint[]): Signal[]`, no side effects, no I/O
 - Signal IDs are derived deterministically from detector configuration and signal inputs, so repeated analysis is stable and persisted signals are idempotent
 - All persisted state lives in one SQLite file (`data.db`); no other storage mechanism is permitted in the MVP

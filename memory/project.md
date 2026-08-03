@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Project: Signal Hub
 
-_Last updated: 2026-07-30_
+_Last updated: 2026-08-03_
 
 ## Summary
 
@@ -49,6 +49,7 @@ SignalHub/
 | 2026-07-27 | Surveyed prior project `internalforces/Future-Signal` for reusable engine code; findings in `memory/reuse-candidates.md` |
 | 2026-07-28 | Completed M1 implementation (TASK-001 through TASK-010): pnpm monorepo, contracts, SQLite storage, detectors, CSV connector, Core, and CLI |
 | 2026-07-30 | Completed M2 implementation (TASK-011): GitHub commit connector with serial pagination, UTC daily aggregation, transient diagnostics, and a token-free public smoke test |
+| 2026-08-03 | Completed post-merge maintenance: corrected CSV physical-line diagnostics, added a built-CLI smoke test and working quick start, synchronized CLI composition dependencies, and added production dependency auditing to CI |
 
 ## Constraints
 
@@ -56,5 +57,5 @@ SignalHub/
 - No YAML config loader (`config` package) until a second data source exists
 - GitHub commit ingestion is available as a connector package; CLI integration remains deferred because it changes the public CLI surface
 - CoinGecko, Polymarket, and generic REST connectors remain deferred
-- Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, types`
+- Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, analysis, storage, types` (CLI composes these dependencies but contains no pipeline logic)
 - Timestamps must be normalized to ISO 8601 UTC by connectors before returning `DataPoint`s
