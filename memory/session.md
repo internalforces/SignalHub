@@ -13,9 +13,9 @@ Harness Version: 1.1
 
 ## Session Info
 
-- **Date**: 2026-07-30
-- **Agent Role**: Implementer
-- **Session Goal**: Implement the approved M2 GitHub connector plan.
+- **Date**: 2026-08-03
+- **Agent Role**: Reviewer
+- **Session Goal**: Address PR #4 review feedback and resolve its merge conflict with `main`.
 
 ## Previous Session Summary
 
@@ -27,6 +27,8 @@ Harness Version: 1.1
 - [x] TASK-012 — GitHub Actions CI is complete on `codex/task-012-ci`.
 - [x] Fixed the PR CI build failure by declaring `@types/node` for the workspace and refreshing the lockfile.
 - [x] TASK-011 — GitHub connector is complete on `codex/m2-github-connector`.
+- [x] Merged `main` into PR #4 and resolved the session-record conflict while retaining the M2 handoff.
+- [x] Updated the M1 review to classify ISS-005 as a plan inconsistency and recorded ISS-007 and ISS-008 from the review feedback.
 
 ## Completed This Session
 
@@ -59,8 +61,10 @@ Harness Version: 1.1
 
 ## Next Session: To-Do
 
-1. Obtain a separate public-API approval before wiring GitHub analysis into the CLI.
-2. Plan M3 connectors only after a dedicated design and approval pass.
+1. Reconcile the CLI dependency guidance between the architecture summary and Task 10 before requesting any Core API refactor (ISS-005).
+2. Correct and smoke-test the README quick-start command (ISS-006).
+3. Obtain approval before changing CI configuration to add dependency vulnerability scanning (ISS-007).
+4. Preserve CSV physical line numbers through blank lines and add a regression test (ISS-008).
 
 ## Important Context
 
