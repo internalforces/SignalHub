@@ -11,7 +11,10 @@ CSV -> Core -> Detector -> Signal -> CLI
 ```bash
 pnpm install
 pnpm build
-pnpm --filter signal-hub exec signal-hub analyze data.csv
+node apps/cli/dist/index.js analyze data.csv
 ```
+
+The command expects `data.csv` to be relative to the repository root. It must have a
+`metricId,timestamp,value` header.
 
 See [`docs/2026-07-27-signal-hub-mvp.md`](docs/2026-07-27-signal-hub-mvp.md) for the implementation plan.

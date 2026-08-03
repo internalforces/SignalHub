@@ -13,10 +13,7 @@ _Last updated: 2026-08-03_
 
 | ID | Severity | Description | Found | Owner | Target resolution |
 |----|----------|-------------|-------|-------|-------------------|
-| ISS-005 | Medium | Plan inconsistency: the architecture summary describes the CLI as depending only on Core, CSV, and types, but Task 10 explicitly constructs analysis and storage dependencies in the CLI. The constitution does not state that narrower CLI edge. | 2026-07-30 | Architect / Planner | Reconcile the plan and architecture in an ADR before requesting a Core API refactor. |
-| ISS-006 | Medium | README quick-start command fails with `Command "signal-hub" not found` after a successful build. | 2026-07-30 | Implementer / Documenter | Document a working repository command and add a smoke test. |
-| ISS-007 | Medium | CI lacks dependency vulnerability scanning even though `standards.md` requires it once CI exists. | 2026-08-03 | Maintainer / Security | Add a CI scan after human approval for the infrastructure-configuration change. |
-| ISS-008 | Medium | `CsvConnector` filters blank lines before calculating error line numbers, so malformed rows after a blank line report the wrong physical source line. | 2026-08-03 | Implementer / Tester | Preserve source line indices and add a blank-line regression test. |
+| ISS-009 | High | A full dependency audit reports critical/high vulnerabilities in development-only Vitest/Vite packages. The CI scan gates production dependencies only, which currently have no known vulnerabilities. | 2026-08-03 | Maintainer / Security | Obtain approval for a dependency upgrade, then update Vitest/Vite and validate the workspace. |
 
 ## Technical Debt
 
@@ -33,6 +30,10 @@ _Last updated: 2026-08-03_
 | ISS-002 | Random signal IDs made repeated analysis non-deterministic and allowed duplicate signal persistence | 2026-07-29 | Deterministic IDs derived from detector configuration and signal inputs; added persistence regression test |
 | ISS-003 | CLI accepted malformed or unknown flags silently | 2026-07-29 | Validate supported flags, values, and missing arguments; added regression tests |
 | ISS-004 | GitHub Actions could not resolve Node built-in module types during the CSV connector build | 2026-07-29 | Declared the Node 20 type definitions at the workspace root and refreshed the lockfile |
+| ISS-005 | CLI dependency guidance conflicted with Task 10's composition dependencies | 2026-08-03 | Recorded ADR-007 and synchronized the architecture, project summary, and MVP plan without changing Core's API |
+| ISS-006 | README quick-start command did not invoke the built repository CLI | 2026-08-03 | Documented the built CLI entry point and added an executable smoke test |
+| ISS-007 | CI lacked dependency vulnerability scanning | 2026-08-03 | Added a production-dependency audit that fails on high or critical findings |
+| ISS-008 | CSV errors after blank lines reported compressed, rather than physical, line numbers | 2026-08-03 | Preserved source-line indices and added a regression test |
 | — | — | — | — |
 
 ## Issue Template

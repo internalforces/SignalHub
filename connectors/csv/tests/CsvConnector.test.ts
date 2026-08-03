@@ -46,6 +46,14 @@ describe("CsvConnector", () => {
     ).rejects.toThrow(/line 2/);
   });
 
+  it("reports a malformed row's physical line number after blank lines", async () => {
+    await expect(
+      new CsvConnector(
+        writeCsv("metricId,timestamp,value\n\nm1,2026-07-27T00:00:00Z\n"),
+      ).fetch(),
+    ).rejects.toThrow(/line 3/);
+  });
+
   it("throws on a row with an invalid timestamp", async () => {
     await expect(
       new CsvConnector(writeCsv("metricId,timestamp,value\nm1,not-a-date,42\n")).fetch(),
