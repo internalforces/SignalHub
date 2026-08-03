@@ -56,6 +56,7 @@ Harness Version: 1.1
 - [x] Completed TASK-016: document `node apps/cli/dist/index.js analyze data.csv` as the repository quick start and test the built executable.
 - [x] Completed TASK-016: adopted ADR-007, synchronizing CLI composition dependencies across project documents without a Core API change.
 - [x] Completed TASK-016: add `pnpm audit --prod --audit-level=high` to pull-request CI; local production audit passes.
+- [x] Resolved PR #5 review feedback: the CLI package now builds its executable before its own test command, so `pnpm --filter signal-hub test` works from a clean checkout.
 
 ## Issues Found / Decisions Made
 

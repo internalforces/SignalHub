@@ -6,6 +6,7 @@
   "bin": { "signal-hub": "./dist/index.js" },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "pretest": "pnpm build",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
