@@ -2,6 +2,7 @@ import { execFile } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
@@ -27,7 +28,7 @@ describe("signal-hub executable", () => {
   it("runs the built CLI against a CSV file", async () => {
     const { stdout, stderr } = await execFileAsync(
       process.execPath,
-      [cliPath.pathname, "analyze", "data.csv"],
+      [fileURLToPath(cliPath), "analyze", "data.csv"],
       { cwd: directory },
     );
 

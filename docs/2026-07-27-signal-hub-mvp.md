@@ -157,7 +157,7 @@ CSV -> Core -> Detector -> Signal -> CLI
 \`\`\`bash
 pnpm install
 pnpm build
-pnpm --filter signal-hub exec signal-hub analyze data.csv
+node apps/cli/dist/index.js analyze data.csv
 \`\`\`
 
 See `docs/superpowers/plans/` for the implementation plan.

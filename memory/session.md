@@ -57,6 +57,7 @@ Harness Version: 1.1
 - [x] Completed TASK-016: adopted ADR-007, synchronizing CLI composition dependencies across project documents without a Core API change.
 - [x] Completed TASK-016: add `pnpm audit --prod --audit-level=high` to pull-request CI; local production audit passes.
 - [x] Resolved PR #5 review feedback: the CLI package now builds its executable before its own test command, so `pnpm --filter signal-hub test` works from a clean checkout.
+- [x] Resolved the follow-up PR #5 review: CLI tests now build their workspace dependencies, safely convert the executable file URL to a path, and the implementation plan uses the corrected quick-start command.
 
 ## Issues Found / Decisions Made
 
