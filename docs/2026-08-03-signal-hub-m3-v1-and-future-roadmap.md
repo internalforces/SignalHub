@@ -21,7 +21,7 @@ The current deterministic pipeline remains the foundation:
 connector.fetch() -> DataPoint[] -> Core -> Detector -> Signal -> CLI JSON
 ~~~
 
-M3 keeps the shared DataPoint, Signal, Detector, and Connector contracts unchanged. Connectors normalize timestamps to ISO 8601 UTC before returning data. Because SQLite deduplicates with metricId::timestamp, every connector must emit one point per timestamp or aggregate collisions deterministically.
+M3 keeps the shared DataPoint, Signal, Detector, and Connector contracts unchanged. Connectors normalize timestamps to ISO 8601 UTC before returning data. Because SQLite deduplicates with metricId::timestamp, every configured source must have a unique metricId and every connector must emit one point per timestamp or aggregate collisions deterministically.
 
 The package boundaries remain binding:
 
@@ -90,7 +90,7 @@ sources:
     request:
       url: https://example.invalid/prices
       headers:
-        Authorization: "Bearer ${EXAMPLE_API_TOKEN}"
+        Authorization: ${EXAMPLE_API_AUTHORIZATION}
     mapping:
       recordsPointer: /data
       timestampPointer: /timestamp
@@ -99,9 +99,9 @@ sources:
       aggregate: last
 ~~~
 
-All sources require unique id, type, and non-empty metricId. Source types are coingecko, polymarket, and rest.
+Every source id and metricId must be non-empty and unique across the full sources list. Source types are coingecko, polymarket, and rest.
 
-Environment interpolation accepts only a full-value placeholder such as ${NAME}. A missing or empty variable is a configuration error. The implementation must not support partial-string templates or read .env files; this makes validation and secret redaction predictable.
+Environment interpolation accepts only a full-value placeholder such as ${NAME}. A missing or empty variable is a configuration error. For example, EXAMPLE_API_AUTHORIZATION must contain the complete Authorization value (such as a Bearer credential); configuration must not compose a prefix with an interpolated secret. The implementation must not support partial-string templates or read .env files; this makes validation and secret redaction predictable.
 
 The REST mapping language uses RFC 6901 JSON Pointer only:
 
@@ -110,9 +110,9 @@ The REST mapping language uses RFC 6901 JSON Pointer only:
 - bucket is none, hour, or day, always in UTC.
 - aggregate is last, sum, or average.
 
-With bucket: none, duplicate metricId/timestamp pairs are configuration errors. Hour/day buckets are reduced after a stable sort by normalized timestamp and original record position. Thus last has a documented deterministic meaning and SQLite data is never silently overwritten.
+With bucket: none, duplicate metricId/timestamp pairs in a response are request-data errors. Hour/day buckets are reduced after a stable sort by normalized timestamp and original record position, and their timestamps represent the UTC start of the bucket. Connectors must emit only closed buckets: a bucket whose end is at or after the connector's injected current time is omitted. Thus last has a documented deterministic meaning, a rerun cannot freeze an accumulating bucket, and SQLite data is never silently overwritten.
 
-The Polymarket schema needs a short API-contract design before its implementation: it must unambiguously identify one market and one outcome, state whether value means probability or price, and document history/timestamp semantics. Missing outcome data must never be fabricated.
+M3 deliberately does not yet propose a Polymarket source schema. TASK-M3-0 must first record the schema and obtain human approval before the general M3 design or connector implementation is approved. That contract must unambiguously identify one market and one outcome, state whether value means probability or price, and document history/timestamp semantics. Missing outcome data must never be fabricated.
 
 ## Connector rules
 
@@ -155,7 +155,39 @@ The proposed M3 command is:
 signal-hub run <config-file> [--source <source-id>] [--min-score <n>] [--threshold <n>]
 ~~~
 
-Configured sources execute sequentially in file order. The output is deterministic grouped JSON ordered by source id, containing each source's signals and redacted diagnostic summaries. It never echoes configuration headers or expanded environment values.
+Configured sources execute sequentially in file order. The output is deterministic grouped JSON and never echoes configuration headers or expanded environment values:
+
+~~~json
+{
+  "status": "complete",
+  "sources": [
+    {
+      "sourceId": "bitcoin-usd",
+      "metricId": "crypto:bitcoin:usd",
+      "signals": [
+        {
+          "id": "percentage-change:crypto:bitcoin:usd:...",
+          "metricId": "crypto:bitcoin:usd",
+          "type": "increase",
+          "score": 42,
+          "direction": "up",
+          "timestamp": "2026-08-03T00:00:00.000Z",
+          "value": 100,
+          "changePercent": 21
+        }
+      ],
+      "diagnostics": [{ "code": "invalid_value", "count": 2 }]
+    }
+  ],
+  "failure": null
+}
+~~~
+
+- status is complete when every selected source finishes, or partial when execution stops at the first failed source.
+- sources contains only successfully processed source groups, in selected configuration-file order. Each group has exactly sourceId, metricId, signals, and diagnostics. signals use the existing Signal contract and retain its deterministic order. diagnostics contains zero or more `{ code: string, count: positive integer }` entries, ordered by code.
+- failure is null for complete output. For partial output it is `{ "sourceId": string, "stage": "fetch" | "pipeline", "code": string }`; code is a stable, redacted failure classification, never a provider response or error text.
+
+M3 intentionally uses this explicit partial-completion contract rather than a run-wide transaction. Successfully processed source groups may already be persisted when a later source fails, no rollback is attempted, and the nonzero command exit status accompanies the partial JSON. Retrying follows the existing idempotent storage behavior.
 
 This CLI contract is proposed only. It needs public-API approval before implementation.
 
@@ -163,10 +195,11 @@ This CLI contract is proposed only. It needs public-API approval before implemen
 
 | ID | Work | Size | Depends on | Completion criteria |
 | --- | --- | --- | --- | --- |
-| TASK-M3-1 | Approve M3 design, dependency, config, and CLI contract | S | — | Approvals record the YAML dependency and confirm no schema change. |
+| TASK-M3-0 | Define and approve the Polymarket public contract | S | — | The source schema, market/outcome selection, value meaning, timestamp/history semantics, and human approval are recorded. |
+| TASK-M3-1 | Approve M3 design, dependency, config, and CLI contract | S | M3-0 | Approvals record the YAML dependency, the grouped JSON and partial-failure contract, and confirm no schema change. |
 | TASK-M3-2 | Build config package | M | M3-1 | Parsing, interpolation, schema validation, duplicate-ID rejection, and redaction tests pass. |
 | TASK-M3-3 | Build CoinGecko connector | M | M3-1 | Fixture tests cover request construction, normalization, UTC buckets, duplicates, diagnostics, and failures. |
-| TASK-M3-4 | Build Polymarket connector | L | M3-1 | API contract is recorded; fixtures cover pagination, eligibility filtering, normalization, diagnostics, and failures. |
+| TASK-M3-4 | Build Polymarket connector | L | M3-1 | Approved API contract and fixtures cover pagination, eligibility filtering, normalization, diagnostics, and failures. |
 | TASK-M3-5 | Build generic REST connector | L | M3-1 | JSON Pointer mapping, aggregation, HTTPS validation, redaction, malformed records, and errors are covered. |
 | TASK-M3-6 | Add approved CLI composition and docs | M | M3-2 through M3-5 | Existing analyze tests stay green; config-run tests cover selection, order, stable output, and redaction. |
 | TASK-M3-7 | Release readiness | M | M3-6 | Build, tests, typecheck, API/package-boundary review, and approved public smoke tests pass. |
@@ -180,6 +213,8 @@ M3-3 through M3-5 can proceed in parallel after approval. No task may change SQL
 - Assert byte-for-byte-equivalent output for the same config and mocked responses.
 - Verify malformed records retain valid points with stable reason codes.
 - Verify request failures are visible and never include header values.
+- Verify a later-source failure returns the exact partial JSON shape, uses a nonzero exit status, and leaves prior successful source groups explicitly represented.
+- Verify open hour/day buckets are omitted and become eligible only after their UTC end time.
 - Retain M1/M2 regression coverage, especially deterministic IDs and UTC normalization.
 
 M3 can be labeled v1.0 only after every acceptance criterion passes and public contracts are reviewed. npm publishing remains a separate manual action requiring human approval.

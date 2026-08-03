@@ -13,9 +13,9 @@ Harness Version: 1.1
 
 ## Session Info
 
-- **Date**: 2026-08-03
-- **Agent Role**: Implementer
-- **Session Goal**: Resolve ISS-005 through ISS-008 after PR #4 merged.
+- **Date**: 2026-08-04
+- **Agent Role**: Reviewer / Documenter
+- **Session Goal**: Address all actionable review feedback on PR #6.
 
 ## Previous Session Summary
 
@@ -33,6 +33,7 @@ Harness Version: 1.1
 
 ## Completed This Session
 
+- [x] Resolved all six PR #6 design-review findings: unique source metric IDs, full-value-only authorization interpolation, closed time buckets, an exact grouped JSON/partial-failure contract, and a separately approved Polymarket-contract task.
 - [x] Documented the proposed M3 v1.0 design, approval gates, task breakdown, and M4/M5 rough roadmap in `docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md`; no deferred implementation was authorized or started.
 - [x] Reviewed the pasted design draft, confirmed the MVP scope decisions it already made (design review §1)
 - [x] Wrote the full implementation plan: `docs/superpowers/plans/2026-07-27-signal-hub-mvp.md` (10 tasks, TDD steps, exact code)

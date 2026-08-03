@@ -136,3 +136,17 @@ connector tasks should cite the relevant candidate before design starts.
 **Rationale**: The composition root needs concrete connector, detector, and storage instances; requiring a Core API refactor merely to hide those dependencies would enlarge the public API without improving the current design.
 **Trade-offs**: The CLI package has a wider direct dependency set, so reviews must continue to ensure it does not absorb Core responsibilities.
 **Consequences**: The MVP plan, project summary, and architecture constraints all record the same dependency direction. No source-code or public-interface change is required.
+
+---
+
+### ADR-008: M3 Pre-Approval Contract Safeguards
+
+- **Date**: 2026-08-04
+- **Status**: Proposed
+- **Decided by**: PR #6 review remediation; pending human M3 approval
+
+**Context**: The proposed M3 multi-source configuration and CLI contracts were incomplete around source identity, authorization interpolation, open buckets, failure behavior, and the undeclared Polymarket public schema.
+**Decision**: Require globally unique source `metricId` values; interpolate only whole configuration values; emit only closed hourly/daily buckets; publish an exact grouped JSON partial-completion shape; and make a reviewed, human-approved Polymarket contract a prerequisite to the wider M3 approval.
+**Rationale**: These rules preserve the current `metricId::timestamp` storage invariant and make a failed multi-source run observable without silently inventing a schema or partial-result behavior.
+**Trade-offs**: M3 planning has an additional approval task and intentionally uses explicit partial completion rather than a run-wide transaction.
+**Consequences**: No implementation is authorized. TASK-M3-0 and TASK-M3-1 must be approved before any deferred M3 connector, configuration, or CLI work begins.
