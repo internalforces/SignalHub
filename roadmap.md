@@ -37,10 +37,21 @@ Full task breakdown: [`docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`](../
 
 ### M3 — v1.0
 
+- Detailed design and approval gates: [`docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md`](docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md)
 - [ ] CoinGecko connector (design review Phase 3)
 - [ ] Polymarket connector (design review Phase 3)
 - [ ] Generic REST connector with dynamic field mapping (design review Phase 3)
 - [ ] `config` package: YAML config loader + env interpolation (deferred from MVP per design review §1.1(5))
+
+### M4 — Local Operations and Reliability (proposed)
+
+- [ ] Proposed only: checkpoints/caching, a single-process scheduler, retry and rate-limit policy,
+  and time-aware analysis. A schema and architecture proposal is required before implementation.
+
+### M5 — Consumption and Explanation (proposed)
+
+- [ ] Proposed only: a minimal read-only local API, opt-in alerts, and deterministic template-based
+  explanations. Each external side effect and public interface requires a separate approved plan.
 
 ## Backlog Ideas
 

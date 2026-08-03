@@ -33,6 +33,7 @@ Harness Version: 1.1
 
 ## Completed This Session
 
+- [x] Documented the proposed M3 v1.0 design, approval gates, task breakdown, and M4/M5 rough roadmap in `docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md`; no deferred implementation was authorized or started.
 - [x] Reviewed the pasted design draft, confirmed the MVP scope decisions it already made (design review §1)
 - [x] Wrote the full implementation plan: `docs/superpowers/plans/2026-07-27-signal-hub-mvp.md` (10 tasks, TDD steps, exact code)
 - [x] AI Development Harness v1.1 (Standard tier) initial setup, seeded from the plan's content (not placeholders)
