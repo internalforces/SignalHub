@@ -108,3 +108,17 @@ connector tasks should cite the relevant candidate before design starts.
 **Rationale**: The project goal requires deterministic transformation, and stable IDs make repeated analysis idempotent without changing the database schema.
 **Trade-offs**: IDs are descriptive serialized strings rather than opaque UUIDs.
 **Consequences**: Detectors must not generate random IDs; tests cover repeatability and duplicate-persistence prevention.
+
+---
+
+### ADR-006: M2 GitHub Commit Connector
+
+- **Date**: 2026-07-30
+- **Status**: Accepted
+- **Decided by**: User (implementation approval)
+
+**Context**: M2 needs to validate the deterministic pipeline with public GitHub data, without changing the shared contracts, SQLite schema, or CLI surface.
+**Decision**: Add `@signal-hub/connector-github`, using Node's built-in `fetch` to retrieve commit pages serially through GitHub's `Link` headers. Normalize valid `commit.committer.date` values into UTC-day commit counts, sort them ascending, and retain malformed-record IDs/reasons only in transient diagnostics.
+**Rationale**: One point per day avoids the storage key collision caused by multiple commits at the same timestamp while preserving deterministic inputs for the existing detectors.
+**Trade-offs**: The connector is not exposed through the CLI yet; it has no persisted ETag, retry, or cooldown state.
+**Consequences**: The connector imports only `connector-sdk` and `types`; public-repository use is token-free, while a caller may supply a private-repository token directly to the constructor.

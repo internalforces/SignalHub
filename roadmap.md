@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # roadmap.md — Signal Hub Roadmap
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-07-30_
 
 ## Goal
 
@@ -33,7 +33,7 @@ Full task breakdown: [`docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`](../
 
 ### M2 — Beta
 
-- [ ] GitHub connector (real-world data validation, per design review Phase 2)
+- [x] GitHub connector (real-world data validation, per design review Phase 2)
 
 ### M3 — v1.0
 

@@ -13,9 +13,9 @@ Harness Version: 1.1
 
 ## Session Info
 
-- **Date**: 2026-07-30
+- **Date**: 2026-08-03
 - **Agent Role**: Reviewer
-- **Session Goal**: Review the merged M1 MVP and CI for correctness, standards compliance, and project-constitution compliance.
+- **Session Goal**: Address PR #4 review feedback and resolve its merge conflict with `main`.
 
 ## Previous Session Summary
 
@@ -23,10 +23,12 @@ Harness Version: 1.1
 
 ## Current Work
 
-- [x] Reviewed the M1 MVP and CI at `e72c26e`.
-- [x] Recorded the Request Changes verdict in `reports/review-2026-07-30-m1-mvp.md`.
-- [x] Verified frozen install, build, all 50 tests, and typecheck.
-- [x] Recorded ISS-005 (CLI package-boundary violation) and ISS-006 (broken README quick start).
+- [x] M2 GitHub connector plan prepared at `docs/2026-07-29-signal-hub-m2-plan.md`.
+- [x] TASK-012 — GitHub Actions CI is complete on `codex/task-012-ci`.
+- [x] Fixed the PR CI build failure by declaring `@types/node` for the workspace and refreshing the lockfile.
+- [x] TASK-011 — GitHub connector is complete on `codex/m2-github-connector`.
+- [x] Merged `main` into PR #4 and resolved the session-record conflict while retaining the M2 handoff.
+- [x] Updated the M1 review to classify ISS-005 as a plan inconsistency and recorded ISS-007 and ISS-008 from the review feedback.
 
 ## Completed This Session
 
@@ -47,20 +49,22 @@ Harness Version: 1.1
 - [x] Completed TASK-015: made signal IDs deterministic, suppressed zero-change pseudo-signals, and rejected malformed CLI flags; full build, test, and typecheck passed.
 - [x] Completed TASK-012: added the Node 20 GitHub Actions PR workflow with frozen install, build, test, and typecheck; workflow YAML and all local checks passed.
 - [x] Fixed ISS-004: CI's clean installation lacked declared Node built-in module types; added `@types/node` ^20.19.43, then passed frozen install, build, test, and typecheck.
+- [x] Completed TASK-011: added `@signal-hub/connector-github` with public/private requests, serial `Link` pagination, UTC-day aggregation in ascending order, transient malformed-record diagnostics, and request-level errors.
+- [x] Ran the token-free public smoke test against `octocat/Hello-World`: 3 daily points and zero diagnostics.
 
 ## Issues Found / Decisions Made
 
 - See `memory/decisions.md` ADR-002 (MVP scope), ADR-003 (monorepo tooling), and ADR-004 (Future-Signal reuse survey) — recorded here.
 - See `memory/known-issues.md` DEBT-001 and DEBT-002 for two known limitations baked into the plan (CSV parser has no RFC 4180 support; no linter configured yet).
 - See `memory/known-issues.md` ISS-004 for the resolved CI type-resolution failure.
-- See `memory/known-issues.md` ISS-005 for the CLI's direct dependencies on `analysis` and `storage`, contrary to the constitution's fixed dependency direction.
-- See `memory/known-issues.md` ISS-006 for the README quick-start command that cannot find the CLI binary.
+- Recorded ADR-006 for M2's aggregation and diagnostics choices.
 
 ## Next Session: To-Do
 
-1. Prepare a Core-owned composition API and obtain human approval before changing the public API to resolve ISS-005.
-2. Correct and smoke-test the README quick-start command to resolve ISS-006.
-3. Re-review both fixes before proceeding with M2.
+1. Reconcile the CLI dependency guidance between the architecture summary and Task 10 before requesting any Core API refactor (ISS-005).
+2. Correct and smoke-test the README quick-start command (ISS-006).
+3. Obtain approval before changing CI configuration to add dependency vulnerability scanning (ISS-007).
+4. Preserve CSV physical line numbers through blank lines and add a regression test (ISS-008).
 
 ## Important Context
 

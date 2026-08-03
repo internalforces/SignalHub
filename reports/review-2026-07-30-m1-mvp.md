@@ -6,20 +6,19 @@
 
 ## Findings
 
-### [High] CLI bypasses the required package dependency direction
+### [Medium] CLI dependency guidance is inconsistent across the plan
 
 `apps/cli/src/cli.ts` imports `@signal-hub/analysis` and `@signal-hub/storage`
 directly, and `apps/cli/package.json` declares both packages as dependencies. The
-project constitution fixes the CLI dependency direction to `core`,
-`connectors/csv`, and `types`, while the architecture makes Core the orchestration
-boundary that combines analysis, storage, and connector concerns. Keeping detector
-and storage construction in the CLI makes that boundary unenforceable and will
-couple every future interface directly to implementation packages.
+architecture summary describes the CLI as depending only on `core`,
+`connectors/csv`, and `types`, while Task 10 explicitly requires the analysis and
+storage imports. The constitution itself only prohibits non-Core packages from
+importing storage, analysis, and connector-sdk together; the CLI imports the first
+two only. This is therefore a planning inconsistency, not a High-severity
+constitutional breach.
 
-**Required change:** Move construction of the MVP pipeline dependencies behind a
-Core-owned API, then remove the CLI's direct analysis and storage dependencies.
-Because changing a public API requires human approval, prepare the proposed Core
-API and obtain that approval before implementing it.
+**Required change:** Reconcile the plan and architecture in an ADR before
+requesting any Core-owned composition API or CLI dependency refactor.
 
 ### [Medium] Documented quick-start command cannot launch the CLI
 
@@ -34,18 +33,36 @@ Consequently, the only documented usage path fails before analysis begins.
 script and document that script. Add an automated smoke check for the documented
 command.
 
+### [Medium] CI does not run the required dependency vulnerability scan
+
+`standards.md` requires regular dependency scanning and directs the project to add
+it when CI is set up. The CI workflow currently installs, builds, tests, and
+typechecks, but does not scan dependencies. This is an unmet project standard.
+
+**Required change:** Track this as ISS-007. Adding the scan changes CI
+infrastructure configuration and therefore requires human approval before it is
+implemented.
+
+### [Medium] CSV diagnostics can report an incorrect physical line number
+
+`CsvConnector` removes blank lines before calculating a malformed row's line
+number. A bad row physically on line 3 can consequently be reported as line 2.
+
+**Required change:** Track this as ISS-008; preserve original source positions and
+add a blank-line regression test when fixing the connector.
+
 ## Checklist
 
 | Check | Result | Notes |
 |---|---|---|
 | Code style | Pass | Strict TypeScript and existing formatting conventions are followed. |
 | Planned tests | Pass | All 50 tests pass and cover the MVP task list plus regressions. |
-| Security | Pass with debt | Core applies `isValidDataPoint`; no hardcoded secrets found. Dependency scanning remains unautomated technical debt. |
-| Dependency direction | **Fail** | CLI directly depends on analysis and storage. |
+| Security | **Fail** | Core applies `isValidDataPoint` and no hardcoded secrets were found, but the required CI dependency scan is absent (ISS-007). |
+| Dependency direction | Pass with plan inconsistency | The constitution's combined-import restriction passes; the plan and architecture need reconciliation (ISS-005). |
 | DEFER scope | Pass | No deferred detector, connector, dashboard, alerting, LLM, MCP, or distributed feature was added. |
-| Error handling | Pass | CSV failures include row numbers and CLI validation rejects malformed flags. |
+| Error handling | **Fail** | CSV errors after blank lines use a compacted rather than physical line number (ISS-008); CLI validation rejects malformed flags. |
 | Documentation | **Fail** | The README quick-start command is not runnable. |
-| AGENTS.md restrictions | **Fail** | The fixed package dependency direction is violated. |
+| AGENTS.md restrictions | Pass | No restriction violation was found; ISS-005 is a plan inconsistency rather than a constitutional breach. |
 | New external dependencies | Pass | No unapproved dependency was introduced in the reviewed state. |
 
 ## Verification
@@ -54,6 +71,5 @@ command.
 - `pnpm build` — passed (7 packages).
 - `pnpm test` — passed (50 tests across 10 test files).
 - `pnpm typecheck` — passed (7 packages).
-- `rg '^import .* from "@signal-hub/' apps packages connectors --glob '*.ts'` — confirmed package imports and exposed the CLI boundary violation.
+- `rg '^import .* from "@signal-hub/' apps packages connectors --glob '*.ts'` — confirmed the CLI imports and the plan inconsistency described in ISS-005.
 - README quick-start smoke command — failed because `signal-hub` was not found.
-

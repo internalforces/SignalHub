@@ -7,14 +7,16 @@ Harness Version: 1.1
 
 # Known Issues — Signal Hub
 
-_Last updated: 2026-07-30_
+_Last updated: 2026-08-03_
 
 ## Active Bugs
 
-| ID | Severity | Description | Found | Owner |
-|----|----------|-------------|-------|-------|
-| ISS-005 | High | CLI directly imports and depends on `analysis` and `storage`, violating the constitution's fixed `apps/cli → core, connectors/csv, types` package direction | 2026-07-30 | Architect / Implementer |
-| ISS-006 | Medium | README quick-start command fails with `Command "signal-hub" not found` after a successful build | 2026-07-30 | Implementer / Documenter |
+| ID | Severity | Description | Found | Owner | Target resolution |
+|----|----------|-------------|-------|-------|-------------------|
+| ISS-005 | Medium | Plan inconsistency: the architecture summary describes the CLI as depending only on Core, CSV, and types, but Task 10 explicitly constructs analysis and storage dependencies in the CLI. The constitution does not state that narrower CLI edge. | 2026-07-30 | Architect / Planner | Reconcile the plan and architecture in an ADR before requesting a Core API refactor. |
+| ISS-006 | Medium | README quick-start command fails with `Command "signal-hub" not found` after a successful build. | 2026-07-30 | Implementer / Documenter | Document a working repository command and add a smoke test. |
+| ISS-007 | Medium | CI lacks dependency vulnerability scanning even though `standards.md` requires it once CI exists. | 2026-08-03 | Maintainer / Security | Add a CI scan after human approval for the infrastructure-configuration change. |
+| ISS-008 | Medium | `CsvConnector` filters blank lines before calculating error line numbers, so malformed rows after a blank line report the wrong physical source line. | 2026-08-03 | Implementer / Tester | Preserve source line indices and add a blank-line regression test. |
 
 ## Technical Debt
 

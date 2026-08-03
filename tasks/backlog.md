@@ -25,7 +25,6 @@ _Last updated: 2026-07-27_
 | TASK-008 | CSV Connector | High | M1 | M | Depends on TASK-003 |
 | TASK-009 | Core Pipeline Engine + Output Formatter | High | M1 | L | Depends on TASK-003, TASK-004, TASK-007 |
 | TASK-010 | CLI Application (End-to-End) | High | M1 | M | Depends on TASK-007, TASK-008, TASK-009 — last task in M1 |
-| TASK-011 | GitHub Connector | Medium | M2 | M | Not yet planned in detail — needs its own plan before starting (design review Phase 2). Use the skip-reason-audited normalization pattern from `memory/reuse-candidates.md` #5, not fail-fast like `CsvConnector` |
 | TASK-012 | GitHub Actions CI (`pnpm install && pnpm build && pnpm test` per PR) | Medium | M1/M2 | S | Not yet planned in detail |
 | TASK-013 | Polymarket Connector | Low | M3 | L | Not yet planned — port the Gamma API client from `internalforces/Future-Signal`'s `backend/app/core/collector.py`; see `memory/reuse-candidates.md` #6 |
 | TASK-014 | Windowed change detector (24h/7d style, not just consecutive-point) | Low | M2/M3 | M | Not yet planned — port `compute_change_for_window` from Future-Signal; see `memory/reuse-candidates.md` #2 |
