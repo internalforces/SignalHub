@@ -145,8 +145,8 @@ connector tasks should cite the relevant candidate before design starts.
 - **Status**: Proposed
 - **Decided by**: PR #6 review remediation; pending human M3 approval
 
-**Context**: The proposed M3 multi-source configuration and CLI contracts were incomplete around source identity, authorization interpolation, open buckets, failure behavior, and the undeclared Polymarket public schema.
-**Decision**: Require globally unique source `metricId` values; interpolate only whole configuration values; emit only closed hourly/daily buckets; publish an exact grouped JSON partial-completion shape; and make a reviewed, human-approved Polymarket contract a prerequisite to the wider M3 approval.
-**Rationale**: These rules preserve the current `metricId::timestamp` storage invariant and make a failed multi-source run observable without silently inventing a schema or partial-result behavior.
+**Context**: The proposed M3 multi-source configuration and CLI contracts were incomplete around source identity, authorization interpolation, open buckets, failure behavior, the undeclared Polymarket public schema, and leakage/early-failure cases identified in the follow-up review.
+**Decision**: Require globally unique source `metricId` values; allow whole-value interpolation only in request headers; emit only closed hourly/daily buckets; publish an exact grouped JSON contract for complete, partial, and pre-execution config/selection failures; and make a reviewed, human-approved Polymarket contract a prerequisite to the wider M3 approval.
+**Rationale**: These rules preserve the current `metricId::timestamp` storage invariant, prevent expanded environment values from reaching output-visible identifiers, and make every failure mode observable without silently inventing a schema or partial-result behavior.
 **Trade-offs**: M3 planning has an additional approval task and intentionally uses explicit partial completion rather than a run-wide transaction.
-**Consequences**: No implementation is authorized. TASK-M3-0 and TASK-M3-1 must be approved before any deferred M3 connector, configuration, or CLI work begins.
+**Consequences**: No implementation is authorized. TASK-M3-0 and TASK-M3-1 must be approved before any deferred M3 connector, configuration, or CLI work begins; config and selection errors must occur before persistence and emit only redacted failure classifications.

@@ -101,7 +101,7 @@ sources:
 
 Every source id and metricId must be non-empty and unique across the full sources list. Source types are coingecko, polymarket, and rest.
 
-Environment interpolation accepts only a full-value placeholder such as ${NAME}. A missing or empty variable is a configuration error. For example, EXAMPLE_API_AUTHORIZATION must contain the complete Authorization value (such as a Bearer credential); configuration must not compose a prefix with an interpolated secret. The implementation must not support partial-string templates or read .env files; this makes validation and secret redaction predictable.
+Environment interpolation is permitted only for request-header values and accepts only a full-value placeholder such as ${NAME}. It is rejected in `id`, `metricId`, and every other configuration field, so no expanded value can flow into output-visible identifiers or request behavior outside headers. A missing or empty variable is a configuration error. For example, EXAMPLE_API_AUTHORIZATION must contain the complete Authorization value (such as a Bearer credential); configuration must not compose a prefix with an interpolated secret. The implementation must not support partial-string templates or read .env files; this makes validation and secret redaction predictable.
 
 The REST mapping language uses RFC 6901 JSON Pointer only:
 
@@ -155,7 +155,7 @@ The proposed M3 command is:
 signal-hub run <config-file> [--source <source-id>] [--min-score <n>] [--threshold <n>]
 ~~~
 
-Configured sources execute sequentially in file order. The output is deterministic grouped JSON and never echoes configuration headers or expanded environment values:
+Configured sources execute sequentially in file order. Every invocation writes exactly one deterministic JSON document to stdout. It never echoes configuration headers or expanded environment values:
 
 ~~~json
 {
@@ -183,11 +183,11 @@ Configured sources execute sequentially in file order. The output is determinist
 }
 ~~~
 
-- status is complete when every selected source finishes, or partial when execution stops at the first failed source.
+- status is `complete` when every selected source finishes, `partial` when execution stops at the first failed source after one or more source groups complete, or `failed` when configuration or source selection fails before any source starts.
 - sources contains only successfully processed source groups, in selected configuration-file order. Each group has exactly sourceId, metricId, signals, and diagnostics. signals use the existing Signal contract and retain its deterministic order. diagnostics contains zero or more `{ code: string, count: positive integer }` entries, ordered by code.
-- failure is null for complete output. For partial output it is `{ "sourceId": string, "stage": "fetch" | "pipeline", "code": string }`; code is a stable, redacted failure classification, never a provider response or error text.
+- failure is null only for complete output. For partial output it is `{ "sourceId": string, "stage": "fetch" | "pipeline", "code": string }`. For failed output, sources is `[]` and failure is `{ "sourceId": null, "stage": "config" | "selection", "code": string }`. `config` covers unreadable or invalid YAML, missing environment values, duplicate IDs, and invalid source definitions; `selection` covers an unknown `--source` ID. Codes are stable redacted classifications—`config_unreadable`, `config_invalid`, `environment_missing`, or `source_not_found`—never provider response, parser, or error text.
 
-M3 intentionally uses this explicit partial-completion contract rather than a run-wide transaction. Successfully processed source groups may already be persisted when a later source fails, no rollback is attempted, and the nonzero command exit status accompanies the partial JSON. Retrying follows the existing idempotent storage behavior.
+M3 intentionally uses this explicit partial-completion contract rather than a run-wide transaction. Successfully processed source groups may already be persisted when a later source fails, no rollback is attempted, and the nonzero command exit status accompanies partial or failed JSON. Retrying follows the existing idempotent storage behavior. Configuration and selection failures occur before connector or pipeline construction and therefore persist nothing.
 
 This CLI contract is proposed only. It needs public-API approval before implementation.
 
@@ -196,8 +196,8 @@ This CLI contract is proposed only. It needs public-API approval before implemen
 | ID | Work | Size | Depends on | Completion criteria |
 | --- | --- | --- | --- | --- |
 | TASK-M3-0 | Define and approve the Polymarket public contract | S | — | The source schema, market/outcome selection, value meaning, timestamp/history semantics, and human approval are recorded. |
-| TASK-M3-1 | Approve M3 design, dependency, config, and CLI contract | S | M3-0 | Approvals record the YAML dependency, the grouped JSON and partial-failure contract, and confirm no schema change. |
-| TASK-M3-2 | Build config package | M | M3-1 | Parsing, interpolation, schema validation, duplicate-ID rejection, and redaction tests pass. |
+| TASK-M3-1 | Approve M3 design, dependency, config, and CLI contract | S | M3-0 | Approvals record the YAML dependency, the grouped JSON contract including config/selection failures, the partial-failure contract, and confirm no schema change. |
+| TASK-M3-2 | Build config package | M | M3-1 | Parsing, header-only interpolation, schema validation, duplicate-ID rejection, output-visible placeholder rejection, and redaction tests pass. |
 | TASK-M3-3 | Build CoinGecko connector | M | M3-1 | Fixture tests cover request construction, normalization, UTC buckets, duplicates, diagnostics, and failures. |
 | TASK-M3-4 | Build Polymarket connector | L | M3-1 | Approved API contract and fixtures cover pagination, eligibility filtering, normalization, diagnostics, and failures. |
 | TASK-M3-5 | Build generic REST connector | L | M3-1 | JSON Pointer mapping, aggregation, HTTPS validation, redaction, malformed records, and errors are covered. |
@@ -214,6 +214,8 @@ M3-3 through M3-5 can proceed in parallel after approval. No task may change SQL
 - Verify malformed records retain valid points with stable reason codes.
 - Verify request failures are visible and never include header values.
 - Verify a later-source failure returns the exact partial JSON shape, uses a nonzero exit status, and leaves prior successful source groups explicitly represented.
+- Verify unreadable/invalid configuration and unknown source selection return the exact failed JSON shape with a nonzero exit status, no source groups, and no persistence.
+- Verify placeholders in output-visible fields are rejected before any output can expose an expanded environment value.
 - Verify open hour/day buckets are omitted and become eligible only after their UTC end time.
 - Retain M1/M2 regression coverage, especially deterministic IDs and UTC normalization.
 
