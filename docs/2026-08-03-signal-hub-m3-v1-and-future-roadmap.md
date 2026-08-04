@@ -21,7 +21,7 @@ The current deterministic pipeline remains the foundation:
 connector.fetch() -> DataPoint[] -> Core -> Detector -> Signal -> CLI JSON
 ~~~
 
-M3 keeps the shared DataPoint, Signal, Detector, and Connector contracts unchanged. Connectors normalize timestamps to ISO 8601 UTC before returning data. M3 treats a configured `metricId` as the public identity only: before it enters Core or SQLite, the CLI derives the opaque storage metric ID `m3:${encodeURIComponent(source.id)}:${encodeURIComponent(source.metricId)}`. This permanently namespaces a source's persisted points from CSV input, other M3 sources, and later configurations that reuse a display metric ID. The CLI maps that private value back to the configured `metricId` only in the `run` JSON view; it never treats an existing un-namespaced series as M3 history. Every connector must emit one point per timestamp or aggregate collisions deterministically.
+M3 keeps the shared DataPoint, Signal, Detector, and Connector contracts unchanged. Connectors normalize timestamps to ISO 8601 UTC before returning data. The existing `analyze` command continues to use `data.db`; the M3 `run` command uses the separate, fixed local `signal-hub-m3.db` file, with the existing SQLite schema unchanged. CSV input therefore never shares storage with M3 and cannot forge an M3 namespace. Inside that M3-only database, a configured `metricId` is the public identity only: before it enters Core or SQLite, the CLI derives the opaque storage metric ID `m3:${encodeURIComponent(source.id)}:${encodeURIComponent(source.metricId)}`. This namespaces a source's persisted points from other M3 sources and later configurations that reuse a display metric ID. The CLI maps that private value back to the configured `metricId` only in the `run` JSON view; it never treats an existing un-namespaced series as M3 history. Every connector must emit one point per timestamp or aggregate collisions deterministically.
 
 The package boundaries remain binding:
 
@@ -100,7 +100,7 @@ sources:
       aggregate: last
 ~~~
 
-Every source id and metricId must be non-empty and unique across the full sources list. A source `id` is also its persistent M3 storage namespace and therefore must remain stable; changing it intentionally creates an independent history. A CoinGecko `historyDays` value is a required positive integer range ending at the connector's injected UTC current time; TASK-M3-0b fixes the approved maximum and provider endpoint semantics before M3 implementation. Source types are coingecko, polymarket, and rest.
+Every source `id` must be non-empty and unique across the full sources list. A display `metricId` must be non-empty but may be shared by distinct sources because the persistent storage namespace includes the unique source ID. A source `id` is also its persistent M3 storage namespace and therefore must remain stable; changing it intentionally creates an independent history. A CoinGecko `historyDays` value is a required positive integer range ending at the connector's injected UTC current time; TASK-M3-0b fixes the approved maximum and provider endpoint semantics before M3 implementation. Source types are coingecko, polymarket, and rest.
 
 Environment interpolation is permitted only for request-header values and accepts only a full-value placeholder such as ${NAME}. It is rejected in `id`, `metricId`, and every other configuration field, so no expanded value can flow into output-visible identifiers or request behavior outside headers. A missing or empty variable is a configuration error. For example, EXAMPLE_API_AUTHORIZATION must contain the complete Authorization value (such as a Bearer credential); configuration must not compose a prefix with an interpolated secret. The implementation must not support partial-string templates or read .env files; this makes validation and secret redaction predictable.
 
@@ -167,7 +167,7 @@ Configured sources execute sequentially in file order. Every invocation writes e
       "metricId": "crypto:bitcoin:usd",
       "signals": [
         {
-          "id": "percentage-change:crypto:bitcoin:usd:...",
+          "id": "[\"percentage-change\",\"crypto:bitcoin:usd\",\"2026-08-03T00:00:00.000Z\",100,21]",
           "metricId": "crypto:bitcoin:usd",
           "type": "increase",
           "score": 42,
@@ -198,8 +198,8 @@ This CLI contract is proposed only. It needs public-API approval before implemen
 | --- | --- | --- | --- | --- |
 | TASK-M3-0 | Define and approve the Polymarket public contract | S | — | The source schema, market/outcome selection, value meaning, timestamp/history semantics, and human approval are recorded. |
 | TASK-M3-0b | Define and approve CoinGecko history semantics | S | — | The endpoint, request parameters, horizon, observation-count expectation, timestamp semantics, provider limitations, and human approval are recorded. |
-| TASK-M3-1 | Approve M3 design, dependency, config, and CLI contract | S | M3-0, M3-0b | Approvals record the YAML dependency, persistent metric namespace, exact grouped JSON contract including usage/config/selection/first-source failures, per-source atomicity, partial-failure contract, and confirm no schema change. |
-| TASK-M3-2 | Build config package | M | M3-1 | Parsing, header-only interpolation, schema validation, duplicate-ID rejection, output-visible placeholder rejection, and redaction tests pass. |
+| TASK-M3-1 | Approve M3 design, dependency, config, and CLI contract | S | M3-0, M3-0b | Approvals record the YAML dependency, dedicated M3 database path and persistent metric namespace, exact grouped JSON contract including usage/config/selection/first-source failures, per-source atomicity, partial-failure contract, and confirm no schema change. |
+| TASK-M3-2 | Build config package | M | M3-1 | Parsing, header-only interpolation, schema validation, duplicate-source-ID rejection, output-visible placeholder rejection, and redaction tests pass. |
 | TASK-M3-3 | Build CoinGecko connector | M | M3-1 | Fixture tests cover the approved request/horizon semantics, normalization, UTC buckets, duplicates, diagnostics, and failures. |
 | TASK-M3-4 | Build Polymarket connector | L | M3-1 | Approved API contract and fixtures cover pagination, eligibility filtering, normalization, diagnostics, and failures. |
 | TASK-M3-5 | Build generic REST connector | L | M3-1 | JSON Pointer mapping, same-origin per-hop redirect validation, HTTPS validation, redaction, malformed records, and errors are covered. |
@@ -220,7 +220,7 @@ M3-3 through M3-5 can proceed in parallel after approval. No task may change SQL
 - Verify unreadable/invalid configuration, invalid command arguments, and unknown source selection return the exact failed JSON shape with a nonzero exit status, no source groups, and no persistence.
 - Verify placeholders in output-visible fields are rejected before any output can expose an expanded environment value.
 - Verify hour/day buckets whose UTC end is strictly after the injected current time are omitted; a bucket ending exactly at that time is included.
-- Verify M3 storage metric namespaces keep M3 sources independent of CSV data, previously configured sources, and overlapping configured display metric IDs.
+- Verify the dedicated M3 database keeps M3 sources independent of CSV data, while storage metric namespaces isolate previous configurations and overlapping configured display metric IDs within M3.
 - Verify a revised persisted metric/timestamp value fails with `historical_conflict`, replaces neither the point nor signals, and rolls back only that source.
 - Verify only same-origin validated redirects are followed and configured headers are never sent to a different origin.
 - Verify projected percentage-change and threshold signal IDs preserve their detector configuration while replacing only the private metric ID.

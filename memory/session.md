@@ -33,6 +33,7 @@ Harness Version: 1.1
 
 ## Completed This Session
 
+- [x] Addressed three further PR #6 findings: M3 now has physical CSV storage isolation, display metric IDs may overlap safely, and the public Signal-ID example uses the actual serialized tuple encoding.
 - [x] Addressed the three follow-up PR #6 findings: revised historical values now fail source-atomically, redirects are same-origin only, and projected signal IDs retain detector configuration.
 - [x] Reviewed the remaining eight unresolved PR #6 findings and revised the M3 proposal: persistent source namespaces, public output projection, source-atomic persistence, exhaustive failed JSON outcomes, CoinGecko pre-approval, duplicate-timestamp policy, exact bucket boundary, and per-hop REST redirect validation. No M3 implementation was authorized or started.
 - [x] Resolved all eight PR #6 design-review findings: unique source metric IDs, header-only full-value interpolation, closed time buckets, exact grouped JSON for complete/partial/configuration/selection outcomes, and a separately approved Polymarket-contract task.
