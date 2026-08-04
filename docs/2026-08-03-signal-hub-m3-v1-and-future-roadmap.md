@@ -21,7 +21,7 @@ The current deterministic pipeline remains the foundation:
 connector.fetch() -> DataPoint[] -> Core -> Detector -> Signal -> CLI JSON
 ~~~
 
-M3 keeps the shared DataPoint, Signal, Detector, and Connector contracts unchanged. Connectors normalize timestamps to ISO 8601 UTC before returning data. The existing `analyze` command continues to use `data.db`; the M3 `run` command uses the separate, fixed local `signal-hub-m3.db` file, with the existing SQLite schema unchanged. CSV input therefore never shares storage with M3 and cannot forge an M3 namespace. Inside that M3-only database, a configured `metricId` is the public identity only: before it enters Core or SQLite, the CLI derives the opaque storage metric ID `m3:${encodeURIComponent(source.id)}:${encodeURIComponent(source.metricId)}`. This namespaces a source's persisted points from other M3 sources and later configurations that reuse a display metric ID. The CLI maps that private value back to the configured `metricId` only in the `run` JSON view; it never treats an existing un-namespaced series as M3 history. Every connector must emit one point per timestamp or aggregate collisions deterministically.
+M3 keeps the shared DataPoint, Signal, Detector, and Connector contracts unchanged. Connectors normalize timestamps to ISO 8601 UTC before returning data. The existing `analyze` command continues to use `data.db`; the M3 `run` command uses the separate, fixed local `signal-hub-m3.db` file in the command's current working directory, with the existing SQLite schema unchanged. CSV input therefore never shares storage with M3 and cannot forge an M3 namespace. Inside that M3-only database, a configured `metricId` is the public identity only: before it enters Core or SQLite, the CLI derives the opaque storage metric ID `m3:${encodeURIComponent(source.id)}:${encodeURIComponent(source.metricId)}`. This namespaces a source's persisted points from other M3 sources and later configurations that reuse a display metric ID. The CLI maps that private value back to the configured `metricId` only in the `run` JSON view; it never treats an existing un-namespaced series as M3 history. Before calling Core, every connector must emit at most one point for each storage metric ID/timestamp pair under the source-specific duplicate policy defined below.
 
 The package boundaries remain binding:
 
@@ -113,6 +113,8 @@ The REST mapping language uses RFC 6901 JSON Pointer only:
 
 With bucket: none, duplicate metricId/timestamp pairs in a response fail that source with the stable `duplicate_timestamp` request-data code; they are not skipped as malformed records. Hour/day buckets are reduced after a stable sort by normalized timestamp and original record position, and their timestamps represent the UTC start of the bucket. Connectors must emit only closed buckets: a bucket whose end is strictly after the connector's injected current time is omitted, so a bucket ending exactly at that time is included. Before writing a source's points, its transaction must compare every existing namespaced metric/timestamp value: an equal value is an idempotent no-op, while a different value fails the source with `historical_conflict` and rolls back that source's transaction. M3 never silently ignores or replaces a revised historical observation.
 
+This REST rule does not leave provider connectors to rely on SQLite's deduplication. Each provider contract must define how raw observations that normalize to the same output timestamp are handled before Core: either a documented deterministic reducer after the same stable sort, or a `duplicate_timestamp` source failure. The connector must return no duplicate output timestamps in either case. TASK-M3-0b and TASK-M3-0 record that rule for CoinGecko and Polymarket respectively before their connectors can be implemented.
+
 M3 deliberately does not yet propose a Polymarket source schema. TASK-M3-0 must first record the schema and obtain human approval before the general M3 design or connector implementation is approved. That contract must unambiguously identify one market and one outcome, state whether value means probability or price, and document history/timestamp semantics. Missing outcome data must never be fabricated.
 
 ## Connector rules
@@ -124,13 +126,14 @@ Every M3 connector must:
 3. return points in ascending timestamp order with deterministic tie-breaking;
 4. expose read-only in-memory diagnostics for malformed individual records;
 5. fail visibly for request-level errors, invalid top-level JSON, unsupported configuration, and unrecoverable pagination; and
-6. redact all request-header values and interpolated values.
+6. redact all request-header values and interpolated values; and
+7. apply its approved normalized-timestamp collision policy before returning points, never relying on storage's `INSERT OR IGNORE` behavior.
 
 Malformed individual records are skipped with stable reason codes such as invalid_timestamp, invalid_value, missing_field, and unsupported_market. This applies the skip-and-audit normalization pattern documented in memory/reuse-candidates.md. A duplicate timestamp for an unbucketed REST response is instead the request-data failure defined above. A failed request is not silently treated as partial success.
 
 ### CoinGecko
 
-The connector accepts the validated asset identifier, quote currency, interval, and an explicit history horizon. TASK-M3-0b must select and document the exact provider endpoint, request parameters, maximum supported horizon, observation-count expectation, UTC timestamp interpretation, and provider limitations, then obtain human approval before the general M3 design is approved. TASK-M3-3 implements only that approved contract. Fixtures must include unordered, duplicate, malformed, and empty observations.
+The connector accepts the validated asset identifier, quote currency, interval, and an explicit history horizon. TASK-M3-0b must select and document the exact provider endpoint, request parameters, maximum supported horizon, observation-count expectation, UTC timestamp interpretation, provider limitations, and normalized-timestamp collision reducer or failure policy, then obtain human approval before the general M3 design is approved. TASK-M3-3 implements only that approved contract. Fixtures must include unordered, duplicate, malformed, and empty observations.
 
 M3 assumes no paid plan. If a key or a paid endpoint becomes necessary, stop and request separate approval.
 
@@ -167,7 +170,7 @@ Configured sources execute sequentially in file order. Every invocation writes e
       "metricId": "crypto:bitcoin:usd",
       "signals": [
         {
-          "id": "[\"percentage-change\",\"crypto:bitcoin:usd\",\"2026-08-03T00:00:00.000Z\",100,21]",
+          "id": "[\"bitcoin-usd\",\"percentage-change\",\"crypto:bitcoin:usd\",\"2026-08-03T00:00:00.000Z\",100,21]",
           "metricId": "crypto:bitcoin:usd",
           "type": "increase",
           "score": 42,
@@ -185,7 +188,7 @@ Configured sources execute sequentially in file order. Every invocation writes e
 ~~~
 
 - status is `complete` when every selected source finishes, `partial` when execution stops at the first failed source after one or more source groups complete, or `failed` when configuration, argument parsing, source selection, or the first selected source fails before a source group completes.
-- sources contains only successfully processed source groups, in selected configuration-file order. Each group has exactly sourceId, metricId, signals, and diagnostics. signals retain the existing Signal fields and deterministic order; before formatting, the CLI replaces the private storage metric ID with the configured public metricId in both `metricId` and the existing serialized `id`, preserving every other ID tuple item. Thus a percentage-change ID remains `[detectorId, publicMetricId, timestamp, value, changePercent]`, while a threshold ID remains `[detectorId, threshold, publicMetricId, timestamp, value, changePercent]`; detector configuration is never discarded. Persisted signal IDs remain internal. diagnostics contains zero or more `{ code: string, count: positive integer }` entries, ordered by code.
+- sources contains only successfully processed source groups, in selected configuration-file order. Each group has exactly sourceId, metricId, signals, and diagnostics. signals retain the existing Signal fields and deterministic order. Before formatting, the CLI replaces the private storage metric ID with the configured public metricId in `metricId`. It publishes an M3-specific serialized signal-ID tuple by prepending the unique `sourceId` and replacing only the private metric tuple item: a percentage-change ID is `[sourceId, detectorId, publicMetricId, timestamp, value, changePercent]`, while a threshold ID is `[sourceId, detectorId, threshold, publicMetricId, timestamp, value, changePercent]`. This preserves every detector-configuration tuple item and prevents public IDs from colliding when distinct source groups share a display metric ID and timestamp. Persisted signal IDs remain internal. diagnostics contains zero or more `{ code: string, count: positive integer }` entries, ordered by code.
 - failure is null only for complete output. For partial output it is `{ "sourceId": string, "stage": "fetch" | "pipeline", "code": string }`. For failed output, sources is `[]` and failure is either `{ "sourceId": null, "stage": "usage" | "config" | "selection", "code": string }` or `{ "sourceId": string, "stage": "fetch" | "pipeline", "code": string }`. `usage` covers a missing config path, unknown flag, missing flag value, or nonnumeric option; `config` covers unreadable or invalid YAML, missing environment values, duplicate IDs, and invalid source definitions; `selection` covers an unknown `--source` ID. Codes are stable redacted classifications—`usage_invalid`, `config_unreadable`, `config_invalid`, `environment_missing`, `source_not_found`, `duplicate_timestamp`, `historical_conflict`, `fetch_failed`, or `pipeline_failed`—never provider response, parser, header, or error text.
 
 M3 intentionally uses this explicit partial-completion contract rather than a run-wide transaction. Each individual source pipeline is atomic: Core must persist that source's points and signals in one SQLite transaction, rolling both back if detection or signal persistence fails. Successfully completed source groups may already be committed when a later source fails, no cross-source rollback is attempted, and the nonzero command exit status accompanies partial or failed JSON. Retrying follows the existing idempotent storage behavior. Configuration and selection failures occur before connector or pipeline construction and therefore persist nothing.
@@ -196,17 +199,17 @@ This CLI contract is proposed only. It needs public-API approval before implemen
 
 | ID | Work | Size | Depends on | Completion criteria |
 | --- | --- | --- | --- | --- |
-| TASK-M3-0 | Define and approve the Polymarket public contract | S | — | The source schema, market/outcome selection, value meaning, timestamp/history semantics, and human approval are recorded. |
-| TASK-M3-0b | Define and approve CoinGecko history semantics | S | — | The endpoint, request parameters, horizon, observation-count expectation, timestamp semantics, provider limitations, and human approval are recorded. |
+| TASK-M3-0 | Define and approve the Polymarket public contract | S | — | The source schema, market/outcome selection, value meaning, timestamp/history semantics, normalized-timestamp collision policy, and human approval are recorded. |
+| TASK-M3-0b | Define and approve CoinGecko history semantics | S | — | The endpoint, request parameters, horizon, observation-count expectation, timestamp semantics, provider limitations, normalized-timestamp collision policy, and human approval are recorded. |
 | TASK-M3-1 | Approve M3 design, dependency, config, and CLI contract | S | M3-0, M3-0b | Approvals record the YAML dependency, dedicated M3 database path and persistent metric namespace, exact grouped JSON contract including usage/config/selection/first-source failures, per-source atomicity, partial-failure contract, and confirm no schema change. |
 | TASK-M3-2 | Build config package | M | M3-1 | Parsing, header-only interpolation, schema validation, duplicate-source-ID rejection, output-visible placeholder rejection, and redaction tests pass. |
-| TASK-M3-3 | Build CoinGecko connector | M | M3-1 | Fixture tests cover the approved request/horizon semantics, normalization, UTC buckets, duplicates, diagnostics, and failures. |
-| TASK-M3-4 | Build Polymarket connector | L | M3-1 | Approved API contract and fixtures cover pagination, eligibility filtering, normalization, diagnostics, and failures. |
+| TASK-M3-3 | Build CoinGecko connector | M | M3-1 | Fixture tests cover the approved request/horizon semantics, normalization, UTC buckets, duplicate policy, diagnostics, and failures. |
+| TASK-M3-4 | Build Polymarket connector | L | M3-1 | Approved API contract and fixtures cover pagination, eligibility filtering, normalization, duplicate policy, diagnostics, and failures. |
 | TASK-M3-5 | Build generic REST connector | L | M3-1 | JSON Pointer mapping, same-origin per-hop redirect validation, HTTPS validation, redaction, malformed records, and errors are covered. |
-| TASK-M3-6 | Add approved CLI composition and docs | M | M3-2 through M3-5 | Existing analyze tests stay green; config-run tests cover namespaced persistence, historical conflicts, selection, order, source-atomic rollback, stable complete/partial/failed JSON, public ID projection, usage errors, and redaction. |
+| TASK-M3-6 | Add approved CLI composition and docs | M | M3-2 through M3-5 | Existing analyze tests stay green; config-run tests cover namespaced persistence, historical conflicts, selection, order, source-atomic rollback, stable complete/partial/failed JSON, source-scoped public ID projection, usage errors, and redaction. |
 | TASK-M3-7 | Release readiness | M | M3-6 | Build, tests, typecheck, API/package-boundary review, and approved public smoke tests pass. |
 
-M3-3 through M3-5 can proceed in parallel after approval. No task may change SQLite or shared contracts; if that becomes necessary, implementation stops for a focused proposal.
+M3-3 through M3-5 can proceed in parallel after approval. No task may change the SQLite schema or shared `DataPoint`, `Signal`, `Detector`, or `Connector` contracts. TASK-M3-6 may add the storage-internal transaction boundary needed for Core's approved per-source atomicity, but it must not change that schema or the approved CLI contract; any broader API change stops for a focused proposal.
 
 ## Test strategy and v1.0 release gate
 
@@ -221,9 +224,11 @@ M3-3 through M3-5 can proceed in parallel after approval. No task may change SQL
 - Verify placeholders in output-visible fields are rejected before any output can expose an expanded environment value.
 - Verify hour/day buckets whose UTC end is strictly after the injected current time are omitted; a bucket ending exactly at that time is included.
 - Verify the dedicated M3 database keeps M3 sources independent of CSV data, while storage metric namespaces isolate previous configurations and overlapping configured display metric IDs within M3.
+- Verify that two sources sharing a display metric ID and timestamp still publish distinct source-scoped signal IDs.
 - Verify a revised persisted metric/timestamp value fails with `historical_conflict`, replaces neither the point nor signals, and rolls back only that source.
+- Verify each provider connector applies its approved normalized-timestamp collision policy before Core and never relies on SQLite to discard a duplicate output point.
 - Verify only same-origin validated redirects are followed and configured headers are never sent to a different origin.
-- Verify projected percentage-change and threshold signal IDs preserve their detector configuration while replacing only the private metric ID.
+- Verify projected percentage-change and threshold signal IDs preserve their detector configuration, replace the private metric ID, and include the source ID.
 - Retain M1/M2 regression coverage, especially deterministic IDs and UTC normalization.
 
 M3 can be labeled v1.0 only after every acceptance criterion passes and public contracts are reviewed. npm publishing remains a separate manual action requiring human approval.

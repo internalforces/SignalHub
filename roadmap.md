@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # roadmap.md — Signal Hub Roadmap
 
-_Last updated: 2026-07-30_
+_Last updated: 2026-08-04_
 
 ## Goal
 
