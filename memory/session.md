@@ -35,6 +35,7 @@ Harness Version: 1.1
 
 - [x] Addressed the latest PR #6 design-review findings: canonical provider-identity namespaces, bounded `historyDays` analysis reads, atomic late-backfill rejection, duplicate YAML-key rejection, deliberately non-paginated bounded REST ingestion, and explicit-offset RFC 3339 REST timestamps. No M3 implementation was started.
 - [x] Addressed the final eight PR #6 design-review findings: predecessor-only threshold context, dataset-selecting-header identity, retained display-metric namespaces, safe horizon-increase rejection, finite REST numeric values, nonempty sources, 15-second per-hop deadlines, and 1 MiB/no-alias YAML limits. No M3 implementation was started.
+- [x] Addressed seven additional PR #6 design-review findings: approved-only Core range API, horizon-scoped namespaces without new schema state, strict configuration keys and header names, finite aggregation diagnostics, capped history horizons, and a current M3 approval handoff. No M3 implementation was started.
 - [x] Proactively hardened PR #6's M3 proposal against two likely follow-up findings: public signal IDs now include the unique source namespace when display metric IDs overlap, and each provider contract must define post-normalization duplicate-timestamp handling before Core. The task and release-gate coverage now test both rules.
 - [x] Addressed three further PR #6 findings: M3 now has physical CSV storage isolation, display metric IDs may overlap safely, and the public Signal-ID example uses the actual serialized tuple encoding.
 - [x] Addressed the three follow-up PR #6 findings: revised historical values now fail source-atomically, redirects are same-origin only, and projected signal IDs retain detector configuration.
@@ -77,7 +78,7 @@ Harness Version: 1.1
 ## Next Session: To-Do
 
 1. Obtain approval to upgrade the vulnerable Vitest/Vite development dependencies and resolve ISS-009.
-2. Plan M3 only after a dedicated design proposal and explicit approval for each deferred connector or configuration feature.
+2. Obtain human approval for TASK-M3-0 (Polymarket contract), TASK-M3-0b (CoinGecko contract), and TASK-M3-1 (the M3 public/dependency/Core-range contract) before any M3 implementation.
 
 ## Important Context
 
