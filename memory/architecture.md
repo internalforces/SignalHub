@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Architecture — Signal Hub
 
-_Last updated: 2026-07-30_
+_Last updated: 2026-08-04_
 
 ## System Overview
 
@@ -28,14 +28,15 @@ signal-hub/
 │   └── core/                  # runPipeline(), formatSignals() — the orchestration layer
 └── connectors/
     ├── csv/                   # CsvConnector: raw CSV rows → DataPoint[]
-    └── github/                # GitHubConnector: commit records → daily commit-count DataPoint[]
+    ├── github/                # GitHubConnector: commit records → daily commit-count DataPoint[]
+    └── coingecko/             # CoinGeckoConnector: market-chart prices → DataPoint[]
 ```
 
 ## Data Flow
 
 ```
-CSV file or GitHub commits endpoint
-  → CsvConnector.fetch() / GitHubConnector.fetch()  (raw input → DataPoint[], ISO 8601 UTC timestamps)
+CSV file, GitHub commits endpoint, or CoinGecko market chart
+  → connector.fetch()                  (raw input → DataPoint[], ISO 8601 UTC timestamps)
   → isValidDataPoint() filter       (connector-sdk; drops malformed points)
   → SqliteStorage.dataPoints        (insert + dedupe by `${metricId}::${timestamp}`)
   → per metric: Detector.detect()   (PercentageChangeDetector, ThresholdDetector — stateless)
@@ -56,6 +57,7 @@ CSV file or GitHub commits endpoint
 | MVP scope | Vertical slice only: CSV connector + 2 rule-based detectors + CLI; everything else deferred | 2026-07-27 |
 | Monorepo tooling | pnpm workspaces + Turborepo + per-package `tsc` (no bundler) | 2026-07-27 |
 | GitHub connector | Serial paginated commit ingestion with UTC-day aggregation and transient diagnostics | 2026-07-30 |
+| Focused M3 | CoinGecko connector library only; no CLI, Core, Storage, or schema changes | 2026-08-04 |
 
 ## Architecture Constraints
 
@@ -73,7 +75,10 @@ CSV file or GitHub commits endpoint
 Do not implement without a new plan and human approval:
 
 - Detectors: spike, anomaly, trend classification, change-point detection (ML-like — deferred)
-- Connectors: CoinGecko, Polymarket, generic REST (Phase 3)
+- Connectors: Polymarket and generic REST
 - `config` package: YAML config loader + env interpolation (deferred until a 2nd data source exists)
 - Dashboard, alert system, marketplace, MCP server, distributed/multi-node scheduling
 - Multi-provider LLM explanation (MVP explanation, if ever added, is template-only)
+
+The CoinGecko connector was separately planned and approved as TASK-017. That approval does not
+extend to CLI integration, persistence changes, or the remaining deferred connectors.

@@ -14,8 +14,8 @@ Harness Version: 1.1
 ## Session Info
 
 - **Date**: 2026-08-04
-- **Agent Role**: Reviewer / Documenter
-- **Session Goal**: Address all actionable review feedback on PR #6.
+- **Agent Role**: Planner / Implementer
+- **Session Goal**: Reduce PR #6 to a focused CoinGecko M3 plan, assign TASK-017, and implement it.
 
 ## Previous Session Summary
 
@@ -23,6 +23,7 @@ Harness Version: 1.1
 
 ## Current Work
 
+- [x] TASK-017 — focused CoinGecko connector is complete locally on `codex/m3-design-roadmap`.
 - [x] M2 GitHub connector plan prepared at `docs/2026-07-29-signal-hub-m2-plan.md`.
 - [x] TASK-012 — GitHub Actions CI is complete on `codex/task-012-ci`.
 - [x] Fixed the PR CI build failure by declaring `@types/node` for the workspace and refreshing the lockfile.
@@ -33,6 +34,11 @@ Harness Version: 1.1
 
 ## Completed This Session
 
+- [x] Recorded the project owner's approval to reduce M3 to the CoinGecko connector only.
+- [x] Reduced the M3 plan from 327 lines to 68 lines and deferred YAML, CLI, Core/Storage, Polymarket, and generic REST work.
+- [x] Assigned TASK-017 to Implementer in `tasks/backlog.md` and tracked it through completion.
+- [x] Implemented `@signal-hub/connector-coingecko` with Demo market-chart requests, UTC normalization, deterministic duplicate handling, immutable diagnostics, redacted errors, a 15-second timeout, and a 5 MiB response limit.
+- [x] Added 7 focused tests; root build, all 56 tests, and typecheck pass.
 - [x] Addressed three new PR #6 findings and proactively closed related gaps: removed secret-derived identity hashes in favor of a required nonsecret REST dataset identity, made public signal IDs configuration-identity-scoped, failed non-finite detector output atomically, assigned identity derivation consistently to config, prohibited ambiguous REST URL components, and clarified late-backfill comparison for fetched points inside the active window. No M3 implementation was started.
 - [x] Addressed the latest three PR #6 review findings: froze one run-wide analysis timestamp, removed the obsolete horizon-increase failure, and approved an exact synchronous outer Storage transaction API for source-atomic Core execution. No M3 implementation was started.
 - [x] Addressed the latest PR #6 design-review findings: canonical provider-identity namespaces, bounded `historyDays` analysis reads, atomic late-backfill rejection, duplicate YAML-key rejection, deliberately non-paginated bounded REST ingestion, and explicit-offset RFC 3339 REST timestamps. No M3 implementation was started.
@@ -80,7 +86,8 @@ Harness Version: 1.1
 ## Next Session: To-Do
 
 1. Obtain approval to upgrade the vulnerable Vitest/Vite development dependencies and resolve ISS-009.
-2. Obtain human approval for TASK-M3-0 (Polymarket contract), TASK-M3-0b (CoinGecko contract), and TASK-M3-1 (the M3 public/dependency/Core-range contract) before any M3 implementation.
+2. Review and merge the focused PR #6 changes when ready.
+3. Keep Polymarket, generic REST, YAML configuration, and CLI integration deferred until separately planned and approved.
 
 ## Important Context
 

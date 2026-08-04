@@ -139,14 +139,21 @@ connector tasks should cite the relevant candidate before design starts.
 
 ---
 
-### ADR-008: M3 Pre-Approval Contract Safeguards
+### ADR-008: Focus M3 on the CoinGecko Connector
 
 - **Date**: 2026-08-04
-- **Status**: Proposed
-- **Decided by**: PR #6 review remediation; pending human M3 approval
+- **Status**: Accepted
+- **Decided by**: Project owner
 
-**Context**: The proposed M3 multi-source configuration and CLI contracts were incomplete around source identity, authorization interpolation, open buckets, failure behavior, provider history semantics, redirect safety, signal identity, storage isolation, bounded input, and early-failure cases identified in PR #6 review.
-**Decision**: Isolate M3 persistence in its own fixed SQLite file and use an opaque per-source storage metric namespace that includes a canonical nonsecret provider-identity digest while preserving configured metric IDs only in public output; allow shared display metric IDs but require unique source IDs and retain their history across display-metric renames; require a nonsecret REST `datasetId`, exclude all headers and expanded values from identity derivation, and reject REST URLs with userinfo, query, or fragment components; make `historyDays` (maximum 36,500) part of source identity so every bounded horizon change is accepted and creates an independent history without persistence metadata or a schema change; capture one immutable `analysisNow` per CLI invocation and inject it into every selected connector; bound every source's detector input to its configured horizon plus only the immediate preceding point as threshold context, filter signals to the horizon, and explicitly approve the narrow additive Core `AnalysisWindow`/storage range-query API required to implement that behavior; reject revised values as `historical_conflict` and newly discovered fetched points within the active comparison window as `late_backfill`, without requiring complete refetches; allow whole-value interpolation only in request headers; require closed configuration mappings and case-insensitively unique header names; reject empty source lists, duplicate YAML mapping keys, YAML over 1 MiB, and YAML aliases; treat unbucketed duplicate timestamps as source failures; require every provider contract to define deterministic post-normalization duplicate handling before Core; skip non-finite aggregation results with an `aggregate_overflow` diagnostic and fail non-finite detector or scoring results atomically as `pipeline_failed`; include a bucket that ends exactly at `analysisNow`; permit only manually validated same-origin redirects; make generic REST single-response-only, explicit-offset RFC 3339-only, finite-JSON-number-only, and bounded to 5 MiB/10,000 records; apply a 15-second abort deadline to every HTTP hop and response stream; project public signal IDs with the unique source ID, nonsecret identity digest, and every detector-configuration tuple item while replacing the private metric tuple item; publish an exact grouped JSON contract for complete, partial, and all failed outcomes; make each source pipeline atomic through the exact synchronous `SqliteStorage.transaction<T>(operation: () => T): T` API; and make reviewed, human-approved Polymarket and CoinGecko contracts prerequisites to wider M3 approval.
-**Rationale**: These rules prevent history from differently targeted source configurations being combined, keep secret-derived offline verifiers out of SQLite and public output, prevent rolling-window threshold false positives, bound resource use and detection input, prevent stale or silently replaced values and contradictory signals, keep every successful Signal JSON number finite, avoid public signal-ID collisions between sources or retargeted configurations, protect credentials from cross-origin redirects, and ensure connector behavior and every JSON outcome are approved before implementation.
-**Trade-offs**: M3 planning has two additional approval tasks, introduces a second local database file plus a storage-namespace/output projection layer, approved additive Core range and Storage transaction APIs, range-bounded reads with one predecessor lookup, and per-source transactions; requires operators to maintain a nonsecret REST dataset identity; makes public signal IDs source-and-identity-scoped; starts a separate history for any horizon change; limits generic REST to a single bounded response; restricts YAML features; and intentionally uses explicit partial completion rather than a run-wide transaction.
-**Consequences**: No implementation is authorized. TASK-M3-0, TASK-M3-0b, and TASK-M3-1 must be approved before any deferred M3 connector, configuration, or CLI work begins; configuration, selection, and usage errors must persist nothing and emit only redacted failure classifications.
+**Context**: PR #6 attempted to specify three connectors, YAML configuration, a new CLI surface,
+and new persistence semantics in one milestone. Repeated review expanded the plan without moving
+the project toward executable validation.
+**Decision**: M3 contains only `@signal-hub/connector-coingecko`. It uses the CoinGecko Demo
+`market_chart` price series, adds no external dependency, and does not change the CLI, Core,
+Storage, database schema, or shared contracts. Polymarket, generic REST, and YAML configuration
+remain deferred behind separate plans and approvals.
+**Rationale**: One connector is the smallest useful slice that validates another real external
+time series while preserving the existing package and pipeline boundaries.
+**Trade-offs**: M3 does not yet provide configuration-driven or CLI-accessible multi-source runs.
+**Consequences**: TASK-017 is authorized. Its exact scope and completion criteria live in
+`docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md`.

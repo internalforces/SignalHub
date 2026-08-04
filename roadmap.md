@@ -35,13 +35,13 @@ Full task breakdown: [`docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`](../
 
 - [x] GitHub connector (real-world data validation, per design review Phase 2)
 
-### M3 — v1.0
+### M3 — CoinGecko Connector
 
-- Detailed design and approval gates: [`docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md`](docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md)
-- [ ] CoinGecko connector (design review Phase 3)
-- [ ] Polymarket connector (design review Phase 3)
-- [ ] Generic REST connector with dynamic field mapping (design review Phase 3)
-- [ ] `config` package: YAML config loader + env interpolation (deferred from MVP per design review §1.1(5))
+- Approved focused plan: [`docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md`](docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md)
+- [x] CoinGecko price-series connector package
+
+The Polymarket connector, generic REST connector, and YAML configuration package remain deferred.
+Each requires its own focused plan and human approval.
 
 ### M4 — Local Operations and Reliability (proposed)
 
