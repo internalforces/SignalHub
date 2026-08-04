@@ -33,6 +33,7 @@ Harness Version: 1.1
 
 ## Completed This Session
 
+- [x] Addressed the latest PR #6 design-review findings: canonical provider-identity namespaces, bounded `historyDays` analysis reads, atomic late-backfill rejection, duplicate YAML-key rejection, deliberately non-paginated bounded REST ingestion, and explicit-offset RFC 3339 REST timestamps. No M3 implementation was started.
 - [x] Proactively hardened PR #6's M3 proposal against two likely follow-up findings: public signal IDs now include the unique source namespace when display metric IDs overlap, and each provider contract must define post-normalization duplicate-timestamp handling before Core. The task and release-gate coverage now test both rules.
 - [x] Addressed three further PR #6 findings: M3 now has physical CSV storage isolation, display metric IDs may overlap safely, and the public Signal-ID example uses the actual serialized tuple encoding.
 - [x] Addressed the three follow-up PR #6 findings: revised historical values now fail source-atomically, redirects are same-origin only, and projected signal IDs retain detector configuration.
