@@ -16,9 +16,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 ## Current State
 
 - **Version**: v0.2.0-dev (focused M3 implemented locally; no release performed)
-- **Phase**: M3 complete — the CoinGecko connector adds a second external time-series shape without changing the CLI or pipeline contracts
-- **Next milestone**: Review and merge the focused M3 changes; later connectors require separate approval
-- **Overall health**: 🟢 Good
+- **Phase**: M3 and TASK-018 security maintenance complete locally
+- **Next milestone**: Review and merge the focused M3 and security-maintenance changes; later connectors require separate approval
+- **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
 
@@ -51,6 +51,7 @@ SignalHub/
 | 2026-07-30 | Completed M2 implementation (TASK-011): GitHub commit connector with serial pagination, UTC daily aggregation, transient diagnostics, and a token-free public smoke test |
 | 2026-08-03 | Completed post-merge maintenance: corrected CSV physical-line diagnostics, added a built-CLI smoke test and working quick start, synchronized CLI composition dependencies, and added production dependency auditing to CI |
 | 2026-08-04 | Reduced M3 to TASK-017 and implemented the CoinGecko Demo market-chart connector with deterministic normalization, diagnostics, bounded failures, and 7 tests |
+| 2026-08-04 | Completed TASK-018: upgraded to Vitest 4.1.10, Vite 6.4.3, and esbuild 0.25.12; frozen install, build, 67 tests, typecheck, and full/production audits pass; ISS-009 resolved |
 
 ## Constraints
 

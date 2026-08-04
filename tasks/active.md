@@ -13,7 +13,7 @@ _Last updated: 2026-08-04_
 
 | ID | Task | Owner | Started | Due |
 |----|------|-------|---------|-----|
-| — | (none — TASK-017 CoinGecko connector is complete; see `tasks/completed.md`) | — | — | — |
+| — | (none — TASK-018 is complete; see `tasks/completed.md`) | — | — | — |
 
 ## Task Detail Template
 

@@ -7,13 +7,13 @@ Harness Version: 1.1
 
 # Known Issues — Signal Hub
 
-_Last updated: 2026-08-03_
+_Last updated: 2026-08-04_
 
 ## Active Bugs
 
 | ID | Severity | Description | Found | Owner | Target resolution |
 |----|----------|-------------|-------|-------|-------------------|
-| ISS-009 | High | A full dependency audit reports critical/high vulnerabilities in development-only Vitest/Vite packages. The CI scan gates production dependencies only, which currently have no known vulnerabilities. | 2026-08-03 | Maintainer / Security | Obtain approval for a dependency upgrade, then update Vitest/Vite and validate the workspace. |
+| — | — | — | — | — | — |
 
 ## Technical Debt
 
@@ -34,6 +34,7 @@ _Last updated: 2026-08-03_
 | ISS-006 | README quick-start command did not invoke the built repository CLI | 2026-08-03 | Documented the built CLI entry point and added an executable smoke test |
 | ISS-007 | CI lacked dependency vulnerability scanning | 2026-08-03 | Added a production-dependency audit that fails on high or critical findings |
 | ISS-008 | CSV errors after blank lines reported compressed, rather than physical, line numbers | 2026-08-03 | Preserved source-line indices and added a regression test |
+| ISS-009 | Development-only Vitest 2.1.9 / Vite 5.4.21 dependencies had critical/high audit findings | 2026-08-04 | Upgraded all workspaces to Vitest 4.1.10 and explicit Vite 6.4.3, resolving esbuild 0.25.12; Node 20.19.5/22.22.3, frozen install, build, 67 tests, typecheck, and full/production audits pass with no known vulnerabilities |
 | — | — | — | — |
 
 ## Issue Template
