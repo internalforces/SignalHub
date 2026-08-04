@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # roadmap.md — Signal Hub Roadmap
 
-_Last updated: 2026-07-30_
+_Last updated: 2026-08-04_
 
 ## Goal
 
@@ -35,12 +35,23 @@ Full task breakdown: [`docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`](../
 
 - [x] GitHub connector (real-world data validation, per design review Phase 2)
 
-### M3 — v1.0
+### M3 — CoinGecko Connector
 
-- [ ] CoinGecko connector (design review Phase 3)
-- [ ] Polymarket connector (design review Phase 3)
-- [ ] Generic REST connector with dynamic field mapping (design review Phase 3)
-- [ ] `config` package: YAML config loader + env interpolation (deferred from MVP per design review §1.1(5))
+- Approved focused plan: [`docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md`](docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md)
+- [x] CoinGecko price-series connector package
+
+The Polymarket connector, generic REST connector, and YAML configuration package remain deferred.
+Each requires its own focused plan and human approval.
+
+### M4 — Local Operations and Reliability (proposed)
+
+- [ ] Proposed only: checkpoints/caching, a single-process scheduler, retry and rate-limit policy,
+  and time-aware analysis. A schema and architecture proposal is required before implementation.
+
+### M5 — Consumption and Explanation (proposed)
+
+- [ ] Proposed only: a minimal read-only local API, opt-in alerts, and deterministic template-based
+  explanations. Each external side effect and public interface requires a separate approved plan.
 
 ## Backlog Ideas
 

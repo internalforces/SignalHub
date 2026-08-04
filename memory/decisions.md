@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-07-29_
+_Last updated: 2026-08-04_
 
 ## Template
 
@@ -136,3 +136,24 @@ connector tasks should cite the relevant candidate before design starts.
 **Rationale**: The composition root needs concrete connector, detector, and storage instances; requiring a Core API refactor merely to hide those dependencies would enlarge the public API without improving the current design.
 **Trade-offs**: The CLI package has a wider direct dependency set, so reviews must continue to ensure it does not absorb Core responsibilities.
 **Consequences**: The MVP plan, project summary, and architecture constraints all record the same dependency direction. No source-code or public-interface change is required.
+
+---
+
+### ADR-008: Focus M3 on the CoinGecko Connector
+
+- **Date**: 2026-08-04
+- **Status**: Accepted
+- **Decided by**: Project owner
+
+**Context**: PR #6 attempted to specify three connectors, YAML configuration, a new CLI surface,
+and new persistence semantics in one milestone. Repeated review expanded the plan without moving
+the project toward executable validation.
+**Decision**: M3 contains only `@signal-hub/connector-coingecko`. It uses the CoinGecko Demo
+`market_chart` price series, adds no external dependency, and does not change the CLI, Core,
+Storage, database schema, or shared contracts. Polymarket, generic REST, and YAML configuration
+remain deferred behind separate plans and approvals.
+**Rationale**: One connector is the smallest useful slice that validates another real external
+time series while preserving the existing package and pipeline boundaries.
+**Trade-offs**: M3 does not yet provide configuration-driven or CLI-accessible multi-source runs.
+**Consequences**: TASK-017 is authorized. Its exact scope and completion criteria live in
+`docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md`.

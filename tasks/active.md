@@ -7,13 +7,13 @@ Harness Version: 1.1
 
 # Active Tasks — Signal Hub
 
-_Last updated: 2026-07-30_
+_Last updated: 2026-08-04_
 
 ## In Progress
 
 | ID | Task | Owner | Started | Due |
 |----|------|-------|---------|-----|
-| — | (none — TASK-011 GitHub connector is complete; see `tasks/completed.md`) | — | — | — |
+| — | (none — TASK-017 CoinGecko connector is complete; see `tasks/completed.md`) | — | — | — |
 
 ## Task Detail Template
 
