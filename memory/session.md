@@ -33,6 +33,7 @@ Harness Version: 1.1
 
 ## Completed This Session
 
+- [x] Reviewed the remaining eight unresolved PR #6 findings and revised the M3 proposal: persistent source namespaces, public output projection, source-atomic persistence, exhaustive failed JSON outcomes, CoinGecko pre-approval, duplicate-timestamp policy, exact bucket boundary, and per-hop REST redirect validation. No M3 implementation was authorized or started.
 - [x] Resolved all eight PR #6 design-review findings: unique source metric IDs, header-only full-value interpolation, closed time buckets, exact grouped JSON for complete/partial/configuration/selection outcomes, and a separately approved Polymarket-contract task.
 - [x] Documented the proposed M3 v1.0 design, approval gates, task breakdown, and M4/M5 rough roadmap in `docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md`; no deferred implementation was authorized or started.
 - [x] Reviewed the pasted design draft, confirmed the MVP scope decisions it already made (design review §1)
