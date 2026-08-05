@@ -1,5 +1,7 @@
 # Signal Hub
 
+English | [한국어](docs/README.ko.md)
+
 Signal Hub turns timestamped numeric observations into deterministic, ranked signals.
 It is intended for developers and analysts who want a small local engine for validating
 time-series signal rules without operating a service, scheduler, or dashboard.

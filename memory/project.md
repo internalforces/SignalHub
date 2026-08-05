@@ -56,7 +56,7 @@ SignalHub/
 | 2026-08-05 | Addressed PR #7 follow-up review: synchronized every MVP plan package snippet with Vitest 4.1.10 and explicit Vite 6.4.3 |
 | 2026-08-05 | Merged focused M3 and security maintenance through PRs #6 and #7; documented a proposed M4 limited to TASK-014 windowed analysis |
 | 2026-08-05 | Completed and merged approved M4 TASK-014 through PR #8: deterministic windowed analysis with 17 focused tests; 84 workspace tests pass |
-| 2026-08-05 | Completed TASK-021 on its review branch: reconciled project records and added README, library usage, development guidance, and a verified CSV example |
+| 2026-08-05 | Completed TASK-021 on its review branch: reconciled project records and added English and Korean user guidance, library usage, development guidance, and a verified CSV example |
 
 ## Constraints
 

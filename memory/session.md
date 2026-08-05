@@ -36,6 +36,7 @@ The work was subsequently merged to `main` through PR #8.
 - [x] Expanded `README.md` with purpose, audience, support boundaries, a real CSV/JSON example,
   CLI options, database location, and common input errors.
 - [x] Added `docs/library-usage.md`, `docs/development.md`, and `examples/prices.csv`.
+- [x] Added `docs/README.ko.md` as a Korean user guide and linked it from the main README.
 - [x] Verified documentation examples against built code and passed workspace build, tests,
   type-checking, and dependency audits.
 
@@ -55,6 +56,7 @@ The work was subsequently merged to `main` through PR #8.
 
 - `README.md` is the user entry point. Users no longer need milestone plans or `memory/` files to
   understand the CSV CLI.
+- `docs/README.ko.md` provides the same user-facing scope and CLI guidance in Korean.
 - `docs/library-usage.md` documents GitHub, CoinGecko, and windowed analysis as library-only APIs;
   none is currently wired into the CLI.
 - `docs/development.md` is the contributor entry point for repository structure, commands, tests,
