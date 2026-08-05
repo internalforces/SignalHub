@@ -44,7 +44,7 @@ _Last updated: 2026-08-05_
 
 - **Date**: 2026-07-27
 - **Status**: Accepted
-- **Decided by**: User (design review), formalized into `docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`
+- **Decided by**: User (design review), formalized into `docs/2026-07-27-signal-hub-mvp.md`
 
 **Context**: The original design draft listed 5 connectors (CSV, GitHub, CoinGecko, Polymarket, REST) and 7 detector types (spike, anomaly, trend, volatility, change point, activity, threshold) as MVP — a design review flagged this as overengineering that would delay core-engine validation.
 **Decision**: MVP ships only the CSV connector, `percentage-change` and `threshold` detectors, and a CLI. GitHub is Phase 2; CoinGecko/Polymarket/REST are Phase 3; scheduler/REST API/LLM explainer/alerts/dashboard/marketplace/MCP server are Phase 4+.

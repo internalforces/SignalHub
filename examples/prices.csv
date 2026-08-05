@@ -1,0 +1,4 @@
+metricId,timestamp,value
+demo.price,2026-08-01T00:00:00Z,100
+demo.price,2026-08-02T00:00:00Z,125
+demo.price,2026-08-03T00:00:00Z,100

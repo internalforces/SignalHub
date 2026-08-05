@@ -15,9 +15,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: v0.2.0-dev (M4 implemented locally; no release performed)
-- **Phase**: M4 TASK-014 deterministic windowed analysis complete locally
-- **Next milestone**: Review and merge the focused M4 changes
+- **Version**: v0.2.0-dev (M4 merged; no release performed)
+- **Phase**: M4 TASK-014 merged through PR #8; TASK-021 documentation prepared for review
+- **Next milestone**: Review and merge TASK-021 project-record and user-documentation changes
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -44,7 +44,7 @@ SignalHub/
 
 | Date | Change |
 |------|--------|
-| 2026-07-27 | Signal Hub MVP implementation plan written (`docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`) |
+| 2026-07-27 | Signal Hub MVP implementation plan written (`docs/2026-07-27-signal-hub-mvp.md`) |
 | 2026-07-27 | AI Development Harness v1.1 (Standard tier) initial setup |
 | 2026-07-27 | Surveyed prior project `internalforces/Future-Signal` for reusable engine code; findings in `memory/reuse-candidates.md` |
 | 2026-07-28 | Completed M1 implementation (TASK-001 through TASK-010): pnpm monorepo, contracts, SQLite storage, detectors, CSV connector, Core, and CLI |
@@ -55,7 +55,8 @@ SignalHub/
 | 2026-08-05 | Addressed PR #7 review: removed the stale duplicate M3 proposal and aligned the advertised Node engine range with Vitest 4.1.10 support |
 | 2026-08-05 | Addressed PR #7 follow-up review: synchronized every MVP plan package snippet with Vitest 4.1.10 and explicit Vite 6.4.3 |
 | 2026-08-05 | Merged focused M3 and security maintenance through PRs #6 and #7; documented a proposed M4 limited to TASK-014 windowed analysis |
-| 2026-08-05 | Completed approved M4 TASK-014: deterministic windowed analysis with 17 focused tests; 84 workspace tests pass |
+| 2026-08-05 | Completed and merged approved M4 TASK-014 through PR #8: deterministic windowed analysis with 17 focused tests; 84 workspace tests pass |
+| 2026-08-05 | Completed TASK-021 on its review branch: reconciled project records and added README, library usage, development guidance, and a verified CSV example |
 
 ## Constraints
 

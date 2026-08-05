@@ -18,7 +18,7 @@ Not a full analytics platform, not a distributed system, not an AI system.
 
 ### M1 — MVP (Phase 1 vertical slice)
 
-Full task breakdown: [`docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`](../docs/superpowers/plans/2026-07-27-signal-hub-mvp.md)
+Full task breakdown: [`docs/2026-07-27-signal-hub-mvp.md`](docs/2026-07-27-signal-hub-mvp.md)
 
 - [x] Monorepo & tooling bootstrap (pnpm + Turborepo + tsconfig)
 - [x] Shared types package (`DataPoint`, `Signal`, `Detector`, `Connector`)
@@ -45,8 +45,8 @@ Each requires its own focused plan and human approval.
 
 ### M4 — Deterministic Windowed Analysis
 
-- Completed scope: [`docs/2026-08-05-signal-hub-m4-windowed-analysis.md`](docs/2026-08-05-signal-hub-m4-windowed-analysis.md)
-- [x] TASK-014: added one deterministic `WindowedChangeDetector` to `@signal-hub/analysis`.
+- Merged scope: [`docs/2026-08-05-signal-hub-m4-windowed-analysis.md`](docs/2026-08-05-signal-hub-m4-windowed-analysis.md)
+- [x] TASK-014: added one deterministic `WindowedChangeDetector` to `@signal-hub/analysis` and merged it through PR #8.
 
 M4 does not include scheduling, checkpoints, caching, retries, rate-limit handling, CLI/Core
 integration, or database changes.
@@ -58,7 +58,6 @@ integration, or database changes.
 
 ## Backlog Ideas
 
-- GitHub Actions CI (build + test on PR) — see `tech-stack.md`
 - Scheduler for recurring ingestion (design review Phase 4)
 - Minimal REST API (design review Phase 4)
 - Template-based explanation engine, then LLM adapter (design review Phase 4/5)

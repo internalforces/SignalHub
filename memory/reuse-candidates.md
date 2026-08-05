@@ -24,7 +24,7 @@ _Last updated: 2026-08-05_
 ## How to Use This Document
 
 Before implementing anything in `packages/analysis`, `connectors/*`, or `packages/storage`
-beyond the MVP (Tasks 1-10 in `docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`), check
+beyond the MVP (Tasks 1-10 in `docs/2026-07-27-signal-hub-mvp.md`), check
 whether Future-Signal already solved the same problem. Cite the source file/function in the
 commit message and in `memory/decisions.md` when a candidate is actually ported.
 
@@ -81,7 +81,7 @@ commit message and in `memory/decisions.md` when a candidate is actually ported.
     as Signal Hub's clamp-to-100 formula, but blends a second factor (volume) instead of using
     change alone.
 - **Port target**: this is exactly the `confidence`/`baseline` fields the design review cut
-  from the MVP `Signal` type (see `docs/superpowers/plans/2026-07-27-signal-hub-mvp.md` §1.1(4)
+  from the MVP `Signal` type (see `docs/2026-07-27-signal-hub-mvp.md`
   "Extended fields can be added later"). When that's revisited, this file is the concrete
   reference implementation to port from — don't redesign from scratch.
 
@@ -105,7 +105,7 @@ commit message and in `memory/decisions.md` when a candidate is actually ported.
 - **Maps to**: `connectors/*` — pattern for any connector beyond `CsvConnector` (Task 8)
 - **What's reusable**: Signal Hub's MVP `CsvConnector` **throws on the first malformed row**
   (fail-fast, appropriate for a static, expected-well-formed local file — see
-  `docs/superpowers/plans/2026-07-27-signal-hub-mvp.md` Task 8). Future-Signal's collector
+  `docs/2026-07-27-signal-hub-mvp.md` Task 8). Future-Signal's collector
   instead **skips** malformed/excluded records one at a time, collects a typed reason for each
   skip (`skip_record(event_id, reason, **details)`), and writes the full skip list to a
   side-channel file for later audit — appropriate for a live external API where some fraction

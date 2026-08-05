@@ -16,7 +16,7 @@ Goal: Decompose requirements into concrete tasks and set priorities.
 
 Project: A minimal, deterministic time-series → signal transformation engine (CSV → Core → Detector → Signal → CLI) | Stack: TypeScript / none (Node.js CLI)
 
-Session start order: AGENTS.md → memory/project.md → memory/session.md → tasks/active.md → roadmap.md → docs/superpowers/plans/2026-07-27-signal-hub-mvp.md
+Session start order: AGENTS.md → memory/project.md → memory/session.md → tasks/active.md → roadmap.md → docs/2026-07-27-signal-hub-mvp.md
 
 Output: Task list in tasks/backlog.md format
 

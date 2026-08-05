@@ -1,0 +1,102 @@
+# Development guide
+
+## Prerequisites and setup
+
+Signal Hub supports Node.js `^20.0.0 || ^22.0.0 || >=24.0.0` and pins pnpm 9.7.0 through the
+root manifest.
+
+```bash
+corepack enable
+pnpm install --frozen-lockfile
+```
+
+No environment file, service, or local database setup is required for the test suite. GitHub and
+CoinGecko credentials are needed only when a caller chooses to exercise authenticated live API
+requests.
+
+## Repository structure
+
+```text
+SignalHub/
+├── apps/cli/                 # CSV command-line application
+├── connectors/
+│   ├── csv/                  # strict local CSV input
+│   ├── github/               # UTC daily GitHub commit counts
+│   └── coingecko/            # CoinGecko market-chart prices
+├── packages/
+│   ├── types/                # shared DataPoint, Signal, Detector, Connector contracts
+│   ├── connector-sdk/        # connector validation and contract re-exports
+│   ├── storage/              # SQLite repositories
+│   ├── analysis/             # detectors and scoring
+│   └── core/                 # pipeline orchestration and JSON formatting
+├── docs/                     # user guides and milestone plans
+├── memory/                   # internal project state and decisions
+└── tasks/                    # active, backlog, and completed work records
+```
+
+There are nine buildable workspaces: one CLI app, three connectors, and five shared packages.
+Each workspace compiles independently with TypeScript; Turborepo orders dependency builds.
+
+## Development commands
+
+Run these from the repository root:
+
+```bash
+pnpm build                         # build all 9 workspaces
+pnpm test                          # run all Vitest suites
+pnpm typecheck                     # type-check all workspaces without emitting files
+pnpm audit --prod --audit-level=high
+pnpm audit                         # full dependency audit for maintenance work
+```
+
+To work on one package:
+
+```bash
+pnpm --filter @signal-hub/analysis build
+pnpm --filter @signal-hub/analysis test
+pnpm --filter @signal-hub/analysis typecheck
+pnpm --filter signal-hub test
+```
+
+The CLI package's test command builds its workspace dependencies and its executable first, so it
+also works from a clean checkout. There is currently no configured lint, format, or coverage
+command.
+
+## Test strategy
+
+- Unit tests cover shared contracts, validation, repositories, each detector, scoring, and output
+  formatting.
+- Connector tests mock network requests; normal test runs do not call GitHub or CoinGecko.
+- Core tests use an in-memory SQLite database.
+- CLI tests use temporary directories and real CSV files, including the built executable.
+- Pull-request CI uses Node 20, a frozen install, a production dependency audit, build, tests, and
+  type-checking.
+
+When documentation includes a command or output example, run it against the built code before
+requesting review.
+
+## Package dependency rules
+
+Dependency direction is intentionally one-way:
+
+```text
+connectors/* -> connector-sdk, types
+storage      -> types
+analysis     -> types
+core         -> storage, analysis, connector-sdk, types
+apps/cli     -> core, connectors/csv, analysis, storage, types
+```
+
+- Connectors must never import Core.
+- Storage must never import Analysis.
+- Only Core may import Storage, Analysis, and Connector SDK together.
+- The CLI is the composition root but must not contain pipeline logic.
+- No package outside Storage may access SQLite directly.
+
+These rules are enforced through package manifests and review rather than lint tooling.
+
+## Local data and release status
+
+The CLI creates `data.db` in its current working directory. Tests that use storage must use
+SQLite's `:memory:` path. The CLI and workspace libraries are private and unpublished; any npm
+publish or deployment requires explicit human approval.
