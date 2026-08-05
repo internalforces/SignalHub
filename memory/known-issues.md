@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Known Issues — Signal Hub
 
-_Last updated: 2026-08-04_
+_Last updated: 2026-08-05_
 
 ## Active Bugs
 
@@ -35,6 +35,8 @@ _Last updated: 2026-08-04_
 | ISS-007 | CI lacked dependency vulnerability scanning | 2026-08-03 | Added a production-dependency audit that fails on high or critical findings |
 | ISS-008 | CSV errors after blank lines reported compressed, rather than physical, line numbers | 2026-08-03 | Preserved source-line indices and added a regression test |
 | ISS-009 | Development-only Vitest 2.1.9 / Vite 5.4.21 dependencies had critical/high audit findings | 2026-08-04 | Upgraded all workspaces to Vitest 4.1.10 and explicit Vite 6.4.3, resolving esbuild 0.25.12; Node 20.19.5/22.22.3, frozen install, build, 67 tests, typecheck, and full/production audits pass with no known vulnerabilities |
+| ISS-010 | A stale duplicate M3 roadmap revived deferred Polymarket, REST, YAML, and CLI work beside the approved focused roadmap | 2026-08-05 | Deleted the duplicate proposal; the approved CoinGecko-only roadmap remains the single M3 authority |
+| ISS-011 | The root `>=20` engine range claimed Node 21.x/23.x support that Vitest 4.1.10 excludes | 2026-08-05 | Narrowed the advertised engine and supporting docs to `^20.0.0 || ^22.0.0 || >=24.0.0` |
 | — | — | — | — |
 
 ## Issue Template

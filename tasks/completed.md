@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Completed Tasks — Signal Hub
 
-_Last updated: 2026-08-04_
+_Last updated: 2026-08-05_
 
 | ID | Task | Completed | Owner | Notes |
 |----|------|-----------|-------|-------|
@@ -29,3 +29,4 @@ _Last updated: 2026-08-04_
 | TASK-016 | Post-merge correctness, documentation, and CI hardening | 2026-08-03 | Implementer | Resolved ISS-005 through ISS-008: CSV physical line numbers, executable CLI quick start, documented CLI composition dependencies, and production dependency auditing in CI |
 | TASK-017 | CoinGecko Connector | 2026-08-04 | Implementer | Demo market-chart price ingestion, UTC normalization, deterministic duplicate handling, diagnostics, redacted failures, timeout/body limits, and 7 tests; root checks pass |
 | TASK-018 | Vitest/Vite security upgrade | 2026-08-04 | Implementer | Upgraded all workspaces to Vitest 4.1.10 and Vite 6.4.3 (esbuild 0.25.12); Node 20.19.5/22.22.3, frozen install, build, 67 tests, typecheck, and full/production audits pass; ISS-009 resolved |
+| TASK-019 | Address PR #7 review findings | 2026-08-05 | Implementer | Removed the stale duplicate M3 roadmap, aligned the Node engine range with Vitest 4.1.10, and passed frozen install/build/67 tests/typecheck/audits |

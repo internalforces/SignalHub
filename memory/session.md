@@ -13,9 +13,9 @@ Harness Version: 1.1
 
 ## Session Info
 
-- **Date**: 2026-08-04
+- **Date**: 2026-08-05
 - **Agent Role**: Planner / Implementer
-- **Session Goal**: Execute the approved Vitest/Vite security upgrade, validate the workspace, and resolve ISS-009.
+- **Session Goal**: Address both unresolved PR #7 review findings and validate the workspace.
 
 ## Previous Session Summary
 
@@ -23,6 +23,7 @@ Harness Version: 1.1
 
 ## Current Work
 
+- [x] TASK-019 — PR #7 review findings are addressed locally.
 - [x] TASK-018 — Vitest/Vite security upgrade is complete; ISS-009 is resolved.
 - [x] TASK-017 — focused CoinGecko connector is complete locally on `codex/m3-design-roadmap`.
 - [x] M2 GitHub connector plan prepared at `docs/2026-07-29-signal-hub-m2-plan.md`.
@@ -35,7 +36,10 @@ Harness Version: 1.1
 
 ## Completed This Session
 
-- [x] Upgraded all ten workspace manifests from Vitest ^2.0.5 to ^4.1.10 and declared Vite 6.4.3 explicitly to preserve Node.js >=20 compatibility.
+- [x] Removed the stale duplicate 327-line M3 proposal; the approved focused CoinGecko roadmap remains authoritative.
+- [x] Narrowed the advertised Node engine to `^20.0.0 || ^22.0.0 || >=24.0.0`, matching Vitest 4.1.10 support, and synchronized project documentation.
+- [x] Revalidated on Node 22.22.3: frozen install, all 9 package builds, all 67 tests, all 9 package typechecks, and full/production dependency audits pass.
+- [x] Upgraded all ten workspace manifests from Vitest ^2.0.5 to ^4.1.10 and declared Vite 6.4.3 explicitly while retaining Node 20 support.
 - [x] Refreshed the lockfile to Vitest 4.1.10, Vite 6.4.3, and esbuild 0.25.12 without changing production dependencies or public interfaces.
 - [x] Passed Node 20.19.5 and Node 22.22.3 validation, frozen install, all 9 package builds, all 67 tests, all 9 package typechecks, and both full and production dependency audits with no known vulnerabilities.
 - [x] Moved TASK-018 to `tasks/completed.md`, moved ISS-009 to Resolved, and synchronized project, dependency, decision, backlog, and session status.

@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Project: Signal Hub
 
-_Last updated: 2026-08-04_
+_Last updated: 2026-08-05_
 
 ## Summary
 
@@ -24,7 +24,7 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 | Field | Value |
 |-------|-------|
-| Language | TypeScript (strict, Node.js >=20) |
+| Language | TypeScript (strict, Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`) |
 | Framework | None — plain Node.js CLI |
 | Infrastructure | None yet; npm publish planned, not executed |
 | Repo Structure | Monorepo (pnpm workspaces + Turborepo) |
@@ -52,6 +52,7 @@ SignalHub/
 | 2026-08-03 | Completed post-merge maintenance: corrected CSV physical-line diagnostics, added a built-CLI smoke test and working quick start, synchronized CLI composition dependencies, and added production dependency auditing to CI |
 | 2026-08-04 | Reduced M3 to TASK-017 and implemented the CoinGecko Demo market-chart connector with deterministic normalization, diagnostics, bounded failures, and 7 tests |
 | 2026-08-04 | Completed TASK-018: upgraded to Vitest 4.1.10, Vite 6.4.3, and esbuild 0.25.12; frozen install, build, 67 tests, typecheck, and full/production audits pass; ISS-009 resolved |
+| 2026-08-05 | Addressed PR #7 review: removed the stale duplicate M3 proposal and aligned the advertised Node engine range with Vitest 4.1.10 support |
 
 ## Constraints
 

@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-08-04_
+_Last updated: 2026-08-05_
 
 ## Template
 
@@ -173,7 +173,7 @@ therefore requires human approval under the dependency policy.
 
 **Decision**: Authorize TASK-018 to update Vitest consistently across all workspace manifests and
 refresh its transitive Vite/esbuild stack to compatible patched versions. The implementation must
-preserve Node.js >=20 support and may not change production dependencies or public interfaces.
+retain Node.js 20 support and may not change production dependencies or public interfaces.
 
 **Rationale**: The upgrade removes known test-tool vulnerabilities while keeping the change
 isolated to development tooling.
@@ -185,3 +185,26 @@ workspace build, test, typecheck, frozen-install, and dependency-audit gates are
 4.1.10, Vite 6.4.3, and esbuild 0.25.12. Node 20.19.5 and 22.22.3 validation, frozen
 installation, build, 67 tests, typecheck, and both full and production audits pass, so ISS-009 is
 resolved.
+
+---
+
+### ADR-010: Match the Advertised Node Range to Vitest 4 Support
+
+- **Date**: 2026-08-05
+- **Status**: Accepted
+- **Decided by**: Project owner (PR #7 review resolution)
+
+**Context**: The workspace upgraded to Vitest 4.1.10, whose published Node engine is
+`^20.0.0 || ^22.0.0 || >=24.0.0`, while the root package continued to advertise `>=20`. That
+broader range incorrectly included unsupported Node 21.x and 23.x installations.
+
+**Decision**: Advertise `^20.0.0 || ^22.0.0 || >=24.0.0` as Signal Hub's Node engine range and
+synchronize the project constitution, implementation guidance, plan, and dependency records.
+
+**Rationale**: Package-engine declarations must not promise versions excluded by the test runner's
+own engine constraint. The exact Vitest range retains the already validated Node 20 and 22 lines.
+
+**Trade-offs**: Node 21.x and 23.x users must switch to a supported release line.
+
+**Consequences**: Engine-enforcing installations reject unsupported odd-major versions before the
+toolchain runs. No dependency, production behavior, database schema, or public CLI/API changes.
