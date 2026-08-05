@@ -53,6 +53,7 @@ SignalHub/
 | 2026-08-04 | Reduced M3 to TASK-017 and implemented the CoinGecko Demo market-chart connector with deterministic normalization, diagnostics, bounded failures, and 7 tests |
 | 2026-08-04 | Completed TASK-018: upgraded to Vitest 4.1.10, Vite 6.4.3, and esbuild 0.25.12; frozen install, build, 67 tests, typecheck, and full/production audits pass; ISS-009 resolved |
 | 2026-08-05 | Addressed PR #7 review: removed the stale duplicate M3 proposal and aligned the advertised Node engine range with Vitest 4.1.10 support |
+| 2026-08-05 | Addressed PR #7 follow-up review: synchronized every MVP plan package snippet with Vitest 4.1.10 and explicit Vite 6.4.3 |
 
 ## Constraints
 

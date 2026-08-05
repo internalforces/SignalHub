@@ -12,7 +12,7 @@
 
 - Language: TypeScript strict mode, target ES2022, module/moduleResolution NodeNext, Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`.
 - Package manager: pnpm workspaces (`packageManager: pnpm@9.7.0`), task orchestration via Turborepo.
-- Test runner: Vitest, zero-config, tests live in each package's `tests/` directory; in-memory SQLite (`:memory:`) for storage-touching tests.
+- Test runner: Vitest 4.1.10 with explicit Vite 6.4.3, zero-config, tests live in each package's `tests/` directory; in-memory SQLite (`:memory:`) for storage-touching tests.
 - Signal model uses the simplified shape from the design review (no `confidence`/`baseline` fields): `{ id, metricId, type, score, direction, timestamp, value, changePercent }`.
 - Only two detectors ship in this plan: `percentage-change` and `threshold`. Spike/anomaly/trend/change-point detection are explicitly deferred.
 - No YAML config loader in this phase — the CLI uses flags (`--min-score`, `--threshold`) and sensible defaults. The `config` package and multi-source YAML wiring are deferred until a second data source exists.
@@ -76,9 +76,11 @@ Each package/connector/app follows the same internal shape: `package.json`, `tsc
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
+    "@types/node": "^20.19.43",
     "typescript": "^5.5.4",
     "turbo": "^2.0.9",
-    "vitest": "^2.0.5"
+    "vite": "6.4.3",
+    "vitest": "^4.1.10"
   }
 }
 ```
@@ -206,7 +208,8 @@ git commit -m "chore: bootstrap pnpm/turborepo monorepo"
   },
   "devDependencies": {
     "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "vite": "6.4.3",
+    "vitest": "^4.1.10"
   }
 }
 ```
@@ -352,7 +355,8 @@ git commit -m "feat(types): add DataPoint, Signal, Detector, Connector interface
   },
   "devDependencies": {
     "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "vite": "6.4.3",
+    "vitest": "^4.1.10"
   }
 }
 ```
@@ -478,7 +482,8 @@ git commit -m "feat(connector-sdk): add isValidDataPoint validation"
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",
     "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "vite": "6.4.3",
+    "vitest": "^4.1.10"
   }
 }
 ```
@@ -716,7 +721,8 @@ git commit -m "feat(storage): add SqliteStorage with data point and signal repos
   },
   "devDependencies": {
     "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "vite": "6.4.3",
+    "vitest": "^4.1.10"
   }
 }
 ```
@@ -1116,7 +1122,8 @@ git commit -m "feat(analysis): add scoreSignals and package entrypoint"
   },
   "devDependencies": {
     "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "vite": "6.4.3",
+    "vitest": "^4.1.10"
   }
 }
 ```
@@ -1321,7 +1328,8 @@ git commit -m "feat(connector-csv): add CsvConnector"
   },
   "devDependencies": {
     "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "vite": "6.4.3",
+    "vitest": "^4.1.10"
   }
 }
 ```
@@ -1555,7 +1563,8 @@ git commit -m "feat(core): add runPipeline and formatSignals"
   },
   "devDependencies": {
     "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "vite": "6.4.3",
+    "vitest": "^4.1.10"
   }
 }
 ```

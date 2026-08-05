@@ -13,7 +13,7 @@ _Last updated: 2026-08-05_
 
 | ID | Task | Owner | Started | Due |
 |----|------|-------|---------|-----|
-| — | (none — TASK-019 is complete; see `tasks/completed.md`) | — | — | — |
+| — | (none — TASK-020 is complete; see `tasks/completed.md`) | — | — | — |
 
 ## Task Detail Template
 

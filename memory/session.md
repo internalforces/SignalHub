@@ -15,7 +15,7 @@ Harness Version: 1.1
 
 - **Date**: 2026-08-05
 - **Agent Role**: Planner / Implementer
-- **Session Goal**: Address both unresolved PR #7 review findings and validate the workspace.
+- **Session Goal**: Address PR #7 review findings, validate the workspace, and publish the fixes.
 
 ## Previous Session Summary
 
@@ -23,6 +23,7 @@ Harness Version: 1.1
 
 ## Current Work
 
+- [x] TASK-020 — PR #7 follow-up plan-snippet finding is addressed locally.
 - [x] TASK-019 — PR #7 review findings are addressed locally.
 - [x] TASK-018 — Vitest/Vite security upgrade is complete; ISS-009 is resolved.
 - [x] TASK-017 — focused CoinGecko connector is complete locally on `codex/m3-design-roadmap`.
@@ -36,6 +37,8 @@ Harness Version: 1.1
 
 ## Completed This Session
 
+- [x] Updated all eight MVP plan package snippets from Vitest ^2.0.5 to Vitest ^4.1.10 with explicit Vite 6.4.3; the root snippet also includes the required Node type definitions.
+- [x] Validated all 17 JSON snippets, frozen installation, 9 package builds, 67 tests, and 9 package typechecks after the follow-up review fix.
 - [x] Removed the stale duplicate 327-line M3 proposal; the approved focused CoinGecko roadmap remains authoritative.
 - [x] Narrowed the advertised Node engine to `^20.0.0 || ^22.0.0 || >=24.0.0`, matching Vitest 4.1.10 support, and synchronized project documentation.
 - [x] Revalidated on Node 22.22.3: frozen install, all 9 package builds, all 67 tests, all 9 package typechecks, and full/production dependency audits pass.
@@ -94,6 +97,7 @@ Harness Version: 1.1
 - Recorded ADR-006 for M2's aggregation and diagnostics choices.
 - Recorded ADR-007 for CLI composition dependencies.
 - ADR-009 authorized the coordinated Vitest/Vite upgrade. TASK-018 completed successfully and ISS-009 is resolved; full and production audits report no known vulnerabilities.
+- ISS-012 records the resolved stale test-stack snippets found by the PR #7 follow-up review.
 
 ## Next Session: To-Do
 
