@@ -13,9 +13,9 @@ Harness Version: 1.1
 
 ## Session Info
 
-- **Date**: 2026-08-04
+- **Date**: 2026-08-05
 - **Agent Role**: Planner / Implementer
-- **Session Goal**: Reduce PR #6 to a focused CoinGecko M3 plan, assign TASK-017, and implement it.
+- **Session Goal**: Address PR #7 review findings, validate the workspace, and publish the fixes.
 
 ## Previous Session Summary
 
@@ -23,6 +23,9 @@ Harness Version: 1.1
 
 ## Current Work
 
+- [x] TASK-020 — PR #7 follow-up plan-snippet finding is addressed locally.
+- [x] TASK-019 — PR #7 review findings are addressed locally.
+- [x] TASK-018 — Vitest/Vite security upgrade is complete; ISS-009 is resolved.
 - [x] TASK-017 — focused CoinGecko connector is complete locally on `codex/m3-design-roadmap`.
 - [x] M2 GitHub connector plan prepared at `docs/2026-07-29-signal-hub-m2-plan.md`.
 - [x] TASK-012 — GitHub Actions CI is complete on `codex/task-012-ci`.
@@ -34,6 +37,18 @@ Harness Version: 1.1
 
 ## Completed This Session
 
+- [x] Updated all eight MVP plan package snippets from Vitest ^2.0.5 to Vitest ^4.1.10 with explicit Vite 6.4.3; the root snippet also includes the required Node type definitions.
+- [x] Validated all 17 JSON snippets, frozen installation, 9 package builds, 67 tests, and 9 package typechecks after the follow-up review fix.
+- [x] Removed the stale duplicate 327-line M3 proposal; the approved focused CoinGecko roadmap remains authoritative.
+- [x] Narrowed the advertised Node engine to `^20.0.0 || ^22.0.0 || >=24.0.0`, matching Vitest 4.1.10 support, and synchronized project documentation.
+- [x] Revalidated on Node 22.22.3: frozen install, all 9 package builds, all 67 tests, all 9 package typechecks, and full/production dependency audits pass.
+- [x] Upgraded all ten workspace manifests from Vitest ^2.0.5 to ^4.1.10 and declared Vite 6.4.3 explicitly while retaining Node 20 support.
+- [x] Refreshed the lockfile to Vitest 4.1.10, Vite 6.4.3, and esbuild 0.25.12 without changing production dependencies or public interfaces.
+- [x] Passed Node 20.19.5 and Node 22.22.3 validation, frozen install, all 9 package builds, all 67 tests, all 9 package typechecks, and both full and production dependency audits with no known vulnerabilities.
+- [x] Moved TASK-018 to `tasks/completed.md`, moved ISS-009 to Resolved, and synchronized project, dependency, decision, backlog, and session status.
+- [x] Recorded the project owner's approval for TASK-018 to upgrade Vitest/Vite and resolve ISS-009.
+- [x] Defined the patched-version floor and completion gates: Vitest >=3.2.6, Vite >=6.4.3, esbuild >=0.25.0, frozen install, build, tests, typecheck, and a clean high/critical audit for the affected stack.
+- [x] Synchronized `memory/project.md`, `tasks/active.md`, `tasks/backlog.md`, `memory/known-issues.md`, `memory/decisions.md`, and `dependencies.md`; no dependency files were changed in this documentation-only step.
 - [x] Recorded the project owner's approval to reduce M3 to the CoinGecko connector only.
 - [x] Reduced the M3 plan from 327 lines to 68 lines and deferred YAML, CLI, Core/Storage, Polymarket, and generic REST work.
 - [x] Assigned TASK-017 to Implementer in `tasks/backlog.md` and tracked it through completion.
@@ -83,13 +98,13 @@ Harness Version: 1.1
 - See `memory/known-issues.md` ISS-004 for the resolved CI type-resolution failure.
 - Recorded ADR-006 for M2's aggregation and diagnostics choices.
 - Recorded ADR-007 for CLI composition dependencies.
-- Full dependency audit reported critical/high development-only Vitest/Vite vulnerabilities; tracked as ISS-009 because dependency upgrades remain out of this task's approved scope.
+- ADR-009 authorized the coordinated Vitest/Vite upgrade. TASK-018 completed successfully and ISS-009 is resolved; full and production audits report no known vulnerabilities.
+- ISS-012 records the resolved stale test-stack snippets found by the PR #7 follow-up review.
 
 ## Next Session: To-Do
 
-1. Obtain approval to upgrade the vulnerable Vitest/Vite development dependencies and resolve ISS-009.
-2. Review and merge the focused PR #6 changes when ready.
-3. Keep Polymarket, generic REST, YAML configuration, and CLI integration deferred until separately planned and approved.
+1. Review and merge the focused PR #6 and TASK-018 changes when ready.
+2. Keep Polymarket, generic REST, YAML configuration, and CLI integration deferred until separately planned and approved.
 
 ## Important Context
 

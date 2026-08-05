@@ -7,13 +7,13 @@ Harness Version: 1.1
 
 # Known Issues — Signal Hub
 
-_Last updated: 2026-08-03_
+_Last updated: 2026-08-05_
 
 ## Active Bugs
 
 | ID | Severity | Description | Found | Owner | Target resolution |
 |----|----------|-------------|-------|-------|-------------------|
-| ISS-009 | High | A full dependency audit reports critical/high vulnerabilities in development-only Vitest/Vite packages. The CI scan gates production dependencies only, which currently have no known vulnerabilities. | 2026-08-03 | Maintainer / Security | Obtain approval for a dependency upgrade, then update Vitest/Vite and validate the workspace. |
+| — | — | — | — | — | — |
 
 ## Technical Debt
 
@@ -34,6 +34,10 @@ _Last updated: 2026-08-03_
 | ISS-006 | README quick-start command did not invoke the built repository CLI | 2026-08-03 | Documented the built CLI entry point and added an executable smoke test |
 | ISS-007 | CI lacked dependency vulnerability scanning | 2026-08-03 | Added a production-dependency audit that fails on high or critical findings |
 | ISS-008 | CSV errors after blank lines reported compressed, rather than physical, line numbers | 2026-08-03 | Preserved source-line indices and added a regression test |
+| ISS-009 | Development-only Vitest 2.1.9 / Vite 5.4.21 dependencies had critical/high audit findings | 2026-08-04 | Upgraded all workspaces to Vitest 4.1.10 and explicit Vite 6.4.3, resolving esbuild 0.25.12; Node 20.19.5/22.22.3, frozen install, build, 67 tests, typecheck, and full/production audits pass with no known vulnerabilities |
+| ISS-010 | A stale duplicate M3 roadmap revived deferred Polymarket, REST, YAML, and CLI work beside the approved focused roadmap | 2026-08-05 | Deleted the duplicate proposal; the approved CoinGecko-only roadmap remains the single M3 authority |
+| ISS-011 | The root `>=20` engine range claimed Node 21.x/23.x support that Vitest 4.1.10 excludes | 2026-08-05 | Narrowed the advertised engine and supporting docs to `^20.0.0 || ^22.0.0 || >=24.0.0` |
+| ISS-012 | The authoritative MVP plan still showed Vitest 2 package snippets without the explicit patched Vite peer | 2026-08-05 | Updated all eight package snippets to Vitest 4.1.10 and Vite 6.4.3; synchronized the root Node type dependency |
 | — | — | — | — |
 
 ## Issue Template

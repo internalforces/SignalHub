@@ -10,7 +10,7 @@ Harness Version: 1.1
 > This is the project constitution. Every AI agent must read this file first.
 > In case of conflict, this document takes highest priority.
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-08-05_
 
 ---
 
@@ -20,7 +20,7 @@ _Last updated: 2026-07-27_
 |-------|-------|
 | Project | Signal Hub |
 | Goal | A minimal, deterministic time-series → signal transformation engine: `CSV → Core → Detector → Signal → CLI` |
-| Language | TypeScript (strict, Node.js >=20, ESM/NodeNext) |
+| Language | TypeScript (strict, Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`, ESM/NodeNext) |
 | Framework | None — plain Node.js CLI, no web framework |
 | Database | SQLite (`better-sqlite3`) |
 | Infrastructure | None yet locally deployed; `signal-hub` CLI package is planned for npm publish (not yet executed) |

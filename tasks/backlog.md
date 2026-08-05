@@ -29,6 +29,7 @@ _Last updated: 2026-08-04_
 | TASK-013 | Polymarket Connector | Low | M3 | L | Not yet planned — port the Gamma API client from `internalforces/Future-Signal`'s `backend/app/core/collector.py`; see `memory/reuse-candidates.md` #6 |
 | TASK-014 | Windowed change detector (24h/7d style, not just consecutive-point) | Low | M2/M3 | M | Not yet planned — port `compute_change_for_window` from Future-Signal; see `memory/reuse-candidates.md` #2 |
 | TASK-017 | CoinGecko Connector (`@signal-hub/connector-coingecko`) | High | M3 | M | **Assigned: Implementer. Completed 2026-08-04.** Scope and DoD: `docs/2026-08-03-signal-hub-m3-v1-and-future-roadmap.md` |
+| TASK-018 | Upgrade Vitest/Vite and resolve ISS-009 | High | Security maintenance | S | **Completed 2026-08-04.** Vitest 4.1.10, Vite 6.4.3, and esbuild 0.25.12 verified; ISS-009 resolved |
 
 ## Size Reference
 

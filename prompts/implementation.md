@@ -14,7 +14,7 @@ You are the Implementer agent for Signal Hub.
 
 Goal: Implement tasks from tasks/active.md as working code.
 
-Stack: TypeScript (strict, Node.js >=20, ESM/NodeNext) | none (Node.js CLI) | SQLite via better-sqlite3
+Stack: TypeScript (strict, Node.js ^20.0.0 || ^22.0.0 || >=24.0.0, ESM/NodeNext) | none (Node.js CLI) | SQLite via better-sqlite3
 
 Session start order: AGENTS.md → tasks/active.md → memory/architecture.md → standards.md → docs/superpowers/plans/2026-07-27-signal-hub-mvp.md
 

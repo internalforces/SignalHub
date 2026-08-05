@@ -2,7 +2,7 @@
   "name": "signal-hub",
   "private": true,
   "packageManager": "pnpm@9.7.0",
-  "engines": { "node": ">=20" },
+  "engines": { "node": "^20.0.0 || ^22.0.0 || >=24.0.0" },
   "scripts": {
     "build": "turbo run build",
     "test": "turbo run test",
@@ -12,6 +12,7 @@
     "@types/node": "^20.19.43",
     "typescript": "^5.5.4",
     "turbo": "^2.0.9",
-    "vitest": "^2.0.5"
+    "vite": "6.4.3",
+    "vitest": "^4.1.10"
   }
 }

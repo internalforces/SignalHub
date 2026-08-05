@@ -43,7 +43,7 @@ Scope should be the package name without the `@signal-hub/` prefix, e.g. `feat(s
 
 - No hardcoded secrets in code
 - Validate all inputs (this is `@signal-hub/connector-sdk`'s `isValidDataPoint`'s job — Core must not skip it)
-- Regular dependency vulnerability scanning (not yet automated — add via GitHub Actions when CI is set up)
+- Pull-request CI audits production dependencies at high severity; dependency-maintenance tasks must also run a full audit before completion
 
 ## Documentation Standards
 
