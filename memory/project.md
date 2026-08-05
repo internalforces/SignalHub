@@ -15,9 +15,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: v0.2.0-dev (focused M3 implemented locally; no release performed)
-- **Phase**: M3 and TASK-018 security maintenance complete locally
-- **Next milestone**: Review and merge the focused M3 and security-maintenance changes; later connectors require separate approval
+- **Version**: v0.2.0-dev (M4 implemented locally; no release performed)
+- **Phase**: M4 TASK-014 deterministic windowed analysis complete locally
+- **Next milestone**: Review and merge the focused M4 changes
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -54,6 +54,8 @@ SignalHub/
 | 2026-08-04 | Completed TASK-018: upgraded to Vitest 4.1.10, Vite 6.4.3, and esbuild 0.25.12; frozen install, build, 67 tests, typecheck, and full/production audits pass; ISS-009 resolved |
 | 2026-08-05 | Addressed PR #7 review: removed the stale duplicate M3 proposal and aligned the advertised Node engine range with Vitest 4.1.10 support |
 | 2026-08-05 | Addressed PR #7 follow-up review: synchronized every MVP plan package snippet with Vitest 4.1.10 and explicit Vite 6.4.3 |
+| 2026-08-05 | Merged focused M3 and security maintenance through PRs #6 and #7; documented a proposed M4 limited to TASK-014 windowed analysis |
+| 2026-08-05 | Completed approved M4 TASK-014: deterministic windowed analysis with 17 focused tests; 84 workspace tests pass |
 
 ## Constraints
 
@@ -61,5 +63,6 @@ SignalHub/
 - No YAML config loader (`config` package) without a separate focused plan and human approval
 - GitHub commit ingestion is available as a connector package; CLI integration remains deferred because it changes the public CLI surface
 - CoinGecko ingestion is available as a library package; Polymarket, generic REST, and CoinGecko CLI integration remain deferred
+- Windowed change analysis is available from `@signal-hub/analysis`; Core and CLI integration remain outside M4
 - Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, analysis, storage, types` (CLI composes these dependencies but contains no pipeline logic)
 - Timestamps must be normalized to ISO 8601 UTC by connectors before returning `DataPoint`s

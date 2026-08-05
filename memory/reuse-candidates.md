@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Reuse Candidates — internalforces/Future-Signal → Signal Hub
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-08-05_
 
 ## Source
 
@@ -51,6 +51,7 @@ commit message and in `memory/decisions.md` when a candidate is actually ported.
   will be polled repeatedly) — add a cooldown parameter to detectors or to `runPipeline`.
 
 ### 2. Windowed change calculation (nearest-snapshot-at-or-before boundary)
+- **Status**: Ported to `WindowedChangeDetector` in TASK-014 on 2026-08-05.
 - **Source**: `backend/app/core/snapshot_metrics.py` — `compute_change_for_window`
 - **Maps to**: `packages/analysis` — a generalization of `PercentageChangeDetector` (Task 5)
 - **What's reusable**: Signal Hub's MVP `PercentageChangeDetector` only compares **consecutive**
@@ -63,9 +64,9 @@ commit message and in `memory/decisions.md` when a candidate is actually ported.
   reference = max(candidates, by timestamp)   // most recent one still before the boundary
   return reference ? current.value - reference.value : null   // null, never a guessed number
   ```
-- **Port target**: worth adding as a `WindowedChangeDetector` (or a `window` option on
-  `PercentageChangeDetector`) once Signal Hub connectors produce irregularly-spaced data
-  (GitHub polling, M2) rather than the evenly-spaced rows a CSV typically has.
+- **Port result**: added as a separate `WindowedChangeDetector` with an explicit millisecond
+  window and optional minimum change. It remains a stateless analysis-library feature; Core and
+  CLI composition were deliberately unchanged.
 
 ### 3. Confidence level / heat score composite scoring
 - **Source**: `backend/app/core/snapshot_metrics.py` — `compute_confidence_level`,

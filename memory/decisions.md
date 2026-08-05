@@ -208,3 +208,29 @@ own engine constraint. The exact Vitest range retains the already validated Node
 
 **Consequences**: Engine-enforcing installations reject unsupported odd-major versions before the
 toolchain runs. No dependency, production behavior, database schema, or public CLI/API changes.
+
+---
+
+### ADR-011: Focus M4 on Deterministic Windowed Analysis
+
+- **Date**: 2026-08-05
+- **Status**: Accepted
+- **Decided by**: Project owner
+
+**Context**: Consecutive-point percentage changes do not represent fixed 24-hour or 7-day changes
+when connector observations arrive at irregular intervals. Future-Signal already used the newest
+snapshot at or before a time boundary to avoid fabricating missing history.
+
+**Decision**: Add a separate `WindowedChangeDetector(windowMs, minChangePercent?)` to
+`@signal-hub/analysis`. The latest series point defines both the current value and the boundary;
+the newest same-metric point at or before that boundary is the reference. The detector returns at
+most one signal and includes its configuration and selected inputs in a deterministic ID.
+
+**Rationale**: A stateless detector is the smallest change that adds correct fixed-window analysis
+without introducing wall-clock dependence, persistence state, or orchestration changes.
+
+**Trade-offs**: Callers must supply sufficient history and compose the detector themselves; M4
+does not expose it through Core defaults or the CLI.
+
+**Consequences**: TASK-014 is complete. No shared type, database schema, dependency, connector,
+Core, or CLI changes were made.

@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Architecture — Signal Hub
 
-_Last updated: 2026-08-04_
+_Last updated: 2026-08-05_
 
 ## System Overview
 
@@ -24,7 +24,7 @@ signal-hub/
 │   ├── types/                # DataPoint, Signal, Detector, Connector interfaces (the shared contract)
 │   ├── connector-sdk/        # isValidDataPoint() + re-exported Connector/DataPoint
 │   ├── storage/               # SqliteStorage: DataPointRepository, SignalRepository
-│   ├── analysis/              # PercentageChangeDetector, ThresholdDetector, scoreSignals
+│   ├── analysis/              # PercentageChangeDetector, ThresholdDetector, WindowedChangeDetector, scoreSignals
 │   └── core/                  # runPipeline(), formatSignals() — the orchestration layer
 └── connectors/
     ├── csv/                   # CsvConnector: raw CSV rows → DataPoint[]
@@ -39,7 +39,7 @@ CSV file, GitHub commits endpoint, or CoinGecko market chart
   → connector.fetch()                  (raw input → DataPoint[], ISO 8601 UTC timestamps)
   → isValidDataPoint() filter       (connector-sdk; drops malformed points)
   → SqliteStorage.dataPoints        (insert + dedupe by `${metricId}::${timestamp}`)
-  → per metric: Detector.detect()   (PercentageChangeDetector, ThresholdDetector — stateless)
+  → per metric: Detector.detect()   (percentage, threshold, or windowed change — stateless)
   → scoreSignals()                  (score = clamp(round(abs(changePercent) * 2), 0, 100); deterministic signal IDs)
   → filter by minScore, sort desc
   → SqliteStorage.signals           (persist)
@@ -58,6 +58,7 @@ CSV file, GitHub commits endpoint, or CoinGecko market chart
 | Monorepo tooling | pnpm workspaces + Turborepo + per-package `tsc` (no bundler) | 2026-07-27 |
 | GitHub connector | Serial paginated commit ingestion with UTC-day aggregation and transient diagnostics | 2026-07-30 |
 | Focused M3 | CoinGecko connector library only; no CLI, Core, Storage, or schema changes | 2026-08-04 |
+| Focused M4 | Deterministic windowed detector library only; no CLI, Core, Storage, or schema changes | 2026-08-05 |
 
 ## Architecture Constraints
 
