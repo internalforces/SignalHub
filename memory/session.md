@@ -14,8 +14,8 @@ Harness Version: 1.1
 ## Session Info
 
 - **Date**: 2026-08-05
-- **Agent Role**: Planner / Implementer
-- **Session Goal**: Address PR #7 review findings, validate the workspace, and publish the fixes.
+- **Agent Role**: Implementer
+- **Session Goal**: Implement and verify the approved, narrowly scoped M4 windowed-analysis detector.
 
 ## Previous Session Summary
 
@@ -23,6 +23,7 @@ Harness Version: 1.1
 
 ## Current Work
 
+- [x] TASK-014 — approved M4 deterministic windowed analysis is implemented and verified.
 - [x] TASK-020 — PR #7 follow-up plan-snippet finding is addressed locally.
 - [x] TASK-019 — PR #7 review findings are addressed locally.
 - [x] TASK-018 — Vitest/Vite security upgrade is complete; ISS-009 is resolved.
@@ -37,6 +38,12 @@ Harness Version: 1.1
 
 ## Completed This Session
 
+- [x] Recorded the project owner's approval to perform M4 within the TASK-014 scope.
+- [x] Added and exported `WindowedChangeDetector(windowMs, minChangePercent?)` with deterministic boundary lookup and signal identity.
+- [x] Added 17 focused tests covering 24-hour, 7-day, custom, irregular, unsorted, insufficient-history, zero-reference, unchanged, minimum-change, scoring, validation, and repeatability behavior.
+- [x] Passed all 9 package builds, all 84 workspace tests, and all 9 package typechecks.
+- [x] Moved TASK-014 to `tasks/completed.md` and synchronized the M4 scope, roadmap, project, architecture, reuse, and decision records.
+- [x] Added the concise M4 scope document and synchronized the roadmap, backlog, and project state without changing code or public interfaces.
 - [x] Updated all eight MVP plan package snippets from Vitest ^2.0.5 to Vitest ^4.1.10 with explicit Vite 6.4.3; the root snippet also includes the required Node type definitions.
 - [x] Validated all 17 JSON snippets, frozen installation, 9 package builds, 67 tests, and 9 package typechecks after the follow-up review fix.
 - [x] Removed the stale duplicate 327-line M3 proposal; the approved focused CoinGecko roadmap remains authoritative.
@@ -100,14 +107,16 @@ Harness Version: 1.1
 - Recorded ADR-007 for CLI composition dependencies.
 - ADR-009 authorized the coordinated Vitest/Vite upgrade. TASK-018 completed successfully and ISS-009 is resolved; full and production audits report no known vulnerabilities.
 - ISS-012 records the resolved stale test-stack snippets found by the PR #7 follow-up review.
+- ADR-011 records the approved M4 boundary-selection algorithm, stateless public API, and deliberate lack of Core/CLI integration.
 
 ## Next Session: To-Do
 
-1. Review and merge the focused PR #6 and TASK-018 changes when ready.
-2. Keep Polymarket, generic REST, YAML configuration, and CLI integration deferred until separately planned and approved.
+1. Review and merge the focused M4 TASK-014 changes when ready.
+2. Keep scheduling, checkpoints, caching, retries, rate-limit handling, Polymarket, generic REST,
+   YAML configuration, and CLI integration deferred.
 
 ## Important Context
 
 - The implementation plan (`docs/2026-07-27-signal-hub-mvp.md`) is the single source of truth for exact file paths, code, and test commands for Tasks 1-10 — this Harness's `memory/` and `tasks/` files summarize and index it, they don't replace it. Some older Harness references retain the former `docs/superpowers/plans/` path.
 - The user's original design draft (pasted in chat, not saved as a separate file) already did most of the MVP-vs-DEFER scoping decisions; `memory/architecture.md`'s DEFER list and `roadmap.md`'s "Out of Scope" section are both taken directly from it.
-- `internalforces/Future-Signal` is the user's own prior project (same domain: signal detection over time-series-like data, different stack: Python/FastAPI/PostgreSQL). It was cloned read-only into the session scratchpad for inspection, not added to this repo. `memory/reuse-candidates.md` is the index of what's worth porting and when — nothing from it has been ported yet.
+- `internalforces/Future-Signal` is the user's own prior project (same domain: signal detection over time-series-like data, different stack: Python/FastAPI/PostgreSQL). It was cloned read-only into the session scratchpad for inspection, not added to this repo. `memory/reuse-candidates.md` is the reuse index; candidate #2's boundary lookup was reimplemented in TypeScript for TASK-014.

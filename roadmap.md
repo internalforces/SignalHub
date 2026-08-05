@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # roadmap.md — Signal Hub Roadmap
 
-_Last updated: 2026-08-04_
+_Last updated: 2026-08-05_
 
 ## Goal
 
@@ -43,10 +43,13 @@ Full task breakdown: [`docs/superpowers/plans/2026-07-27-signal-hub-mvp.md`](../
 The Polymarket connector, generic REST connector, and YAML configuration package remain deferred.
 Each requires its own focused plan and human approval.
 
-### M4 — Local Operations and Reliability (proposed)
+### M4 — Deterministic Windowed Analysis
 
-- [ ] Proposed only: checkpoints/caching, a single-process scheduler, retry and rate-limit policy,
-  and time-aware analysis. A schema and architecture proposal is required before implementation.
+- Completed scope: [`docs/2026-08-05-signal-hub-m4-windowed-analysis.md`](docs/2026-08-05-signal-hub-m4-windowed-analysis.md)
+- [x] TASK-014: added one deterministic `WindowedChangeDetector` to `@signal-hub/analysis`.
+
+M4 does not include scheduling, checkpoints, caching, retries, rate-limit handling, CLI/Core
+integration, or database changes.
 
 ### M5 — Consumption and Explanation (proposed)
 
