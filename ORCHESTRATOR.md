@@ -73,6 +73,6 @@ After deploy: update memory/project.md version, clean up tasks/completed.md
 |-----------|--------|
 | New external dependency | Security and license review |
 | DB schema change | Irreversible change |
-| `npm publish` of the `signal-hub` package | Final responsibility stays with humans |
+| `npm publish` of the public CLI package, currently `csv-to-signal` | Final responsibility stays with humans |
 | Any item from the DEFER list (see `memory/architecture.md`) | Scope creep risk flagged explicitly in the design review |
-| Public API interface change (`DataPoint`, `Signal`, `Detector`, `Connector`, CLI flags) | Backward compatibility impact |
+| Public API interface change (`DataPoint`, `Signal`, `Detector`, `Connector`, CLI package/executable name or flags) | Backward compatibility impact |

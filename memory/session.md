@@ -65,6 +65,9 @@ owner approved all implementation gates and selected Apache-2.0.
   release checker, and user documentation; 10 focused CLI tests pass.
 - [x] Passed the full `pnpm release:check`: build, 87 tests, typecheck, both audits, exact four-file
   package inspection, isolated install, `csv-to-signal` execution, and error paths.
+- [x] Addressed the independent review's P2 governance finding by making `AGENTS.md` and
+  `ORCHESTRATOR.md` name the current public CLI package and cover package/executable renames in the
+  public-interface approval gate.
 
 ## Issues Found / Decisions Made
 

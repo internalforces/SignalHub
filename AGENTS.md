@@ -23,7 +23,7 @@ _Last updated: 2026-08-05_
 | Language | TypeScript (strict, Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`, ESM/NodeNext) |
 | Framework | None — plain Node.js CLI, no web framework |
 | Database | SQLite (`better-sqlite3`) |
-| Infrastructure | None yet locally deployed; `signal-hub` CLI package is planned for npm publish (not yet executed) |
+| Infrastructure | None yet locally deployed; public CLI package `csv-to-signal` is planned for npm publish (not yet executed) |
 | Repo Structure | Monorepo (pnpm workspaces + Turborepo) |
 | Harness Tier | Standard |
 
@@ -59,7 +59,7 @@ Even if the user explicitly requests them, ask for confirmation first:
 - [ ] Committing directly to `main` / `master`
 - [ ] Implementing anything from the DEFER list in `memory/architecture.md` (spike/anomaly/trend/change-point detectors, GitHub/CoinGecko/Polymarket/REST connectors, YAML `config` package, dashboard, alerting, LLM explainer, MCP server, distributed scheduling) without a dedicated follow-up plan and explicit human approval — see the [MVP plan](docs/2026-07-27-signal-hub-mvp.md)
 - [ ] Violating the package dependency direction: connectors may only import `connector-sdk`/`types`; `storage` must never import `analysis`; only `core` may import `storage` + `analysis` + `connector-sdk` together
-- [ ] `npm publish` of the `signal-hub` CLI package (always requires HUMAN APPROVAL — see Release Workflow)
+- [ ] `npm publish` of the public CLI package, currently `csv-to-signal` (always requires HUMAN APPROVAL — see Release Workflow)
 
 ---
 
@@ -70,8 +70,8 @@ Always confirm with the user before proceeding:
 - Adding a new external dependency
 - Changing the database schema
 - Modifying infrastructure configuration
-- Changing an existing public API interface (`DataPoint`, `Signal`, `Detector`, `Connector` shapes, or the CLI's flags/output format)
-- Any deployment, including `npm publish` of the `signal-hub` package
+- Changing an existing public API interface (`DataPoint`, `Signal`, `Detector`, `Connector` shapes, or the CLI's package/executable name, flags, or output format)
+- Any deployment, including `npm publish` of the public CLI package
 
 ---
 
