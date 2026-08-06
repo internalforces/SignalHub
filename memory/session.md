@@ -11,9 +11,8 @@ Harness Version: 1.1
 
 - **Date**: 2026-08-06
 - **Agent Role**: Implementer
-- **Session Goal**: Prepare the approved `csv-to-signal@0.2.1` replacement release after npm
-  rejected the original unscoped package name, without rewriting `v0.2.0` or publishing an
-  unreviewed artifact.
+- **Session Goal**: Complete and record the independently reviewed, explicitly approved
+  `csv-to-signal@0.2.1` npm release.
 
 ## Previous Session Summary
 
@@ -24,8 +23,7 @@ owner approved all implementation gates and selected Apache-2.0.
 ## Current Work
 
 - [x] TASK-022 CLI Release Readiness is complete.
-- [ ] TASK-023 CSV to Signal 0.2.1 Release is in progress on
-  `codex/csv-to-signal-release`; npm publication remains pending.
+- [x] TASK-023 CSV to Signal 0.2.1 Release is complete.
 - [x] PR #10's package-only review finding is fixed and fully revalidated.
 
 ## Completed This Session
@@ -68,6 +66,13 @@ owner approved all implementation gates and selected Apache-2.0.
 - [x] Addressed the independent review's P2 governance finding by making `AGENTS.md` and
   `ORCHESTRATOR.md` name the current public CLI package and cover package/executable renames in the
   public-interface approval gate.
+- [x] Merged PR #11 as `a3a00696d5526ea788199df2c1a3e1ce6a4217e3`, re-ran the full release
+  check from that exact clean commit, and reproduced the approved 8,517-byte artifact and integrity.
+- [x] Received exact-artifact approval, pushed annotated tag `v0.2.1`, published
+  `csv-to-signal@0.2.1`, and confirmed registry integrity, shasum, tarball URL, and `latest: 0.2.1`.
+- [x] Installed `csv-to-signal@0.2.1` in a fresh registry consumer, ran the installed executable
+  against `examples/prices.csv`, verified deterministic JSON, and confirmed `data.db` was created in
+  the consumer working directory.
 
 ## Issues Found / Decisions Made
 
@@ -80,19 +85,18 @@ owner approved all implementation gates and selected Apache-2.0.
 - The project owner explicitly approved push, PR creation, tagging, deployment, and public npm
   publication for the original `signal-hub@0.2.0` artifact; the changed artifact requires renewed
   approval after exact merged verification.
-- npm authentication is valid with security-key 2FA. The changed `csv-to-signal@0.2.1` artifact
-  still requires independent review, merge, exact-tarball verification, and renewed publication
-  approval.
+- npm authentication is valid with security-key 2FA. `csv-to-signal@0.2.1` is publicly available
+  at `https://www.npmjs.com/package/csv-to-signal`.
 - `v0.2.0` exists at `09b0cc9` as the rejected unscoped candidate and must not be moved or deleted.
-- No npm publication or GitHub release occurred.
+- The published 0.2.1 package README retains a pre-release sentence. ISS-018 records this low-impact
+  documentation defect; source text is corrected, but changing the immutable registry artifact
+  requires a separately approved future version.
 
 ## Next Session: To-Do
 
-1. Obtain independent review, push the new branch, and merge without self-merging.
-2. Revalidate the exact merged commit and registry identity, then present the exact artifact for
-   renewed approval before creating `v0.2.1` or publishing.
-3. After approved publication, verify registry metadata, integrity, latest dist-tag, clean install,
-   executable behavior, and update TASK-023 release records.
+1. Review and merge the post-release record/documentation branch without self-merging.
+2. Select a focused M6 plan before expanding the public surface.
+3. If a future patch release is approved, include the corrected package README and resolve ISS-018.
 
 ## Important Context
 
@@ -102,9 +106,9 @@ owner approved all implementation gates and selected Apache-2.0.
   package-only compatibility check used for alternate local Node runtimes and now always rebuilds
   the CLI dependency subtree before inspecting the tarball.
 - The root and internal libraries remain private; only the CLI manifest is publishable.
-- The release check deletes its temporary tarball. A matching review artifact is retained outside
-  the repository at `/tmp/csv-to-signal-artifact.lAmK9R/csv-to-signal-0.2.1.tgz`, size 8,517 bytes,
-  integrity `sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`.
-- PR #10 is merged and `v0.2.0` is pushed at its exact merge commit.
-- ADR-014 records the new public identity. The original publication authorization does not cover an
-  unreviewed changed tarball and does not override independent-review and no-self-merge requirements.
+- The published tarball is 8,517 bytes with integrity
+  `sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`
+  and shasum `21fd10bf3f04aa8846f7c33790cfdbefe3d640bb`.
+- PR #10 and `v0.2.0` preserve the rejected identity candidate; PR #11 and `v0.2.1` preserve the
+  successfully published release.
+- ADR-014 records the new public identity and ADR-015 records the exact approved publication.

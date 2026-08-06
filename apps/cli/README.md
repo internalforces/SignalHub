@@ -10,13 +10,9 @@ identities for equal inputs and detector configuration.
 
 ## Installation
 
-After an approved npm release:
-
 ```bash
 npm install --global csv-to-signal
 ```
-
-The `0.2.1` release candidate is verified locally. No npm release has been performed yet.
 
 ## Usage
 

@@ -56,10 +56,12 @@ integration, or database changes.
 - Plan: [`docs/2026-08-06-signal-hub-release-readiness-plan.md`](docs/2026-08-06-signal-hub-release-readiness-plan.md)
 - [x] TASK-022: produced a minimal, independently installable CLI tarball and completed all local
   release checks without publishing it.
+- [x] TASK-023: renamed the npm-rejected candidate, merged independently reviewed PR #11, tagged
+  `v0.2.1`, published `csv-to-signal@0.2.1`, and verified a clean registry install and execution.
 
 The original `signal-hub@0.2.0` candidate was tagged but rejected by npm's package-name similarity
-policy. The approved follow-up plan prepares `csv-to-signal@0.2.1` with the same Apache-2.0 bundle
-and `better-sqlite3` external. `npm publish` remains a separate human approval gate:
+policy. The approved follow-up plan published `csv-to-signal@0.2.1` with the same Apache-2.0 bundle
+and `better-sqlite3` external:
 
 - [CSV to Signal 0.2.1 release identity plan](docs/2026-08-06-csv-to-signal-release.md)
 
@@ -74,8 +76,6 @@ and `better-sqlite3` external. `npm publish` remains a separate human approval g
 - Minimal REST API (design review Phase 4)
 - Template-based explanation engine, then LLM adapter (design review Phase 4/5)
 - Alert system (design review Phase 4)
-- npm publish of the `csv-to-signal` CLI package after M5 readiness checks (requires HUMAN APPROVAL
-  when the exact release candidate is ready)
 
 ## Out of Scope
 

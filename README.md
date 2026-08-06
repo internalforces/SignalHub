@@ -23,8 +23,9 @@ persists observations and signals in SQLite.
 - GitHub commit history, CoinGecko price history, and windowed change analysis as workspace
   libraries. These are not connected to the CLI.
 
-CSV to Signal has a locally verified `0.2.1` npm release candidate but is not yet published. It does
-not provide scheduling, alerts, a REST API,
+CSV to Signal `0.2.1` is published on npm as
+[`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal). It does not provide scheduling,
+alerts, a REST API,
 a dashboard, YAML configuration, Polymarket or generic REST ingestion, or ML-style anomaly,
 trend, spike, and change-point detection.
 
