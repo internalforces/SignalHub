@@ -26,22 +26,28 @@ importers:
 
   apps/cli:
     dependencies:
+      better-sqlite3:
+        specifier: ^11.3.0
+        version: 11.10.0
+    devDependencies:
       '@signal-hub/analysis':
-        specifier: workspace:*
+        specifier: 0.1.0
         version: link:../../packages/analysis
       '@signal-hub/connector-csv':
-        specifier: workspace:*
+        specifier: 0.1.0
         version: link:../../connectors/csv
       '@signal-hub/core':
-        specifier: workspace:*
+        specifier: 0.1.0
         version: link:../../packages/core
       '@signal-hub/storage':
-        specifier: workspace:*
+        specifier: 0.1.0
         version: link:../../packages/storage
       '@signal-hub/types':
-        specifier: workspace:*
+        specifier: 0.1.0
         version: link:../../packages/types
-    devDependencies:
+      esbuild:
+        specifier: 0.25.12
+        version: 0.25.12
       typescript:
         specifier: ^5.5.4
         version: 5.9.3

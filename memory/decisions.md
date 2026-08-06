@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 
 ## Template
 
@@ -234,3 +234,59 @@ does not expose it through Core defaults or the CLI.
 
 **Consequences**: TASK-014 is complete. No shared type, database schema, dependency, connector,
 Core, or CLI changes were made.
+
+---
+
+### ADR-012: Prioritize and Implement CLI Release Readiness Before New Product Surface
+
+- **Date**: 2026-08-06
+- **Status**: Accepted
+- **Decided by**: Project owner
+
+**Context**: M1 through M4 and TASK-021 are merged, but the CLI remains a private monorepo package.
+A baseline pack assessment found that its version and metadata are not release-aligned, its tarball
+contains local/development artifacts, and neither npm nor pnpm output installs independently.
+
+**Decision**: Make M5 a focused TASK-022 CLI release-readiness milestone before starting proposed
+consumption/explanation work. Package `signal-hub@0.2.0` as one Apache-2.0 bundle using approved
+esbuild 0.25.12, with private workspace code bundled and `better-sqlite3` external. Validate Node
+20/22/24 and stop at a locally verified tarball. The previous proposed consumption/explanation
+milestone moves to M6.
+
+**Rationale**: The implemented vertical slice should be reproducibly packageable before the project
+adds more public surfaces. A local pack/install proof exposes release defects without deploying or
+requiring registry credentials.
+
+**Trade-offs**: Product expansion pauses while package topology, version, license, metadata, and
+verification are settled. The recommended standalone bundle likely needs a new direct build
+dependency and therefore separate human approval.
+
+**Consequences**: TASK-022 is complete, ISS-013 is resolved, and the CLI is independently
+installable from a strict four-file tarball. The root and internal libraries remain private.
+`npm publish` remains separately prohibited without human approval.
+
+---
+
+### ADR-013: Authorize the Reviewed Public CLI 0.2.0 Release
+
+- **Date**: 2026-08-06
+- **Status**: Accepted
+- **Decided by**: Project owner
+
+**Context**: TASK-022 produced a verified Apache-2.0 release candidate, but publishing, pushing,
+PR creation, tagging, and deployment remained separate approval gates.
+
+**Decision**: Authorize pushing the release-readiness branch, opening its PR, creating and pushing
+tag `v0.2.0`, and publicly publishing `signal-hub@0.2.0` after the exact release commit has passed
+independent review, merged to `main`, and been revalidated. Registry credentials must not be
+recorded or printed.
+
+**Rationale**: The package has deterministic release checks and cross-version validation, while
+retaining an independently reviewed merge as the source of truth prevents an unreviewed branch
+commit from becoming a public release.
+
+**Trade-offs**: Publication cannot finish in the current unauthenticated npm session, and the
+repository's no-self-merge rule requires another reviewer before tagging.
+
+**Consequences**: PR #10 is open and passes Node 20/22/24 CI. TASK-023 tracks the remaining
+review, merge, npm authentication, tag, public publication, and registry verification steps.

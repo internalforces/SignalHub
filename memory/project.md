@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Project: Signal Hub
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 
 ## Summary
 
@@ -15,9 +15,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: v0.2.0-dev (M4 merged; no release performed)
-- **Phase**: M4 TASK-014 merged through PR #8; TASK-021 documentation prepared for review
-- **Next milestone**: Review and merge TASK-021 project-record and user-documentation changes
+- **Version**: v0.2.0 release candidate (locally verified; unpublished)
+- **Phase**: M5 TASK-022 CLI release readiness complete
+- **Next milestone**: Review the exact release candidate before any separately approved npm publish, or select a focused M6 plan
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -57,6 +57,9 @@ SignalHub/
 | 2026-08-05 | Merged focused M3 and security maintenance through PRs #6 and #7; documented a proposed M4 limited to TASK-014 windowed analysis |
 | 2026-08-05 | Completed and merged approved M4 TASK-014 through PR #8: deterministic windowed analysis with 17 focused tests; 84 workspace tests pass |
 | 2026-08-05 | Completed TASK-021 on its review branch: reconciled project records and added English and Korean user guidance, library usage, development guidance, and a verified CSV example |
+| 2026-08-06 | Merged TASK-021 through PR #9; all approved M1-M4 work is now on `origin/main`, with no active task |
+| 2026-08-06 | Planned M5 TASK-022 after a baseline `npm pack` assessment found version drift, incomplete metadata, an unsafe tarball file set, and non-installable workspace dependencies; no publication performed |
+| 2026-08-06 | Completed TASK-022: Apache-2.0 `signal-hub@0.2.0` bundles private workspace code, packs four approved files, installs and runs independently on Node 20/22/24, and remains unpublished |
 
 ## Constraints
 

@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Backlog — Signal Hub
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 
 Only genuinely unstarted work belongs here. Completed tasks are archived in
 [`tasks/completed.md`](completed.md); proposed ideas without an approved task ID remain in the

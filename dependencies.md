@@ -7,13 +7,13 @@ Harness Version: 1.1
 
 # dependencies.md — Signal Hub Dependencies
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 
 ## Core Dependencies
 
 | Package | Version | Purpose | License |
 |---------|---------|---------|---------|
-| better-sqlite3 | ^11.3.0 | Embedded SQLite engine backing `@signal-hub/storage`'s `SqliteStorage` | MIT |
+| better-sqlite3 | ^11.3.0 | Embedded SQLite engine backing `@signal-hub/storage`; kept external as the bundled CLI's only runtime dependency | MIT |
 
 ## Dev Dependencies
 
@@ -25,6 +25,7 @@ _Last updated: 2026-08-05_
 | turbo | ^2.0.9 | Monorepo build/test/typecheck orchestration |
 | @types/node | ^20.19.43 | Node 20 built-in module type definitions for workspace compilation |
 | @types/better-sqlite3 | ^7.6.11 | Type definitions for `better-sqlite3` (used in `@signal-hub/storage`) |
+| esbuild | 0.25.12 | Approved direct CLI bundler for producing a standalone npm runtime artifact |
 
 ## External Services / APIs
 
@@ -45,6 +46,7 @@ _Last updated: 2026-08-05_
 | Task | Approval | Previous baseline | Verified resolution | Status |
 |------|----------|-------------------|---------------------|--------|
 | TASK-018 / ISS-009 | Project owner, 2026-08-04 | Vitest 2.1.9; transitive Vite 5.4.21 | Vitest 4.1.10; Vite 6.4.3; esbuild 0.25.12 | Completed; Node 20.19.5 and 22.22.3 validation, frozen install, build, 67 tests, typecheck, and full/production audits passed |
+| TASK-022 / ISS-013 | Project owner, 2026-08-06 | esbuild available only transitively through Vite | esbuild 0.25.12 declared directly by the CLI | Approved for the standalone CLI bundle; no package publication authorized |
 
 The workspace advertises Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`, matching Vitest 4.1.10's
 published engine range instead of claiming support for unsupported Node 21.x or 23.x releases.

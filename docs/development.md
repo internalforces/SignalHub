@@ -47,6 +47,7 @@ pnpm test                          # run all Vitest suites
 pnpm typecheck                     # type-check all workspaces without emitting files
 pnpm audit --prod --audit-level=high
 pnpm audit                         # full dependency audit for maintenance work
+pnpm release:check                 # validate the unpublished CLI tarball end to end
 ```
 
 To work on one package:
@@ -69,8 +70,8 @@ command.
 - Connector tests mock network requests; normal test runs do not call GitHub or CoinGecko.
 - Core tests use an in-memory SQLite database.
 - CLI tests use temporary directories and real CSV files, including the built executable.
-- Pull-request CI uses Node 20, a frozen install, a production dependency audit, build, tests, and
-  type-checking.
+- Pull-request CI validates Node 20, 22, and 24 with a frozen install, production dependency audit,
+  build, tests, and type-checking. Node 22 additionally runs the complete release-candidate check.
 
 When documentation includes a command or output example, run it against the built code before
 requesting review.
@@ -98,5 +99,14 @@ These rules are enforced through package manifests and review rather than lint t
 ## Local data and release status
 
 The CLI creates `data.db` in its current working directory. Tests that use storage must use
-SQLite's `:memory:` path. The CLI and workspace libraries are private and unpublished; any npm
-publish or deployment requires explicit human approval.
+SQLite's `:memory:` path.
+
+The workspace root and internal libraries remain private. The `signal-hub@0.2.0` CLI manifest is
+prepared for public packaging but has not been published. Its build bundles private workspace code
+and keeps `better-sqlite3` as the only external runtime dependency. A strict file allowlist prevents
+source, tests, caches, logs, configuration, and local databases from entering the tarball.
+
+`pnpm release:check` creates package artifacts only in a temporary directory, installs the tarball
+into an isolated consumer project, exercises valid and invalid CLI paths, prints candidate metadata,
+and deletes the temporary files. Any npm publish, registry access change, tag, release, or deployment
+still requires separate explicit human approval.

@@ -23,7 +23,8 @@ persists observations and signals in SQLite.
 - GitHub commit history, CoinGecko price history, and windowed change analysis as workspace
   libraries. These are not connected to the CLI.
 
-Signal Hub is not yet published to npm. It does not provide scheduling, alerts, a REST API,
+Signal Hub has a locally verified `0.2.0` npm release candidate but is not yet published. It does
+not provide scheduling, alerts, a REST API,
 a dashboard, YAML configuration, Polymarket or generic REST ingestion, or ML-style anomaly,
 trend, spike, and change-point detection.
 
@@ -123,6 +124,23 @@ idempotent because observations and deterministic signal IDs are inserted only o
 is ignored by Git.
 
 Use a dedicated working directory if you want separate databases for separate analyses.
+
+## Release-candidate verification
+
+Maintainers can build, inspect, install, and execute the unpublished npm tarball locally:
+
+```bash
+pnpm release:check
+```
+
+The command performs a frozen install, build, all tests, typecheck, full and production dependency
+audits, strict package-content validation, and an isolated tarball install/CLI smoke test. The
+temporary tarball is deleted after verification. It never authenticates to npm or publishes a
+package.
+
+The release candidate contains only the bundled CLI executable, package metadata, its package
+README, and the Apache-2.0 license. GitHub, CoinGecko, and windowed-analysis workspaces remain
+private and are not runtime dependencies of the tarball.
 
 ## More documentation
 
