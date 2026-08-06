@@ -7,32 +7,56 @@ Harness Version: 1.1
 
 # tech-stack.md — Signal Hub Technology Stack
 
-_Last updated: 2026-07-29_
+_Last updated: 2026-08-05_
+
+Versions below reflect the current lockfile and verified local toolchain. Manifest ranges are
+shown where they define the supported contract.
 
 ## Stack Overview
 
-| Layer | Technology | Version | Rationale |
-|-------|-----------|---------|-----------|
-| Language | TypeScript | ^5.5.4 | Strict typing across a package-boundary-heavy monorepo; shared interfaces (`DataPoint`, `Signal`, etc.) are the contract between packages |
-| Framework | None | — | Signal Hub MVP is a CLI, not a web app — no framework needed |
-| Database | SQLite via `better-sqlite3` | ^11.3.0 | Zero-ops embedded storage matching the MVP's "no distributed system" philosophy; synchronous API keeps the pipeline simple |
-| Infrastructure | None (local execution) | — | No cloud infra in the MVP; `signal-hub` is planned for npm publish only, not yet executed |
-| Package Manager | pnpm workspaces + Turborepo | pnpm@9.7.0 / turbo ^2.0.9 | Workspace `workspace:*` deps + `dependsOn: ["^build"]` gives correct cross-package build ordering with minimal config |
-| CI/CD | GitHub Actions | Node 20 | PR workflow runs frozen `pnpm install`, build, test, and typecheck |
-| Test Runner | Vitest | ^2.0.5 | Zero-config TS test runner, in-memory SQLite friendly |
+| Layer | Technology | Current / supported version | Rationale |
+|-------|-----------|-----------------------------|-----------|
+| Runtime | Node.js | `^20.0.0 || ^22.0.0 || >=24.0.0`; CI uses 20 | Supported range matches Vitest 4.1.10 and the package engine contract |
+| Language | TypeScript | 5.9.3 resolved (`^5.5.4`) | Strict typing across package boundaries |
+| Framework | None | — | Signal Hub is a local CLI and library workspace |
+| Database | SQLite via `better-sqlite3` | 11.10.0 resolved (`^11.3.0`) | Embedded, synchronous storage with no service dependency |
+| Package manager | pnpm workspaces | pnpm 9.7.0 | `workspace:*` links the monorepo packages |
+| Task orchestration | Turborepo | 2.10.7 resolved (`^2.0.9`) | Dependency-ordered build, test, and type-check tasks |
+| Test runner | Vitest | 4.1.10 | TypeScript tests and in-memory SQLite coverage |
+| Test build dependency | Vite | 6.4.3 | Explicit patched Vite version for the Vitest stack |
+| CI | GitHub Actions | Node 20 | Frozen install, production audit, build, test, and type-check on pull requests |
+| Infrastructure | None | — | No deployment exists; npm publishing is planned but not authorized or configured |
+
+## Workspace Structure
+
+The monorepo contains nine buildable workspaces:
+
+- one application: `apps/cli`;
+- three connectors: `connectors/csv`, `connectors/github`, `connectors/coingecko`; and
+- five packages: `packages/types`, `packages/connector-sdk`, `packages/storage`,
+  `packages/analysis`, and `packages/core`.
+
+Each workspace compiles independently with `tsc -p tsconfig.json`. Turborepo's `^build`
+dependency ordering ensures package entry points exist before consumers build or test.
 
 ## Architecture Patterns
 
-- **Structure**: Layered monorepo with strict one-directional package dependencies — `apps/cli → core → {storage, analysis, connector-sdk}`, `connectors/* → connector-sdk`. Enforced by convention/review today, not tooling.
-- **Storage access**: Repository pattern (`DataPointRepository`, `SignalRepository`) — no package outside `storage` talks to SQLite directly.
-- **API style**: N/A — no REST API in the MVP; the CLI (`signal-hub analyze <file>`) is the only interface.
-- **State management**: N/A — detectors are stateless (`detect(series): Signal[]`); the only persisted state is the SQLite file (`data.db`).
-- **Build**: each package compiles independently via `tsc -p tsconfig.json` (no bundler); Turborepo orders builds via `dependsOn: ["^build"]` and workspace symlinks resolve cross-package imports through each package's `main`/`types` fields.
+- **Structure**: layered monorepo with strict one-directional dependencies. Connectors depend only
+  on Connector SDK and Types; Storage and Analysis depend only on Types; Core composes the shared
+  packages; the CLI composes Core with CSV, Analysis, Storage, and Types.
+- **Storage access**: repository pattern through `DataPointRepository` and `SignalRepository`.
+  No package outside Storage talks directly to SQLite.
+- **Interfaces**: the CSV CLI is the only user-facing interface. GitHub, CoinGecko, and windowed
+  analysis are library-only APIs.
+- **State**: detectors are stateless. The CLI persists points and signals to `data.db` in its
+  current working directory.
+- **Build**: ESM/NodeNext output targeting ES2022; no bundler, web framework, or migration tool.
 
 ## Environments
 
 | Environment | Purpose | Access |
 |-------------|---------|--------|
-| Local | Local development and CLI usage | `pnpm --filter signal-hub exec signal-hub analyze <file>` |
-| Staging | N/A — not defined for this project | — |
-| Production | N/A locally; future npm registry once `signal-hub` is published (not yet done) | `npm install -g signal-hub` (planned, not live) |
+| Local | Development, tests, and CSV CLI use | `node apps/cli/dist/index.js analyze <file.csv>` after `pnpm build` |
+| Pull-request CI | Verification on Node 20 | GitHub Actions workflow in `.github/workflows/ci.yml` |
+| Staging | Not defined | — |
+| Production | Not deployed or published | — |

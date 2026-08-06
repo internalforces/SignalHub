@@ -11,7 +11,7 @@ _Last updated: 2026-08-05_
 
 | ID | Task | Completed | Owner | Notes |
 |----|------|-----------|-------|-------|
-| — | Signal Hub MVP implementation plan written | 2026-07-27 | Planner | `docs/superpowers/plans/2026-07-27-signal-hub-mvp.md` |
+| — | Signal Hub MVP implementation plan written | 2026-07-27 | Planner | `docs/2026-07-27-signal-hub-mvp.md` |
 | — | AI Development Harness v1.1 initial setup | 2026-07-27 | — | Standard tier |
 | TASK-001 | Monorepo & Tooling Bootstrap | 2026-07-28 | Implementer | pnpm workspace, Turbo, TypeScript, Vitest configured; install and root checks pass |
 | TASK-002 | Shared Types Package (`@signal-hub/types`) | 2026-07-28 | Implementer | Canonical data, signal, detector, and connector contracts implemented; 4 tests pass |
@@ -32,3 +32,4 @@ _Last updated: 2026-08-05_
 | TASK-019 | Address PR #7 review findings | 2026-08-05 | Implementer | Removed the stale duplicate M3 roadmap, aligned the Node engine range with Vitest 4.1.10, and passed frozen install/build/67 tests/typecheck/audits |
 | TASK-020 | Address PR #7 follow-up review | 2026-08-05 | Implementer | Synchronized all authoritative MVP plan package snippets with Vitest 4.1.10, Vite 6.4.3, and the root Node type dependency; JSON snippets and full workspace checks pass |
 | TASK-014 | Deterministic windowed change detector | 2026-08-05 | Implementer | Added an exported, stateless detector for 24-hour, 7-day, and caller-defined windows; 17 focused and 84 workspace tests pass |
+| TASK-021 | Project records and user documentation | 2026-08-05 | Documenter | Reconciled merged milestone, backlog, plan paths, M2 status, roadmap, and toolchain records; added verified English/Korean user guidance, library, development, CSV, and JSON examples without code or public-interface changes |

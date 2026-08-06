@@ -16,7 +16,7 @@ Goal: Implement tasks from tasks/active.md as working code.
 
 Stack: TypeScript (strict, Node.js ^20.0.0 || ^22.0.0 || >=24.0.0, ESM/NodeNext) | none (Node.js CLI) | SQLite via better-sqlite3
 
-Session start order: AGENTS.md → tasks/active.md → memory/architecture.md → standards.md → docs/superpowers/plans/2026-07-27-signal-hub-mvp.md
+Session start order: AGENTS.md → tasks/active.md → memory/architecture.md → standards.md → docs/2026-07-27-signal-hub-mvp.md
 
 Implementation principles:
 - Work on one task at a time, following the plan's TDD steps exactly: write the failing test, run it to confirm it fails, write the minimal implementation, run it to confirm it passes, commit

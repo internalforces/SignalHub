@@ -162,7 +162,7 @@ pnpm build
 node apps/cli/dist/index.js analyze data.csv
 \`\`\`
 
-See `docs/superpowers/plans/` for the implementation plan.
+See `docs/2026-07-27-signal-hub-mvp.md` for the implementation plan.
 ```
 
 - [ ] **Step 7: Verify install succeeds**
