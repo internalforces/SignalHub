@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Completed Tasks — Signal Hub
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 
 | ID | Task | Completed | Owner | Notes |
 |----|------|-----------|-------|-------|
@@ -33,3 +33,4 @@ _Last updated: 2026-08-05_
 | TASK-020 | Address PR #7 follow-up review | 2026-08-05 | Implementer | Synchronized all authoritative MVP plan package snippets with Vitest 4.1.10, Vite 6.4.3, and the root Node type dependency; JSON snippets and full workspace checks pass |
 | TASK-014 | Deterministic windowed change detector | 2026-08-05 | Implementer | Added an exported, stateless detector for 24-hour, 7-day, and caller-defined windows; 17 focused and 84 workspace tests pass |
 | TASK-021 | Project records and user documentation | 2026-08-05 | Documenter | Reconciled merged milestone, backlog, plan paths, M2 status, roadmap, and toolchain records; added verified English/Korean user guidance, library, development, CSV, and JSON examples without code or public-interface changes |
+| TASK-022 | CLI Release Readiness | 2026-08-06 | Implementer | Prepared `signal-hub@0.2.0` as an Apache-2.0 standalone bundle; strict four-file tarball, isolated Node 20/22/24 install/execute checks, 87 tests, typecheck, audits, and release-check automation pass; no publication performed |

@@ -15,9 +15,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: v0.2.0-dev (M4 merged; no release performed)
-- **Phase**: M4 complete; M5 TASK-022 CLI release-readiness implementation plan prepared
-- **Next milestone**: Review TASK-022 decisions and approve a release-readiness implementation scope; no npm publish is authorized
+- **Version**: v0.2.0 release candidate (locally verified; unpublished)
+- **Phase**: M5 TASK-022 CLI release readiness complete
+- **Next milestone**: Review the exact release candidate before any separately approved npm publish, or select a focused M6 plan
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -59,6 +59,7 @@ SignalHub/
 | 2026-08-05 | Completed TASK-021 on its review branch: reconciled project records and added English and Korean user guidance, library usage, development guidance, and a verified CSV example |
 | 2026-08-06 | Merged TASK-021 through PR #9; all approved M1-M4 work is now on `origin/main`, with no active task |
 | 2026-08-06 | Planned M5 TASK-022 after a baseline `npm pack` assessment found version drift, incomplete metadata, an unsafe tarball file set, and non-installable workspace dependencies; no publication performed |
+| 2026-08-06 | Completed TASK-022: Apache-2.0 `signal-hub@0.2.0` bundles private workspace code, packs four approved files, installs and runs independently on Node 20/22/24, and remains unpublished |
 
 ## Constraints
 

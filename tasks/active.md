@@ -13,7 +13,7 @@ _Last updated: 2026-08-06_
 
 | ID | Task | Owner | Started | Due |
 |----|------|-------|---------|-----|
-| — | (none — TASK-022 is planned in `tasks/backlog.md` but implementation is not approved) | — | — | — |
+| — | (none — TASK-022 is complete; see `tasks/completed.md`) | — | — | — |
 
 ## Task Detail Template
 

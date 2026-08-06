@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Architecture — Signal Hub
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 
 ## System Overview
 
@@ -59,6 +59,7 @@ CSV file, GitHub commits endpoint, or CoinGecko market chart
 | GitHub connector | Serial paginated commit ingestion with UTC-day aggregation and transient diagnostics | 2026-07-30 |
 | Focused M3 | CoinGecko connector library only; no CLI, Core, Storage, or schema changes | 2026-08-04 |
 | Focused M4 | Deterministic windowed detector library only; no CLI, Core, Storage, or schema changes | 2026-08-05 |
+| CLI release topology | Publish one bundled CLI artifact; keep internal workspaces private and `better-sqlite3` external | 2026-08-06 |
 
 ## Architecture Constraints
 
@@ -70,6 +71,19 @@ CSV file, GitHub commits endpoint, or CoinGecko market chart
 - Signal IDs are derived deterministically from detector configuration and signal inputs, so repeated analysis is stable and persisted signals are idempotent
 - All persisted state lives in one SQLite file (`data.db`); no other storage mechanism is permitted in the MVP
 - Timestamps are always ISO 8601 UTC strings by the time they reach `DataPoint`
+
+## Release Packaging Boundary
+
+The source workspace dependency direction remains unchanged. For npm distribution only, the CLI
+bundles the JavaScript reached through `analysis`, `connector-csv`, `core`, `storage`,
+`connector-sdk`, and `types`. Those workspaces remain private build/test dependencies and are not
+registry runtime dependencies. `better-sqlite3` stays external because it is a native module and is
+declared directly by the CLI package.
+
+The release tarball allowlist is `dist/index.js`, `package.json`, `README.md`, and `LICENSE`.
+Packaging must never include SQLite databases, source, tests, caches, logs, configuration, or
+environment files. This distribution boundary does not change package ownership or the runtime
+layering enforced in source.
 
 ## DEFER List (explicit — see design review §1.1/§1.2)
 

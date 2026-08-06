@@ -6,7 +6,9 @@
   "scripts": {
     "build": "turbo run build",
     "test": "turbo run test",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "turbo run typecheck",
+    "release:check": "node scripts/release-check.mjs",
+    "release:package": "node scripts/release-check.mjs --package-only"
   },
   "devDependencies": {
     "@types/node": "^20.19.43",

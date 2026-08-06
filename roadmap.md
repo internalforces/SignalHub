@@ -51,14 +51,14 @@ Each requires its own focused plan and human approval.
 M4 does not include scheduling, checkpoints, caching, retries, rate-limit handling, CLI/Core
 integration, or database changes.
 
-### M5 — CLI Release Readiness (planned)
+### M5 — CLI Release Readiness
 
 - Plan: [`docs/2026-08-06-signal-hub-release-readiness-plan.md`](docs/2026-08-06-signal-hub-release-readiness-plan.md)
-- [ ] TASK-022: produce a minimal, independently installable CLI tarball and complete all local
+- [x] TASK-022: produced a minimal, independently installable CLI tarball and completed all local
   release checks without publishing it.
 
-Implementation is pending explicit decisions on release topology, package identity/version,
-license, and any new build dependency. `npm publish` remains a separate human approval gate.
+The approved release candidate is `signal-hub@0.2.0`, licensed Apache-2.0 and packaged as one
+bundle with `better-sqlite3` external. `npm publish` remains a separate human approval gate.
 
 ### M6 — Consumption and Explanation (proposed)
 

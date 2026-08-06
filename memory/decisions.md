@@ -237,10 +237,10 @@ Core, or CLI changes were made.
 
 ---
 
-### ADR-012: Prioritize CLI Release Readiness Before New Product Surface
+### ADR-012: Prioritize and Implement CLI Release Readiness Before New Product Surface
 
 - **Date**: 2026-08-06
-- **Status**: Accepted for planning only
+- **Status**: Accepted
 - **Decided by**: Project owner
 
 **Context**: M1 through M4 and TASK-021 are merged, but the CLI remains a private monorepo package.
@@ -248,8 +248,10 @@ A baseline pack assessment found that its version and metadata are not release-a
 contains local/development artifacts, and neither npm nor pnpm output installs independently.
 
 **Decision**: Make M5 a focused TASK-022 CLI release-readiness milestone before starting proposed
-consumption/explanation work. TASK-022 ends at a locally verified tarball; it does not include npm
-publication. The previous proposed consumption/explanation milestone moves to M6.
+consumption/explanation work. Package `signal-hub@0.2.0` as one Apache-2.0 bundle using approved
+esbuild 0.25.12, with private workspace code bundled and `better-sqlite3` external. Validate Node
+20/22/24 and stop at a locally verified tarball. The previous proposed consumption/explanation
+milestone moves to M6.
 
 **Rationale**: The implemented vertical slice should be reproducibly packageable before the project
 adds more public surfaces. A local pack/install proof exposes release defects without deploying or
@@ -259,6 +261,6 @@ requiring registry credentials.
 verification are settled. The recommended standalone bundle likely needs a new direct build
 dependency and therefore separate human approval.
 
-**Consequences**: The M5 plan and TASK-022 backlog entry are authoritative. Implementation remains
-pending its explicit decision gates, and `npm publish` remains separately prohibited without human
-approval.
+**Consequences**: TASK-022 is complete, ISS-013 is resolved, and the CLI is independently
+installable from a strict four-file tarball. The root and internal libraries remain private.
+`npm publish` remains separately prohibited without human approval.

@@ -2,8 +2,9 @@
 
 ## Status
 
-Planned on 2026-08-06 at the project owner's direction. Implementation is not yet approved.
-This plan prepares a locally installable npm tarball only. It does not authorize or perform
+Completed on 2026-08-06 after the project owner approved the single-package topology,
+`signal-hub@0.2.0`, Apache-2.0, esbuild 0.25.12, and the Node 20/22/24 CI matrix.
+This work prepared a locally installable npm tarball only. It did not authorize or perform
 `npm publish`, deployment, registry authentication, tag creation, or a GitHub release.
 
 ## Goal
@@ -47,11 +48,11 @@ packages must therefore be published too or removed from the packed runtime grap
 
 ## Required Decisions and Approval Gates
 
-No implementation starts until the project owner resolves these gates.
+The project owner resolved the implementation gates on 2026-08-06. Publication remains gated.
 
 ### Gate 1 — Release topology
 
-Recommended: publish one self-contained `signal-hub` CLI package. Bundle the private TypeScript
+Approved: publish one self-contained `signal-hub` CLI package. Bundle the private TypeScript
 workspace packages into the CLI output and keep `better-sqlite3` as the only external runtime
 dependency.
 
@@ -61,27 +62,25 @@ Why this is preferred:
 - it avoids publishing and versioning six internal packages before the CLI can install; and
 - it keeps the current library workspaces private and preserves their existing APIs.
 
-This approach will probably require adding a direct bundler dependency and therefore requires
-explicit human approval under `AGENTS.md`. The implementation proposal must name and pin the chosen
-tool before it is added. Publishing every internal package is the fallback and requires a separate,
-larger release plan.
+The approved implementation pins esbuild 0.25.12 as a direct CLI development dependency.
+Publishing every internal package remains a fallback that requires a separate, larger release plan.
 
 ### Gate 2 — Public identity and license
 
-The owner must approve:
+Approved identity:
 
-- the final npm package name and ownership account or organization;
-- the first public version (recommended: `0.2.0`, matching the current project version); and
-- the public license and copyright holder text.
+- package name: `signal-hub`;
+- owner/author: `internalforces`;
+- first public version candidate: `0.2.0`; and
+- license: Apache-2.0, copyright 2026 internalforces.
 
 Name availability is not ownership and can change. Recheck it immediately before an approved
 release; do not reserve or publish a name as part of TASK-022.
 
 ### Gate 3 — CI coverage
 
-Adding a packaging job or Node version matrix changes infrastructure configuration and requires
-human approval. Without that approval, TASK-022 may add a local `release:check` script and tests,
-but must not edit `.github/workflows/ci.yml`.
+Approved and implemented: pull-request CI covers Node 20, 22, and 24. Node 22 additionally runs the
+complete release-candidate check.
 
 ### Gate 4 — Publication
 
@@ -182,18 +181,30 @@ not authenticate to npm or invoke a publish command.
 
 ## Definition of Done
 
-- [ ] Release topology, package identity, version, and license are explicitly approved.
-- [ ] Any new external build dependency is explicitly approved before addition.
-- [ ] Project and CLI versions agree on the approved release candidate version.
-- [ ] Only the CLI package is publishable; the workspace root and internal libraries remain private.
-- [ ] The packed manifest has no `workspace:` or private `@signal-hub/*` runtime dependency.
-- [ ] `npm pack --dry-run --json` reports only the approved file allowlist.
-- [ ] No database, source, test, cache, log, environment, or credential file is packed.
-- [ ] A fresh temporary npm project installs the tarball and runs the built CLI successfully.
-- [ ] Supported Node release lines are validated in the approved local or CI matrix.
-- [ ] Frozen install, build, all tests, typecheck, and both dependency audits pass.
-- [ ] User and developer documentation distinguishes local development from installed-package use.
-- [ ] No package is published, no release/tag is created, and no registry credential is used.
+- [x] Release topology, package identity, version, and license are explicitly approved.
+- [x] Any new external build dependency is explicitly approved before addition.
+- [x] Project and CLI versions agree on the approved release candidate version.
+- [x] Only the CLI package is publishable; the workspace root and internal libraries remain private.
+- [x] The packed manifest has no `workspace:` or private `@signal-hub/*` runtime dependency.
+- [x] `npm pack --dry-run --json` reports only the approved file allowlist.
+- [x] No database, source, test, cache, log, environment, or credential file is packed.
+- [x] A fresh temporary npm project installs the tarball and runs the built CLI successfully.
+- [x] Supported Node release lines are validated in the approved local or CI matrix.
+- [x] Frozen install, build, all tests, typecheck, and both dependency audits pass.
+- [x] User and developer documentation distinguishes local development from installed-package use.
+- [x] No package is published, no release/tag is created, and no registry credential is used.
+
+## Verification
+
+- `pnpm release:check` passed on Node 22.22.3 with forced build, 87 tests, forced typecheck,
+  production audit, full audit, package validation, isolated install, and CLI execution.
+- The isolated package/install/execute check also passed on Node 20.20.2 and Node 24.19.0.
+- Pull-request CI is configured for clean Node 20/22/24 installs and full workspace checks.
+- `npm pack --dry-run --json` reports exactly four files: `dist/index.js`, `package.json`,
+  `README.md`, and `LICENSE`.
+- The verified tarball is 8,504 bytes and has no workspace or private-package runtime dependency.
+- No known dependency vulnerability was reported.
+- No npm authentication, publication, tag, release, or deployment occurred.
 
 ## Explicitly Out of Scope
 

@@ -13,7 +13,7 @@ _Last updated: 2026-08-06_
 
 | ID | Severity | Description | Found | Owner | Target resolution |
 |----|----------|-------------|-------|-------|-------------------|
-| ISS-013 | High | The private CLI package is not independently installable: npm keeps `workspace:*` dependencies, pnpm rewrites them to unpublished packages, and the tarball includes local `data.db` plus development artifacts | 2026-08-06 | Unassigned | TASK-022 |
+| — | — | — | — | — | — |
 
 ## Technical Debt
 
@@ -21,10 +21,12 @@ _Last updated: 2026-08-06_
 |----|-------------|--------|--------------------|
 | DEBT-001 | `CsvConnector` (Task 8 of the implementation plan) parses rows with a plain `split(",")` — no RFC 4180 quoting/escaping support, so values containing commas or quoted fields will misparse | Low for the MVP (canonical `metricId,timestamp,value` files); would break on hand-exported CSVs with embedded commas | Revisit if Phase 2+ needs richer CSV input, or if a user reports a real file that breaks it |
 | DEBT-002 | No ESLint/Prettier configured; `standards.md` code style section is only partially specified (indentation is inferred, max line length and coverage threshold are TBD) | Style drift risk as more agents contribute | Add before M2 (GitHub connector) once more contributors are active |
+| DEBT-003 | Isolated npm installation warns that transitive `prebuild-install@7.1.3` is deprecated through `better-sqlite3@11.x` | No known vulnerability or runtime failure; adds maintenance noise during consumer installation | Reassess during the next approved `better-sqlite3` major-version maintenance task |
 
 ### ISS-013: CLI release tarball is unsafe and cannot install independently
 
-- **Severity**: High release blocker; no current runtime impact while the package remains private.
+- **Status**: Resolved by TASK-022 on 2026-08-06.
+- **Severity**: High release blocker before resolution; no remaining runtime impact.
 - **Found**: 2026-08-06
 - **Reproduction**:
   1. Run `npm pack --dry-run --json` in `apps/cli`; observe `data.db`, `.turbo`, source, tests,
@@ -35,10 +37,10 @@ _Last updated: 2026-08-06_
      returns `E404` for unpublished `@signal-hub/analysis` and the other private runtime packages.
 - **Root cause**: The CLI was designed only as a private monorepo workspace. It has no package
   allowlist or standalone runtime build, and its concrete runtime graph points at private workspaces.
-- **Workaround**: Run the CLI from a built repository checkout; keep `private: true` and do not
-  distribute the current tarball.
-- **Permanent fix direction**: Complete approved TASK-022 using the single-package topology or an
-  separately approved multi-package release plan.
+- **Historical workaround**: Run the CLI from a built repository checkout; keep the CLI private and
+  do not distribute the unsafe tarball.
+- **Resolution**: TASK-022 implemented the approved single-package bundle and independent
+  install/execute validation.
 
 ## Resolved
 
@@ -56,6 +58,7 @@ _Last updated: 2026-08-06_
 | ISS-010 | A stale duplicate M3 roadmap revived deferred Polymarket, REST, YAML, and CLI work beside the approved focused roadmap | 2026-08-05 | Deleted the duplicate proposal; the approved CoinGecko-only roadmap remains the single M3 authority |
 | ISS-011 | The root `>=20` engine range claimed Node 21.x/23.x support that Vitest 4.1.10 excludes | 2026-08-05 | Narrowed the advertised engine and supporting docs to `^20.0.0 || ^22.0.0 || >=24.0.0` |
 | ISS-012 | The authoritative MVP plan still showed Vitest 2 package snippets without the explicit patched Vite peer | 2026-08-05 | Updated all eight package snippets to Vitest 4.1.10 and Vite 6.4.3; synchronized the root Node type dependency |
+| ISS-013 | The CLI tarball contained local/development artifacts and could not install outside the workspace | 2026-08-06 | Bundled private workspace code, kept `better-sqlite3` external, added a four-file allowlist, and verified isolated npm installation/execution on Node 20/22/24 |
 | — | — | — | — |
 
 ## Issue Template
