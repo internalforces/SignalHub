@@ -29,7 +29,7 @@ Full task breakdown: [`docs/2026-07-27-signal-hub-mvp.md`](docs/2026-07-27-signa
 - [x] Signal scoring engine
 - [x] CSV connector
 - [x] Core pipeline engine + output formatter
-- [x] CLI application (`signal-hub analyze <file>`)
+- [x] CLI application (`csv-to-signal analyze <file>`; renamed before first successful npm publish)
 
 ### M2 — Beta
 
@@ -57,8 +57,11 @@ integration, or database changes.
 - [x] TASK-022: produced a minimal, independently installable CLI tarball and completed all local
   release checks without publishing it.
 
-The approved release candidate is `signal-hub@0.2.0`, licensed Apache-2.0 and packaged as one
-bundle with `better-sqlite3` external. `npm publish` remains a separate human approval gate.
+The original `signal-hub@0.2.0` candidate was tagged but rejected by npm's package-name similarity
+policy. The approved follow-up plan prepares `csv-to-signal@0.2.1` with the same Apache-2.0 bundle
+and `better-sqlite3` external. `npm publish` remains a separate human approval gate:
+
+- [CSV to Signal 0.2.1 release identity plan](docs/2026-08-06-csv-to-signal-release.md)
 
 ### M6 — Consumption and Explanation (proposed)
 
@@ -71,7 +74,7 @@ bundle with `better-sqlite3` external. `npm publish` remains a separate human ap
 - Minimal REST API (design review Phase 4)
 - Template-based explanation engine, then LLM adapter (design review Phase 4/5)
 - Alert system (design review Phase 4)
-- npm publish of the `signal-hub` CLI package after M5 readiness checks (requires HUMAN APPROVAL
+- npm publish of the `csv-to-signal` CLI package after M5 readiness checks (requires HUMAN APPROVAL
   when the exact release candidate is ready)
 
 ## Out of Scope

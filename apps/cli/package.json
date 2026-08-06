@@ -1,6 +1,6 @@
 {
-  "name": "signal-hub",
-  "version": "0.2.0",
+  "name": "csv-to-signal",
+  "version": "0.2.1",
   "description": "Deterministic CSV time-series signal analysis from the command line",
   "license": "Apache-2.0",
   "author": "internalforces",
@@ -29,15 +29,15 @@
     "README.md",
     "LICENSE"
   ],
-  "bin": { "signal-hub": "./dist/index.js" },
+  "bin": { "csv-to-signal": "./dist/index.js" },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json --noEmit && esbuild src/index.ts --bundle --platform=node --format=esm --target=node20 --external:better-sqlite3 --outfile=dist/index.js",
-    "prepack": "pnpm --filter signal-hub... build",
-    "pretest": "pnpm --filter signal-hub... build",
+    "prepack": "pnpm --filter csv-to-signal... build",
+    "pretest": "pnpm --filter csv-to-signal... build",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },

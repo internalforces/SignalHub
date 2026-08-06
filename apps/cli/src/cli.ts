@@ -5,7 +5,7 @@ import { formatSignals, runPipeline } from "@signal-hub/core";
 import { SqliteStorage } from "@signal-hub/storage";
 import type { Detector } from "@signal-hub/types";
 
-const USAGE = "Usage: signal-hub analyze <file.csv> [--min-score <n>] [--threshold <n>]";
+const USAGE = "Usage: csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]";
 
 export async function runCli(args: string[]): Promise<string> {
   const [command, filePath, ...rest] = args;

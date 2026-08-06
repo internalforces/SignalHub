@@ -70,10 +70,10 @@ function assertPackage(pack) {
     throw new Error("Packed manifest contains a private @signal-hub runtime dependency");
   }
   if (
-    manifest.name !== "signal-hub" ||
-    manifest.version !== "0.2.0" ||
+    manifest.name !== "csv-to-signal" ||
+    manifest.version !== "0.2.1" ||
     manifest.license !== "Apache-2.0" ||
-    manifest.bin?.["signal-hub"] !== "./dist/index.js"
+    manifest.bin?.["csv-to-signal"] !== "./dist/index.js"
   ) {
     throw new Error("Packed manifest does not match the approved release identity");
   }
@@ -105,7 +105,7 @@ if (!packageOnly) {
   run("pnpm", ["audit", "--prod", "--audit-level=high"]);
   run("pnpm", ["audit"]);
 } else {
-  run("pnpm", ["--filter", "signal-hub...", "build"]);
+  run("pnpm", ["--filter", "csv-to-signal...", "build"]);
 }
 
 const dryRun = JSON.parse(
@@ -116,7 +116,7 @@ const dryRun = JSON.parse(
 );
 assertPackage(dryRun[0]);
 
-const temporaryRoot = mkdtempSync(join(tmpdir(), "signal-hub-release-check-"));
+const temporaryRoot = mkdtempSync(join(tmpdir(), "csv-to-signal-release-check-"));
 try {
   const packResult = JSON.parse(
     run("npm", ["pack", "--json", "--ignore-scripts", "--pack-destination", temporaryRoot], {
@@ -132,7 +132,7 @@ try {
   }
 
   const consumerManifest = {
-    name: "signal-hub-release-consumer",
+    name: "csv-to-signal-release-consumer",
     version: "1.0.0",
     private: true,
   };
@@ -143,7 +143,7 @@ try {
     temporaryRoot,
     "node_modules",
     ".bin",
-    process.platform === "win32" ? "signal-hub.cmd" : "signal-hub",
+    process.platform === "win32" ? "csv-to-signal.cmd" : "csv-to-signal",
   );
   writeFileSync(
     join(temporaryRoot, "prices.csv"),
@@ -162,7 +162,7 @@ try {
     throw new Error("Installed CLI did not create data.db in the consumer working directory");
   }
 
-  const installedPackage = join(temporaryRoot, "node_modules", "signal-hub");
+  const installedPackage = join(temporaryRoot, "node_modules", "csv-to-signal");
   if (findDatabaseFiles(installedPackage).length > 0) {
     throw new Error("Installed package contains a database file");
   }

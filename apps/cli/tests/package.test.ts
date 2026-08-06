@@ -15,6 +15,7 @@ interface PackageManifest {
   license?: string;
   engines?: { node?: string };
   files?: string[];
+  bin?: Record<string, string>;
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
 }
@@ -27,12 +28,13 @@ const manifest = JSON.parse(
 describe("CLI release package", () => {
   it("has approved release metadata and no workspace runtime dependency", () => {
     expect(manifest).toMatchObject({
-      name: "signal-hub",
-      version: "0.2.0",
+      name: "csv-to-signal",
+      version: "0.2.1",
       license: "Apache-2.0",
       engines: { node: "^20.0.0 || ^22.0.0 || >=24.0.0" },
       files: ["dist/index.js", "README.md", "LICENSE"],
       dependencies: { "better-sqlite3": "^11.3.0" },
+      bin: { "csv-to-signal": "./dist/index.js" },
     });
     expect(manifest.private).not.toBe(true);
     expect(Object.keys(manifest.dependencies ?? {})).toEqual(["better-sqlite3"]);

@@ -13,7 +13,7 @@ _Last updated: 2026-08-06_
 
 | ID | Severity | Description | Found | Owner | Target resolution |
 |----|----------|-------------|-------|-------|-------------------|
-| — | — | — | — | — | — |
+| ISS-017 | High release blocker | npm rejected unscoped `signal-hub` because it is too similar to existing `signalhub@4.9.0`; registry E404 did not establish publishability | 2026-08-06 | Implementer | Prepare and independently review `csv-to-signal@0.2.1`, then confirm registry acceptance only through an explicitly approved publication |
 
 ## Technical Debt
 

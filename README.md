@@ -1,8 +1,8 @@
-# Signal Hub
+# CSV to Signal
 
 English | [한국어](docs/README.ko.md)
 
-Signal Hub turns timestamped numeric observations into deterministic, ranked signals.
+CSV to Signal turns timestamped numeric observations into deterministic, ranked signals.
 It is intended for developers and analysts who want a small local engine for validating
 time-series signal rules without operating a service, scheduler, or dashboard.
 
@@ -10,20 +10,20 @@ time-series signal rules without operating a service, scheduler, or dashboard.
 CSV -> Core -> Detector -> Signal -> CLI
 ```
 
-Given the same stored observations and detector configuration, Signal Hub produces the same
+Given the same stored observations and detector configuration, CSV to Signal produces the same
 signal identities and scores. The current user-facing command analyzes CSV files locally and
 persists observations and signals in SQLite.
 
 ## Current support
 
-- CSV input through the `signal-hub analyze` CLI.
+- CSV input through the `csv-to-signal analyze` CLI.
 - Consecutive percentage-change signals by default.
 - Optional upward threshold-crossing signals.
 - Score filtering and deterministic JSON output.
 - GitHub commit history, CoinGecko price history, and windowed change analysis as workspace
   libraries. These are not connected to the CLI.
 
-Signal Hub has a locally verified `0.2.0` npm release candidate but is not yet published. It does
+CSV to Signal has a locally verified `0.2.1` npm release candidate but is not yet published. It does
 not provide scheduling, alerts, a REST API,
 a dashboard, YAML configuration, Polymarket or generic REST ingestion, or ML-style anomaly,
 trend, spike, and change-point detection.
@@ -83,7 +83,7 @@ The command prints ranked JSON:
 ## CLI reference
 
 ```text
-signal-hub analyze <file.csv> [--min-score <n>] [--threshold <n>]
+csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]
 ```
 
 | Argument | Meaning |
@@ -146,4 +146,6 @@ private and are not runtime dependencies of the tarball.
 
 - [Library usage](docs/library-usage.md): GitHub, CoinGecko, and `WindowedChangeDetector` examples.
 - [Development guide](docs/development.md): repository layout, commands, tests, and dependency rules.
+- [CSV to Signal 0.2.1 release plan](docs/2026-08-06-csv-to-signal-release.md): approved public
+  package and executable identity after npm rejected the original unscoped name.
 - [MVP implementation plan](docs/2026-07-27-signal-hub-mvp.md): historical task-level implementation detail.
