@@ -264,3 +264,29 @@ dependency and therefore separate human approval.
 **Consequences**: TASK-022 is complete, ISS-013 is resolved, and the CLI is independently
 installable from a strict four-file tarball. The root and internal libraries remain private.
 `npm publish` remains separately prohibited without human approval.
+
+---
+
+### ADR-013: Authorize the Reviewed Public CLI 0.2.0 Release
+
+- **Date**: 2026-08-06
+- **Status**: Accepted
+- **Decided by**: Project owner
+
+**Context**: TASK-022 produced a verified Apache-2.0 release candidate, but publishing, pushing,
+PR creation, tagging, and deployment remained separate approval gates.
+
+**Decision**: Authorize pushing the release-readiness branch, opening its PR, creating and pushing
+tag `v0.2.0`, and publicly publishing `signal-hub@0.2.0` after the exact release commit has passed
+independent review, merged to `main`, and been revalidated. Registry credentials must not be
+recorded or printed.
+
+**Rationale**: The package has deterministic release checks and cross-version validation, while
+retaining an independently reviewed merge as the source of truth prevents an unreviewed branch
+commit from becoming a public release.
+
+**Trade-offs**: Publication cannot finish in the current unauthenticated npm session, and the
+repository's no-self-merge rule requires another reviewer before tagging.
+
+**Consequences**: PR #10 is open and passes Node 20/22/24 CI. TASK-023 tracks the remaining
+review, merge, npm authentication, tag, public publication, and registry verification steps.

@@ -13,7 +13,24 @@ _Last updated: 2026-08-06_
 
 | ID | Task | Owner | Started | Due |
 |----|------|-------|---------|-----|
-| — | (none — TASK-022 is complete; see `tasks/completed.md`) | — | — | — |
+| TASK-023 | CLI 0.2.0 Release | Implementer | 2026-08-06 | After independent review, merge, and npm authentication |
+
+### TASK-023: CLI 0.2.0 Release
+
+- **Owner**: Implementer
+- **Priority**: High
+- **Milestone**: M5
+- **Description**: Publish the verified Apache-2.0 `signal-hub@0.2.0` package from the exact
+  independently reviewed and merged `main` commit.
+- **Definition of Done**:
+  - [x] Push the release-readiness branch and open PR #10.
+  - [x] Pass Node 20/22/24 pull-request CI.
+  - [ ] Obtain reviewer-agent sign-off and merge without self-merging.
+  - [ ] Authenticate npm on the release machine without recording credentials.
+  - [ ] Revalidate the merged commit and package-name availability.
+  - [ ] Create and push `v0.2.0` from the exact released commit.
+  - [ ] Publish `signal-hub@0.2.0` with public access and verify the registry artifact.
+  - [ ] Record the released commit, tag, tarball integrity, and registry result.
 
 ## Task Detail Template
 

@@ -11,7 +11,8 @@ Harness Version: 1.1
 
 - **Date**: 2026-08-06
 - **Agent Role**: Implementer
-- **Session Goal**: Implement approved TASK-022 as a verified Apache-2.0 standalone CLI package without publishing it.
+- **Session Goal**: Complete TASK-022 and start the separately approved `signal-hub@0.2.0`
+  release workflow without bypassing review or registry authentication.
 
 ## Previous Session Summary
 
@@ -21,7 +22,9 @@ owner approved all implementation gates and selected Apache-2.0.
 
 ## Current Work
 
-- [x] TASK-022 CLI Release Readiness is complete; `npm publish` remains unapproved and was not run.
+- [x] TASK-022 CLI Release Readiness is complete.
+- [ ] TASK-023 CLI 0.2.0 Release is in progress; the branch and PR are published, but tagging and
+  npm publication are waiting for independent review/merge and npm authentication.
 
 ## Completed This Session
 
@@ -43,6 +46,9 @@ owner approved all implementation gates and selected Apache-2.0.
   Node 22.
 - [x] Resolved ISS-013 and synchronized architecture, dependencies, roadmap, project, task, plan,
   and development records.
+- [x] Pushed `codex/task-022-release-readiness-plan` and opened ready-for-review PR #10.
+- [x] Confirmed all PR #10 CI jobs pass on Node 20, 22, and 24.
+- [x] Rechecked that `signal-hub` is unregistered immediately before the release workflow.
 
 ## Issues Found / Decisions Made
 
@@ -51,16 +57,21 @@ owner approved all implementation gates and selected Apache-2.0.
 - ISS-013 is resolved. DEBT-003 records the non-blocking deprecation warning from transitive
   `prebuild-install@7.1.3`; dependency audits remain clear.
 - No shared interface, CLI command/flag/output, detector, Core behavior, or database schema changed.
-- No npm authentication, publication, access change, tag, release, or deployment occurred.
+- The project owner explicitly approved push, PR creation, tagging, deployment, and public npm
+  publication for this release.
+- GitHub authentication is valid, but the release machine is not authenticated to npm.
+- No npm publication, tag, GitHub release, or deployment occurred because PR #10 still requires
+  independent review and merge, and npm authentication is missing.
 
 ## Next Session: To-Do
 
-1. Review the TASK-022 implementation changes and CI result on a pull request.
-2. Recheck npm package-name availability immediately before any release decision.
-3. Present the exact commit, tarball metadata, registry, and tag for separate explicit human
-   approval before any future `npm publish`.
-4. Otherwise select a focused M6 plan; do not treat release readiness as approval for deployment or
-   deferred product work.
+1. Obtain independent reviewer-agent sign-off for PR #10 and merge it without self-merging.
+2. Authenticate the release machine to npm without recording or printing credentials.
+3. From the exact merged `main` commit, re-run `pnpm release:check`, recheck that `signal-hub`
+   remains available, create and push tag `v0.2.0`, publish with public access, and verify the
+   registry artifact.
+4. Update TASK-023 and release records after successful publication; otherwise record the exact
+   blocker without creating a tag or partial release.
 
 ## Important Context
 
@@ -69,4 +80,6 @@ owner approved all implementation gates and selected Apache-2.0.
   package-only compatibility check used for alternate local Node runtimes.
 - The root and internal libraries remain private; only the CLI manifest is publishable.
 - The verified tarball is temporary and deleted after the check.
-- `npm publish`, registry login/access changes, tags, releases, and deployment remain out of scope.
+- PR #10 is <https://github.com/internalforces/SignalHub/pull/10>; all three CI jobs passed.
+- Release authorization is recorded in ADR-013, but authorization does not override the repository's
+  independent-review and no-self-merge requirements.
