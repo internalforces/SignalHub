@@ -9,11 +9,11 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 const execFileAsync = promisify(execFile);
 const cliPath = new URL("../dist/index.js", import.meta.url);
 
-describe("signal-hub executable", () => {
+describe("csv-to-signal executable", () => {
   let directory: string;
 
   beforeEach(() => {
-    directory = mkdtempSync(join(tmpdir(), "signal-hub-cli-bin-"));
+    directory = mkdtempSync(join(tmpdir(), "csv-to-signal-cli-bin-"));
     writeFileSync(
       join(directory, "data.csv"),
       "metricId,timestamp,value\nm1,2026-07-27T00:00:00Z,100\nm1,2026-07-27T01:00:00Z,150\n",

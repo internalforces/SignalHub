@@ -290,3 +290,32 @@ repository's no-self-merge rule requires another reviewer before tagging.
 
 **Consequences**: PR #10 is open and passes Node 20/22/24 CI. TASK-023 tracks the remaining
 review, merge, npm authentication, tag, public publication, and registry verification steps.
+
+---
+
+### ADR-014: Rename the Public CLI Release to CSV to Signal 0.2.1
+
+- **Date**: 2026-08-06
+- **Status**: Accepted
+- **Decided by**: Project owner
+
+**Context**: The verified `signal-hub@0.2.0` candidate completed npm security-key authentication,
+but npm rejected the unscoped name as too similar to existing `signalhub@4.9.0`. Registry E404 did
+not establish that the name was publishable. The annotated `v0.2.0` tag already records the exact
+rejected candidate at `09b0cc9`.
+
+**Decision**: Use `csv-to-signal` as both the public npm package name and executable name. Prepare
+version `0.2.1` and a future `v0.2.1` tag while preserving `v0.2.0`. Keep all private
+`@signal-hub/*` workspace names, behavior, flags, output, schema, and dependency topology unchanged.
+
+**Rationale**: `csv-to-signal` states the current public input and output directly, avoids coupling
+the release to the rejected global name, and does not imply that private GitHub, CoinGecko, or
+windowed-analysis workspaces are CLI features.
+
+**Trade-offs**: The installed command changes before the first successful npm publication, and the
+new identity requires another reviewed commit, tarball verification, tag, and final publication
+approval.
+
+**Consequences**: TASK-023 targets `csv-to-signal@0.2.1`. The existing `v0.2.0` tag must not be
+moved or deleted. Publication remains prohibited until the exact merged candidate is presented and
+explicitly approved.

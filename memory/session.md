@@ -11,8 +11,9 @@ Harness Version: 1.1
 
 - **Date**: 2026-08-06
 - **Agent Role**: Implementer
-- **Session Goal**: Complete TASK-022 and start the separately approved `signal-hub@0.2.0`
-  release workflow without bypassing review or registry authentication.
+- **Session Goal**: Prepare the approved `csv-to-signal@0.2.1` replacement release after npm
+  rejected the original unscoped package name, without rewriting `v0.2.0` or publishing an
+  unreviewed artifact.
 
 ## Previous Session Summary
 
@@ -23,8 +24,8 @@ owner approved all implementation gates and selected Apache-2.0.
 ## Current Work
 
 - [x] TASK-022 CLI Release Readiness is complete.
-- [ ] TASK-023 CLI 0.2.0 Release is in progress; the branch and PR are published, but tagging and
-  npm publication are waiting for independent review/merge and npm authentication.
+- [ ] TASK-023 CSV to Signal 0.2.1 Release is in progress on
+  `codex/csv-to-signal-release`; npm publication remains pending.
 - [x] PR #10's package-only review finding is fixed and fully revalidated.
 
 ## Completed This Session
@@ -54,6 +55,16 @@ owner approved all implementation gates and selected Apache-2.0.
   `release:package` rebuild the CLI dependency subtree before packing.
 - [x] Re-ran the package-only clean-artifact scenario and the complete release check: the standalone
   install/execute path, 87 tests, typecheck, full audit, and production audit all pass.
+- [x] Merged PR #10 after independent review, revalidated exact `main` commit `09b0cc9`, and pushed
+  annotated tag `v0.2.0` at that commit.
+- [x] Completed npm security-key 2FA; npm then rejected `signal-hub` as too similar to existing
+  `signalhub@4.9.0`, so no npm package was created.
+- [x] Obtained owner approval for package and executable `csv-to-signal`, candidate version
+  `0.2.1`, and preservation of the existing `v0.2.0` tag.
+- [x] Added failing public-identity tests, then changed the package metadata, executable, usage text,
+  release checker, and user documentation; 10 focused CLI tests pass.
+- [x] Passed the full `pnpm release:check`: build, 87 tests, typecheck, both audits, exact four-file
+  package inspection, isolated install, `csv-to-signal` execution, and error paths.
 
 ## Issues Found / Decisions Made
 
@@ -61,31 +72,36 @@ owner approved all implementation gates and selected Apache-2.0.
   esbuild 0.25.12, and Node support matrix.
 - ISS-013 is resolved. DEBT-003 records the non-blocking deprecation warning from transitive
   `prebuild-install@7.1.3`; dependency audits remain clear.
-- No shared interface, CLI command/flag/output, detector, Core behavior, or database schema changed.
+- The package and executable names changed as approved; flags, JSON output, shared interfaces,
+  detector and Core behavior, dependency topology, and database schema did not change.
 - The project owner explicitly approved push, PR creation, tagging, deployment, and public npm
-  publication for this release.
-- GitHub authentication is valid, but the release machine is not authenticated to npm.
-- No npm publication, tag, GitHub release, or deployment occurred because PR #10 still requires
-  independent review and merge, and npm authentication is missing.
+  publication for the original `signal-hub@0.2.0` artifact; the changed artifact requires renewed
+  approval after exact merged verification.
+- npm authentication is valid with security-key 2FA. The changed `csv-to-signal@0.2.1` artifact
+  still requires independent review, merge, exact-tarball verification, and renewed publication
+  approval.
+- `v0.2.0` exists at `09b0cc9` as the rejected unscoped candidate and must not be moved or deleted.
+- No npm publication or GitHub release occurred.
 
 ## Next Session: To-Do
 
-1. Obtain independent reviewer-agent sign-off for PR #10 and merge it without self-merging.
-2. Authenticate the release machine to npm without recording or printing credentials.
-3. From the exact merged `main` commit, re-run `pnpm release:check`, recheck that `signal-hub`
-   remains available, create and push tag `v0.2.0`, publish with public access, and verify the
-   registry artifact.
-4. Update TASK-023 and release records after successful publication; otherwise record the exact
-   blocker without creating a tag or partial release.
+1. Obtain independent review, push the new branch, and merge without self-merging.
+2. Revalidate the exact merged commit and registry identity, then present the exact artifact for
+   renewed approval before creating `v0.2.1` or publishing.
+3. After approved publication, verify registry metadata, integrity, latest dist-tag, clean install,
+   executable behavior, and update TASK-023 release records.
 
 ## Important Context
 
-- The authoritative completed plan is `docs/2026-08-06-signal-hub-release-readiness-plan.md`.
+- The current follow-up plan is `docs/2026-08-06-csv-to-signal-release.md`; the completed packaging
+  plan remains `docs/2026-08-06-signal-hub-release-readiness-plan.md`.
 - `pnpm release:check` is the complete local release-candidate gate; `release:package` is the
   package-only compatibility check used for alternate local Node runtimes and now always rebuilds
   the CLI dependency subtree before inspecting the tarball.
 - The root and internal libraries remain private; only the CLI manifest is publishable.
-- The verified tarball is temporary and deleted after the check.
-- PR #10 is <https://github.com/internalforces/SignalHub/pull/10>; all three CI jobs passed.
-- Release authorization is recorded in ADR-013, but authorization does not override the repository's
-  independent-review and no-self-merge requirements.
+- The release check deletes its temporary tarball. A matching review artifact is retained outside
+  the repository at `/tmp/csv-to-signal-artifact.lAmK9R/csv-to-signal-0.2.1.tgz`, size 8,517 bytes,
+  integrity `sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`.
+- PR #10 is merged and `v0.2.0` is pushed at its exact merge commit.
+- ADR-014 records the new public identity. The original publication authorization does not cover an
+  unreviewed changed tarball and does not override independent-review and no-self-merge requirements.

@@ -56,7 +56,7 @@ To work on one package:
 pnpm --filter @signal-hub/analysis build
 pnpm --filter @signal-hub/analysis test
 pnpm --filter @signal-hub/analysis typecheck
-pnpm --filter signal-hub test
+pnpm --filter csv-to-signal test
 ```
 
 The CLI package's test command builds its workspace dependencies and its executable first, so it
@@ -101,7 +101,7 @@ These rules are enforced through package manifests and review rather than lint t
 The CLI creates `data.db` in its current working directory. Tests that use storage must use
 SQLite's `:memory:` path.
 
-The workspace root and internal libraries remain private. The `signal-hub@0.2.0` CLI manifest is
+The workspace root and internal libraries remain private. The `csv-to-signal@0.2.1` CLI manifest is
 prepared for public packaging but has not been published. Its build bundles private workspace code
 and keeps `better-sqlite3` as the only external runtime dependency. A strict file allowlist prevents
 source, tests, caches, logs, configuration, and local databases from entering the tarball.

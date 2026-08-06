@@ -1,7 +1,7 @@
 # Library usage
 
 The GitHub and CoinGecko connectors and `WindowedChangeDetector` are implemented workspace
-libraries. They are not wired into the `signal-hub analyze` CLI, so callers must compose them in
+libraries. They are not wired into the `csv-to-signal analyze` CLI, so callers must compose them in
 TypeScript or JavaScript.
 
 Build the workspace before using the generated packages:

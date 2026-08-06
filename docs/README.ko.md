@@ -1,8 +1,8 @@
-# Signal Hub 한국어 안내서
+# CSV to Signal 한국어 안내서
 
 [English](../README.md)
 
-Signal Hub는 시간 정보가 포함된 숫자 관측값을 결정론적 신호로 변환하고 점수순으로
+CSV to Signal은 시간 정보가 포함된 숫자 관측값을 결정론적 신호로 변환하고 점수순으로
 정렬하는 도구입니다. 별도의 서비스, 스케줄러, 대시보드를 운영하지 않고 시계열 신호
 규칙을 검증하려는 개발자와 분석가를 대상으로 합니다.
 
@@ -15,14 +15,14 @@ CSV -> Core -> Detector -> Signal -> CLI
 
 ## 현재 지원 범위
 
-- `signal-hub analyze` CLI를 통한 CSV 입력
+- `csv-to-signal analyze` CLI를 통한 CSV 입력
 - 기본 연속 구간 변화율 신호
 - 선택적 상향 임계값 통과 신호
 - 점수 필터링과 결정론적 JSON 출력
 - 워크스페이스 라이브러리 형태의 GitHub 커밋 기록, CoinGecko 가격 기록,
   윈도우 변화 분석
 
-GitHub, CoinGecko, 윈도우 분석은 현재 CLI에 연결되어 있지 않습니다. Signal Hub는 아직
+GitHub, CoinGecko, 윈도우 분석은 현재 CLI에 연결되어 있지 않습니다. CSV to Signal은 아직
 npm에 배포되지 않았으며 스케줄링, 알림, REST API, 대시보드, YAML 설정, Polymarket 또는
 범용 REST 수집, ML 방식의 이상·추세·스파이크·변화점 탐지를 제공하지 않습니다.
 
@@ -81,7 +81,7 @@ demo.price,2026-08-03T00:00:00Z,100
 ## CLI 옵션
 
 ```text
-signal-hub analyze <file.csv> [--min-score <n>] [--threshold <n>]
+csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]
 ```
 
 | 인자 | 설명 |

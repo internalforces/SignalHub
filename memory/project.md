@@ -15,9 +15,10 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: v0.2.0 release candidate (locally verified; unpublished)
-- **Phase**: M5 TASK-022 CLI release readiness complete
-- **Next milestone**: Review the exact release candidate before any separately approved npm publish, or select a focused M6 plan
+- **Version**: v0.2.1 release candidate (`csv-to-signal`; unpublished)
+- **Phase**: M5 TASK-023 CLI release identity correction in progress
+- **Next milestone**: Review and merge the renamed candidate, revalidate the exact merged tarball,
+  then obtain explicit approval before creating `v0.2.1` or publishing
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -60,6 +61,8 @@ SignalHub/
 | 2026-08-06 | Merged TASK-021 through PR #9; all approved M1-M4 work is now on `origin/main`, with no active task |
 | 2026-08-06 | Planned M5 TASK-022 after a baseline `npm pack` assessment found version drift, incomplete metadata, an unsafe tarball file set, and non-installable workspace dependencies; no publication performed |
 | 2026-08-06 | Completed TASK-022: Apache-2.0 `signal-hub@0.2.0` bundles private workspace code, packs four approved files, installs and runs independently on Node 20/22/24, and remains unpublished |
+| 2026-08-06 | npm accepted security-key authentication but rejected unscoped `signal-hub` as too similar to `signalhub@4.9.0`; the owner selected public package and command `csv-to-signal` with candidate version `0.2.1`, preserving the pushed `v0.2.0` tag |
+| 2026-08-06 | The renamed branch candidate passed the full release check: 87 tests, typecheck, both audits, four-file package inspection, isolated install, and `csv-to-signal` execution; the 8,517-byte artifact remains unpublished |
 
 ## Constraints
 

@@ -24,7 +24,7 @@ pnpm build                     # turbo run build (tsc -p per package, dependency
 pnpm test                      # turbo run test (vitest run per package)
 pnpm typecheck                 # turbo run typecheck (tsc --noEmit per package)
 pnpm --filter <pkg> test        # Run a single package's tests, e.g. --filter @signal-hub/analysis
-pnpm --filter signal-hub exec signal-hub analyze <file.csv>   # Run the CLI against a CSV file
+node apps/cli/dist/index.js analyze <file.csv>                 # Run the built CLI against a CSV file
 ```
 
 > Lint and format tooling (ESLint/Prettier) are **not yet configured** — not part of the MVP plan. Add them via a Planner-approved task before relying on `pnpm lint` / `pnpm format`.
@@ -33,7 +33,7 @@ pnpm --filter signal-hub exec signal-hub analyze <file.csv>   # Run the CLI agai
 
 ```bash
 pnpm -r build             # Build every package/connector/app in dependency order
-# ⚠️ npm publish of the `signal-hub` CLI package: HUMAN APPROVAL required, not yet set up
+# ⚠️ npm publish of the `csv-to-signal` CLI package: HUMAN APPROVAL required
 ```
 
 ## Database

@@ -7,6 +7,11 @@ Completed on 2026-08-06 after the project owner approved the single-package topo
 This work prepared a locally installable npm tarball only. It did not authorize or perform
 `npm publish`, deployment, registry authentication, tag creation, or a GitHub release.
 
+Postscript: npm later rejected the unscoped name `signal-hub` as too similar to existing
+`signalhub`. The approved replacement identity is tracked separately in
+[`docs/2026-08-06-csv-to-signal-release.md`](2026-08-06-csv-to-signal-release.md). This document
+remains the historical record of the completed `0.2.0` packaging work.
+
 ## Goal
 
 Make the `signal-hub` CLI package release-ready without changing its commands or JSON output:

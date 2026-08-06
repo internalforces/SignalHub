@@ -9,7 +9,7 @@ describe("runCli", () => {
   let originalCwd: string;
 
   beforeEach(() => {
-    directory = mkdtempSync(join(tmpdir(), "signal-hub-cli-"));
+    directory = mkdtempSync(join(tmpdir(), "csv-to-signal-cli-"));
     originalCwd = process.cwd();
     process.chdir(directory);
   });
@@ -63,7 +63,9 @@ describe("runCli", () => {
   });
 
   it("throws a usage error when the file argument is missing", async () => {
-    await expect(runCli(["analyze"])).rejects.toThrow(/Usage/);
+    await expect(runCli(["analyze"])).rejects.toThrow(
+      "Usage: csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]",
+    );
   });
 
   it("throws a usage error for an unknown command", async () => {

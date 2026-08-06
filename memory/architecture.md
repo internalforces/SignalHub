@@ -19,7 +19,7 @@ A CLI-based system built to achieve: a minimal, deterministic time-series → si
 
 ```
 signal-hub/
-├── apps/cli/                 # signal-hub analyze <file> — the only user-facing interface
+├── apps/cli/                 # csv-to-signal analyze <file> — the only user-facing interface
 ├── packages/
 │   ├── types/                # DataPoint, Signal, Detector, Connector interfaces (the shared contract)
 │   ├── connector-sdk/        # isValidDataPoint() + re-exported Connector/DataPoint

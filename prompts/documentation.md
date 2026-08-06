@@ -21,7 +21,7 @@ Principles:
 - Document what exists, not what's planned — mark unreleased features explicitly if mentioned at all
 - Public API surface to document as it lands: DataPoint, Signal, Detector, Connector (packages/types),
   CsvConnector (connectors/csv), runPipeline/formatSignals (packages/core), the CLI's
-  `signal-hub analyze <file> [--min-score <n>] [--threshold <n>]` usage
+  `csv-to-signal analyze <file> [--min-score <n>] [--threshold <n>]` usage
 - Cross-reference memory/glossary.md for terminology consistency
 
 Output: Updated README.md / docs/, no separate report file needed unless requested

@@ -1,6 +1,6 @@
-# signal-hub
+# csv-to-signal
 
-`signal-hub` is a deterministic local CLI for turning timestamped CSV observations into ranked
+`csv-to-signal` is a deterministic local CLI for turning timestamped CSV observations into ranked
 JSON signals. It stores normalized observations and signals in SQLite and produces stable signal
 identities for equal inputs and detector configuration.
 
@@ -13,15 +13,15 @@ identities for equal inputs and detector configuration.
 After an approved npm release:
 
 ```bash
-npm install --global signal-hub
+npm install --global csv-to-signal
 ```
 
-TASK-022 only prepares and verifies the package. No npm release has been performed yet.
+The `0.2.1` release candidate is verified locally. No npm release has been performed yet.
 
 ## Usage
 
 ```text
-signal-hub analyze <file.csv> [--min-score <n>] [--threshold <n>]
+csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]
 ```
 
 Example input:
@@ -36,7 +36,7 @@ demo.price,2026-08-03T00:00:00Z,100
 Example command:
 
 ```bash
-signal-hub analyze prices.csv --min-score 40 --threshold 120
+csv-to-signal analyze prices.csv --min-score 40 --threshold 120
 ```
 
 The command writes ranked JSON to standard output. It opens or creates `data.db` in the current
