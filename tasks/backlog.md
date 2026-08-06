@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Backlog — Signal Hub
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 
 Only genuinely unstarted work belongs here. Completed tasks are archived in
 [`tasks/completed.md`](completed.md); proposed ideas without an approved task ID remain in the
@@ -15,6 +15,7 @@ roadmap.
 
 | ID | Task | Priority | Milestone | Size | Notes |
 |----|------|----------|-----------|------|-------|
+| TASK-022 | CLI Release Readiness | High | M5 | M | Plan: `docs/2026-08-06-signal-hub-release-readiness-plan.md`; implementation awaits release-topology, identity/version, license, and dependency approvals; actual npm publish is excluded |
 | TASK-013 | Polymarket Connector | Low | Future | L | Not yet planned or approved. A dedicated plan and human approval are required; review `memory/reuse-candidates.md` #6 before implementation |
 
 ## Size Reference

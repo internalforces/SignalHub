@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # roadmap.md — Signal Hub Roadmap
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 
 ## Goal
 
@@ -51,7 +51,16 @@ Each requires its own focused plan and human approval.
 M4 does not include scheduling, checkpoints, caching, retries, rate-limit handling, CLI/Core
 integration, or database changes.
 
-### M5 — Consumption and Explanation (proposed)
+### M5 — CLI Release Readiness (planned)
+
+- Plan: [`docs/2026-08-06-signal-hub-release-readiness-plan.md`](docs/2026-08-06-signal-hub-release-readiness-plan.md)
+- [ ] TASK-022: produce a minimal, independently installable CLI tarball and complete all local
+  release checks without publishing it.
+
+Implementation is pending explicit decisions on release topology, package identity/version,
+license, and any new build dependency. `npm publish` remains a separate human approval gate.
+
+### M6 — Consumption and Explanation (proposed)
 
 - [ ] Proposed only: a minimal read-only local API, opt-in alerts, and deterministic template-based
   explanations. Each external side effect and public interface requires a separate approved plan.
@@ -62,7 +71,8 @@ integration, or database changes.
 - Minimal REST API (design review Phase 4)
 - Template-based explanation engine, then LLM adapter (design review Phase 4/5)
 - Alert system (design review Phase 4)
-- npm publish of the `signal-hub` CLI package (requires HUMAN APPROVAL when the time comes)
+- npm publish of the `signal-hub` CLI package after M5 readiness checks (requires HUMAN APPROVAL
+  when the exact release candidate is ready)
 
 ## Out of Scope
 

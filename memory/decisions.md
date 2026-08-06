@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 
 ## Template
 
@@ -234,3 +234,31 @@ does not expose it through Core defaults or the CLI.
 
 **Consequences**: TASK-014 is complete. No shared type, database schema, dependency, connector,
 Core, or CLI changes were made.
+
+---
+
+### ADR-012: Prioritize CLI Release Readiness Before New Product Surface
+
+- **Date**: 2026-08-06
+- **Status**: Accepted for planning only
+- **Decided by**: Project owner
+
+**Context**: M1 through M4 and TASK-021 are merged, but the CLI remains a private monorepo package.
+A baseline pack assessment found that its version and metadata are not release-aligned, its tarball
+contains local/development artifacts, and neither npm nor pnpm output installs independently.
+
+**Decision**: Make M5 a focused TASK-022 CLI release-readiness milestone before starting proposed
+consumption/explanation work. TASK-022 ends at a locally verified tarball; it does not include npm
+publication. The previous proposed consumption/explanation milestone moves to M6.
+
+**Rationale**: The implemented vertical slice should be reproducibly packageable before the project
+adds more public surfaces. A local pack/install proof exposes release defects without deploying or
+requiring registry credentials.
+
+**Trade-offs**: Product expansion pauses while package topology, version, license, metadata, and
+verification are settled. The recommended standalone bundle likely needs a new direct build
+dependency and therefore separate human approval.
+
+**Consequences**: The M5 plan and TASK-022 backlog entry are authoritative. Implementation remains
+pending its explicit decision gates, and `npm publish` remains separately prohibited without human
+approval.

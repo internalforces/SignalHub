@@ -7,13 +7,13 @@ Harness Version: 1.1
 
 # Known Issues — Signal Hub
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-06_
 
 ## Active Bugs
 
 | ID | Severity | Description | Found | Owner | Target resolution |
 |----|----------|-------------|-------|-------|-------------------|
-| — | — | — | — | — | — |
+| ISS-013 | High | The private CLI package is not independently installable: npm keeps `workspace:*` dependencies, pnpm rewrites them to unpublished packages, and the tarball includes local `data.db` plus development artifacts | 2026-08-06 | Unassigned | TASK-022 |
 
 ## Technical Debt
 
@@ -21,6 +21,24 @@ _Last updated: 2026-08-05_
 |----|-------------|--------|--------------------|
 | DEBT-001 | `CsvConnector` (Task 8 of the implementation plan) parses rows with a plain `split(",")` — no RFC 4180 quoting/escaping support, so values containing commas or quoted fields will misparse | Low for the MVP (canonical `metricId,timestamp,value` files); would break on hand-exported CSVs with embedded commas | Revisit if Phase 2+ needs richer CSV input, or if a user reports a real file that breaks it |
 | DEBT-002 | No ESLint/Prettier configured; `standards.md` code style section is only partially specified (indentation is inferred, max line length and coverage threshold are TBD) | Style drift risk as more agents contribute | Add before M2 (GitHub connector) once more contributors are active |
+
+### ISS-013: CLI release tarball is unsafe and cannot install independently
+
+- **Severity**: High release blocker; no current runtime impact while the package remains private.
+- **Found**: 2026-08-06
+- **Reproduction**:
+  1. Run `npm pack --dry-run --json` in `apps/cli`; observe `data.db`, `.turbo`, source, tests,
+     and configuration in the file list.
+  2. Pack with npm and install the tarball in an empty project; npm rejects `workspace:*` with
+     `EUNSUPPORTEDPROTOCOL`.
+  3. Pack with pnpm and install the tarball; pnpm has rewritten dependencies to `0.1.0`, but npm
+     returns `E404` for unpublished `@signal-hub/analysis` and the other private runtime packages.
+- **Root cause**: The CLI was designed only as a private monorepo workspace. It has no package
+  allowlist or standalone runtime build, and its concrete runtime graph points at private workspaces.
+- **Workaround**: Run the CLI from a built repository checkout; keep `private: true` and do not
+  distribute the current tarball.
+- **Permanent fix direction**: Complete approved TASK-022 using the single-package topology or an
+  separately approved multi-package release plan.
 
 ## Resolved
 
