@@ -319,3 +319,28 @@ approval.
 **Consequences**: TASK-023 targets `csv-to-signal@0.2.1`. The existing `v0.2.0` tag must not be
 moved or deleted. Publication remains prohibited until the exact merged candidate is presented and
 explicitly approved.
+
+---
+
+### ADR-015: Publish CSV to Signal 0.2.1 from the Exact Reviewed Merge
+
+- **Date**: 2026-08-06
+- **Status**: Accepted and executed
+- **Decided by**: Project owner
+
+**Context**: PR #11 passed independent review and Node 20/22/24 CI, then merged as
+`a3a00696d5526ea788199df2c1a3e1ce6a4217e3`. A clean release check reproduced the reviewed
+four-file artifact, size 8,517 bytes and integrity
+`sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`.
+
+**Decision**: After the owner explicitly approved this exact commit, tag, package, registry, size,
+and integrity, create and push annotated tag `v0.2.1` and publish `csv-to-signal@0.2.1` publicly to
+the npm registry with the `latest` dist-tag.
+
+**Rationale**: Publishing only the exact reviewed merge preserves release provenance and ensures
+the registry artifact matches the independently installed and executed candidate.
+
+**Consequences**: `csv-to-signal@0.2.1` is public and `latest`. Registry integrity and a clean
+consumer installation/execution match the approved artifact. TASK-023 and M5 are complete. The
+immutable 0.2.1 README retains one pre-release sentence; ISS-018 tracks its correction in a future
+separately approved version.

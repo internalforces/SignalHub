@@ -2,10 +2,9 @@
 
 ## Status
 
-Approved by the project owner on 2026-08-06 and in progress on
-`codex/csv-to-signal-release`. This plan changes the public npm package and executable identity;
-it does not authorize publishing the changed artifact before its exact merged commit and tarball
-are presented for final approval.
+Completed on 2026-08-06. PR #11 merged as commit
+`a3a00696d5526ea788199df2c1a3e1ce6a4217e3`; after exact merged-artifact revalidation and explicit
+owner approval, annotated tag `v0.2.1` was pushed and `csv-to-signal@0.2.1` was published publicly.
 
 ## Context
 
@@ -24,7 +23,7 @@ CSV -> Detector -> Signal
 - npm package: `csv-to-signal`
 - executable: `csv-to-signal`
 - release candidate: `0.2.1`
-- future tag after review and merge: `v0.2.1`
+- release tag: `v0.2.1`
 - license and author: Apache-2.0, `internalforces`
 - registry: `https://registry.npmjs.org/`
 
@@ -48,8 +47,10 @@ not be deleted or moved.
 - [x] Frozen install, full build, 87 tests, typecheck, production and full dependency audits.
 - [x] Dry-run package allowlist and real temporary tarball inspection.
 - [x] Isolated install and `csv-to-signal analyze` smoke and error-path checks.
-- Registry recheck immediately before any separately approved publish.
+- [x] Registry recheck immediately before the separately approved publish.
 
 The branch candidate is 8,517 bytes, contains exactly four approved files, and has integrity
 `sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`.
-It remains unpublished and untagged as `v0.2.1`.
+The registry reports the same integrity and `latest: 0.2.1`. A clean registry consumer installed
+the package, executed `csv-to-signal analyze`, produced the expected deterministic JSON, and created
+`data.db` only in the consumer working directory.

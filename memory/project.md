@@ -15,10 +15,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: v0.2.1 release candidate (`csv-to-signal`; unpublished)
-- **Phase**: M5 TASK-023 CLI release identity correction in progress
-- **Next milestone**: Review and merge the renamed candidate, revalidate the exact merged tarball,
-  then obtain explicit approval before creating `v0.2.1` or publishing
+- **Version**: v0.2.1 (`csv-to-signal`; published)
+- **Phase**: M5 complete
+- **Next milestone**: Select and approve a focused M6 plan before expanding the public surface
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -27,7 +26,7 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 |-------|-------|
 | Language | TypeScript (strict, Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`) |
 | Framework | None — plain Node.js CLI |
-| Infrastructure | None yet; npm publish planned, not executed |
+| Infrastructure | `csv-to-signal@0.2.1` published on npm; no service infrastructure deployed |
 | Repo Structure | Monorepo (pnpm workspaces + Turborepo) |
 
 ## Key Paths
@@ -63,6 +62,7 @@ SignalHub/
 | 2026-08-06 | Completed TASK-022: Apache-2.0 `signal-hub@0.2.0` bundles private workspace code, packs four approved files, installs and runs independently on Node 20/22/24, and remains unpublished |
 | 2026-08-06 | npm accepted security-key authentication but rejected unscoped `signal-hub` as too similar to `signalhub@4.9.0`; the owner selected public package and command `csv-to-signal` with candidate version `0.2.1`, preserving the pushed `v0.2.0` tag |
 | 2026-08-06 | The renamed branch candidate passed the full release check: 87 tests, typecheck, both audits, four-file package inspection, isolated install, and `csv-to-signal` execution; the 8,517-byte artifact remains unpublished |
+| 2026-08-06 | Merged PR #11 as `a3a0069`, pushed `v0.2.1`, published `csv-to-signal@0.2.1` with integrity `sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`, and verified `latest`, clean registry installation, execution, output, and local database placement |
 
 ## Constraints
 

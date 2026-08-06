@@ -13,7 +13,7 @@ _Last updated: 2026-08-06_
 
 | ID | Severity | Description | Found | Owner | Target resolution |
 |----|----------|-------------|-------|-------|-------------------|
-| ISS-017 | High release blocker | npm rejected unscoped `signal-hub` because it is too similar to existing `signalhub@4.9.0`; registry E404 did not establish publishability | 2026-08-06 | Implementer | Prepare and independently review `csv-to-signal@0.2.1`, then confirm registry acceptance only through an explicitly approved publication |
+| ISS-018 | Low documentation | The immutable `csv-to-signal@0.2.1` npm tarball README still says the release has not occurred, although registry publication succeeded | 2026-08-06 | Documenter | Source README corrected; publish the correction only as part of a separately approved future patch release |
 
 ## Technical Debt
 
@@ -59,6 +59,7 @@ _Last updated: 2026-08-06_
 | ISS-011 | The root `>=20` engine range claimed Node 21.x/23.x support that Vitest 4.1.10 excludes | 2026-08-05 | Narrowed the advertised engine and supporting docs to `^20.0.0 || ^22.0.0 || >=24.0.0` |
 | ISS-012 | The authoritative MVP plan still showed Vitest 2 package snippets without the explicit patched Vite peer | 2026-08-05 | Updated all eight package snippets to Vitest 4.1.10 and Vite 6.4.3; synchronized the root Node type dependency |
 | ISS-013 | The CLI tarball contained local/development artifacts and could not install outside the workspace | 2026-08-06 | Bundled private workspace code, kept `better-sqlite3` external, added a four-file allowlist, and verified isolated npm installation/execution on Node 20/22/24 |
+| ISS-017 | npm rejected unscoped `signal-hub` as too similar to existing `signalhub@4.9.0` | 2026-08-06 | Renamed the public package and executable to `csv-to-signal`, independently reviewed and merged the change, and successfully published `csv-to-signal@0.2.1` |
 | — | — | — | — |
 
 ## Issue Template

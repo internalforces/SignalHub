@@ -22,9 +22,10 @@ CSV -> Core -> Detector -> Signal -> CLI
 - 워크스페이스 라이브러리 형태의 GitHub 커밋 기록, CoinGecko 가격 기록,
   윈도우 변화 분석
 
-GitHub, CoinGecko, 윈도우 분석은 현재 CLI에 연결되어 있지 않습니다. CSV to Signal은 아직
-npm에 배포되지 않았으며 스케줄링, 알림, REST API, 대시보드, YAML 설정, Polymarket 또는
-범용 REST 수집, ML 방식의 이상·추세·스파이크·변화점 탐지를 제공하지 않습니다.
+GitHub, CoinGecko, 윈도우 분석은 현재 CLI에 연결되어 있지 않습니다. CSV to Signal
+`0.2.1`은 npm에 `csv-to-signal`로 공개됐으며, 스케줄링, 알림, REST API, 대시보드,
+YAML 설정, Polymarket 또는 범용 REST 수집, ML 방식의 이상·추세·스파이크·변화점 탐지를
+제공하지 않습니다.
 
 ## 실행 요구 사항
 

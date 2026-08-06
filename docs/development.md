@@ -101,8 +101,8 @@ These rules are enforced through package manifests and review rather than lint t
 The CLI creates `data.db` in its current working directory. Tests that use storage must use
 SQLite's `:memory:` path.
 
-The workspace root and internal libraries remain private. The `csv-to-signal@0.2.1` CLI manifest is
-prepared for public packaging but has not been published. Its build bundles private workspace code
+The workspace root and internal libraries remain private. The `csv-to-signal@0.2.1` CLI is
+published on npm. Its build bundles private workspace code
 and keeps `better-sqlite3` as the only external runtime dependency. A strict file allowlist prevents
 source, tests, caches, logs, configuration, and local databases from entering the tarball.
 
