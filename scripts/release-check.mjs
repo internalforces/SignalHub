@@ -104,6 +104,8 @@ if (!packageOnly) {
   run("pnpm", ["exec", "turbo", "run", "typecheck", "--force"]);
   run("pnpm", ["audit", "--prod", "--audit-level=high"]);
   run("pnpm", ["audit"]);
+} else {
+  run("pnpm", ["--filter", "signal-hub...", "build"]);
 }
 
 const dryRun = JSON.parse(

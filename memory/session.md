@@ -25,6 +25,7 @@ owner approved all implementation gates and selected Apache-2.0.
 - [x] TASK-022 CLI Release Readiness is complete.
 - [ ] TASK-023 CLI 0.2.0 Release is in progress; the branch and PR are published, but tagging and
   npm publication are waiting for independent review/merge and npm authentication.
+- [x] PR #10's package-only review finding is fixed and fully revalidated.
 
 ## Completed This Session
 
@@ -49,6 +50,10 @@ owner approved all implementation gates and selected Apache-2.0.
 - [x] Pushed `codex/task-022-release-readiness-plan` and opened ready-for-review PR #10.
 - [x] Confirmed all PR #10 CI jobs pass on Node 20, 22, and 24.
 - [x] Rechecked that `signal-hub` is unregistered immediately before the release workflow.
+- [x] Reproduced PR #10's unresolved review finding from an absent CLI `dist` directory, then made
+  `release:package` rebuild the CLI dependency subtree before packing.
+- [x] Re-ran the package-only clean-artifact scenario and the complete release check: the standalone
+  install/execute path, 87 tests, typecheck, full audit, and production audit all pass.
 
 ## Issues Found / Decisions Made
 
@@ -77,7 +82,8 @@ owner approved all implementation gates and selected Apache-2.0.
 
 - The authoritative completed plan is `docs/2026-08-06-signal-hub-release-readiness-plan.md`.
 - `pnpm release:check` is the complete local release-candidate gate; `release:package` is the
-  package-only compatibility check used for alternate local Node runtimes.
+  package-only compatibility check used for alternate local Node runtimes and now always rebuilds
+  the CLI dependency subtree before inspecting the tarball.
 - The root and internal libraries remain private; only the CLI manifest is publishable.
 - The verified tarball is temporary and deleted after the check.
 - PR #10 is <https://github.com/internalforces/SignalHub/pull/10>; all three CI jobs passed.
