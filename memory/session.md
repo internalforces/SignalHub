@@ -34,7 +34,8 @@ records into `main`. The GitHub Release object for the existing tag was still mi
   avoiding an immediate documentation-only 0.2.2.
 - [x] Verified all release-related temporary worktrees were clean and their commits were contained
   in `origin/main` before removal.
-- [x] Preserved the primary workspace's pre-existing uncommitted legal/research changes.
+- [x] Preserved the primary workspace's pre-existing uncommitted legal/research changes in the
+  named stash `pre-cleanup: license review and release follow-up changes (2026-08-06)`.
 
 ## Issues Found / Decisions Made
 
@@ -57,5 +58,5 @@ records into `main`. The GitHub Release object for the existing tag was still mi
   `sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`.
 - The source package README is already corrected; only the immutable npm 0.2.1 tarball retains the
   outdated sentence.
-- The primary workspace remains on its prior branch with pre-existing uncommitted work and must not
-  be reset or discarded during cleanup.
+- The primary workspace is clean on up-to-date `main`. Its prior uncommitted work is recoverable from
+  the named stash `pre-cleanup: license review and release follow-up changes (2026-08-06)`.
