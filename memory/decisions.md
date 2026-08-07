@@ -344,3 +344,26 @@ the registry artifact matches the independently installed and executed candidate
 consumer installation/execution match the approved artifact. TASK-023 and M5 are complete. The
 immutable 0.2.1 README retains one pre-release sentence; ISS-018 tracks its correction in a future
 separately approved version.
+
+---
+
+### ADR-016: Defer the ISS-018 README Correction to the Next Approved Patch
+
+- **Date**: 2026-08-07
+- **Status**: Accepted
+- **Decided by**: Project owner
+
+**Context**: The immutable npm package `csv-to-signal@0.2.1` contains one outdated sentence saying
+publication has not occurred. The repository source README is already corrected, and the runtime,
+CLI output, package integrity, and installation behavior are unaffected.
+
+**Decision**: Include the corrected README in the next separately approved patch release. Do not
+publish 0.2.2 immediately solely to replace this low-impact sentence.
+
+**Rationale**: A new immutable registry version and full release workflow are disproportionate to
+one documentation-only sentence when consumers can use the package normally and the source is
+already correct.
+
+**Consequences**: ISS-018 remains open and must be checked during the next patch release. GitHub
+Release v0.2.1 discloses the known issue and the deferral; no npm version, tag, code, API, schema,
+dependency, or runtime behavior changes as part of this decision.

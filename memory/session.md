@@ -9,106 +9,53 @@ Harness Version: 1.1
 
 ## Session Info
 
-- **Date**: 2026-08-06
+- **Date**: 2026-08-07
 - **Agent Role**: Implementer
-- **Session Goal**: Complete and record the independently reviewed, explicitly approved
-  `csv-to-signal@0.2.1` npm release.
+- **Session Goal**: Finish the v0.2.1 release by publishing the missing GitHub Release, record the
+  ISS-018 patch policy, and clean temporary release worktrees without disturbing existing user work.
 
 ## Previous Session Summary
 
-TASK-022 was planned after the private CLI tarball was found to contain local/development files and
-to be non-installable outside the workspace. The plan was committed as `bb560d3` before the project
-owner approved all implementation gates and selected Apache-2.0.
-
-## Current Work
-
-- [x] TASK-022 CLI Release Readiness is complete.
-- [x] TASK-023 CSV to Signal 0.2.1 Release is complete.
-- [x] PR #10's package-only review finding is fixed and fully revalidated.
+PR #11 merged as `a3a0069`, annotated tag `v0.2.1` was pushed, and
+`csv-to-signal@0.2.1` was published and verified on npm. PR #12 then merged the publication
+records into `main`. The GitHub Release object for the existing tag was still missing.
 
 ## Completed This Session
 
-- [x] Added failing release-package tests, then implemented the approved metadata and strict file
-  allowlist for `signal-hub@0.2.0`.
-- [x] Added the Apache-2.0 license at repository and CLI-package roots with copyright 2026
-  internalforces.
-- [x] Declared approved esbuild 0.25.12 directly and bundled all private workspace runtime code;
-  `better-sqlite3` is the only external runtime dependency.
-- [x] Added package documentation and retained the existing CLI command, flags, JSON output, and
-  SQLite behavior.
-- [x] Added `release:check` for forced build/test/typecheck, audits, package inspection, isolated
-  install, successful CLI execution, error-path checks, and temporary-artifact cleanup.
-- [x] Reduced the npm tarball from unsafe workspace contents to exactly four files totaling 8,504
-  bytes: bundled executable, manifest, README, and license.
-- [x] Verified isolated package installation and execution on Node 20.20.2, 22.22.3, and 24.19.0.
-- [x] Passed a forced Node 22 workspace build, 87 tests, typecheck, full audit, and production audit.
-- [x] Expanded pull-request CI to clean Node 20/22/24 checks, with the complete package check on
-  Node 22.
-- [x] Resolved ISS-013 and synchronized architecture, dependencies, roadmap, project, task, plan,
-  and development records.
-- [x] Pushed `codex/task-022-release-readiness-plan` and opened ready-for-review PR #10.
-- [x] Confirmed all PR #10 CI jobs pass on Node 20, 22, and 24.
-- [x] Rechecked that `signal-hub` is unregistered immediately before the release workflow.
-- [x] Reproduced PR #10's unresolved review finding from an absent CLI `dist` directory, then made
-  `release:package` rebuild the CLI dependency subtree before packing.
-- [x] Re-ran the package-only clean-artifact scenario and the complete release check: the standalone
-  install/execute path, 87 tests, typecheck, full audit, and production audit all pass.
-- [x] Merged PR #10 after independent review, revalidated exact `main` commit `09b0cc9`, and pushed
-  annotated tag `v0.2.0` at that commit.
-- [x] Completed npm security-key 2FA; npm then rejected `signal-hub` as too similar to existing
-  `signalhub@4.9.0`, so no npm package was created.
-- [x] Obtained owner approval for package and executable `csv-to-signal`, candidate version
-  `0.2.1`, and preservation of the existing `v0.2.0` tag.
-- [x] Added failing public-identity tests, then changed the package metadata, executable, usage text,
-  release checker, and user documentation; 10 focused CLI tests pass.
-- [x] Passed the full `pnpm release:check`: build, 87 tests, typecheck, both audits, exact four-file
-  package inspection, isolated install, `csv-to-signal` execution, and error paths.
-- [x] Addressed the independent review's P2 governance finding by making `AGENTS.md` and
-  `ORCHESTRATOR.md` name the current public CLI package and cover package/executable renames in the
-  public-interface approval gate.
-- [x] Merged PR #11 as `a3a00696d5526ea788199df2c1a3e1ce6a4217e3`, re-ran the full release
-  check from that exact clean commit, and reproduced the approved 8,517-byte artifact and integrity.
-- [x] Received exact-artifact approval, pushed annotated tag `v0.2.1`, published
-  `csv-to-signal@0.2.1`, and confirmed registry integrity, shasum, tarball URL, and `latest: 0.2.1`.
-- [x] Installed `csv-to-signal@0.2.1` in a fresh registry consumer, ran the installed executable
-  against `examples/prices.csv`, verified deterministic JSON, and confirmed `data.db` was created in
-  the consumer working directory.
+- [x] Verified that `v0.2.1` resolves to merge commit
+  `a3a00696d5526ea788199df2c1a3e1ce6a4217e3`.
+- [x] Rechecked npm registry version, tarball, integrity, shasum, and publication time for
+  `csv-to-signal@0.2.1`.
+- [x] Published stable GitHub Release `csv-to-signal v0.2.1` and confirmed it is neither a draft
+  nor a prerelease and is marked Latest.
+- [x] Added release notes covering installation, provenance, npm integrity, the unpublished
+  `v0.2.0` identity candidate, and ISS-018.
+- [x] Recorded the owner decision to include the corrected README in the next approved patch while
+  avoiding an immediate documentation-only 0.2.2.
+- [x] Verified all release-related temporary worktrees were clean and their commits were contained
+  in `origin/main` before removal.
+- [x] Preserved the primary workspace's pre-existing uncommitted legal/research changes.
 
 ## Issues Found / Decisions Made
 
-- ADR-012 now records the approved single-package topology, Apache-2.0 license, version 0.2.0,
-  esbuild 0.25.12, and Node support matrix.
-- ISS-013 is resolved. DEBT-003 records the non-blocking deprecation warning from transitive
-  `prebuild-install@7.1.3`; dependency audits remain clear.
-- The package and executable names changed as approved; flags, JSON output, shared interfaces,
-  detector and Core behavior, dependency topology, and database schema did not change.
-- The project owner explicitly approved push, PR creation, tagging, deployment, and public npm
-  publication for the original `signal-hub@0.2.0` artifact; the changed artifact requires renewed
-  approval after exact merged verification.
-- npm authentication is valid with security-key 2FA. `csv-to-signal@0.2.1` is publicly available
-  at `https://www.npmjs.com/package/csv-to-signal`.
-- `v0.2.0` exists at `09b0cc9` as the rejected unscoped candidate and must not be moved or deleted.
-- The published 0.2.1 package README retains a pre-release sentence. ISS-018 records this low-impact
-  documentation defect; source text is corrected, but changing the immutable registry artifact
-  requires a separately approved future version.
+- ADR-016 records that ISS-018 remains open for the next approved patch release and is not sufficient
+  reason by itself for an immediate 0.2.2.
+- GitHub Release: <https://github.com/internalforces/SignalHub/releases/tag/v0.2.1>.
+- No npm publication, new version, new tag, code change, dependency change, public-interface change,
+  database schema change, or infrastructure change was made.
 
 ## Next Session: To-Do
 
-1. Review and merge the post-release record/documentation branch without self-merging.
-2. Select a focused M6 plan before expanding the public surface.
-3. If a future patch release is approved, include the corrected package README and resolve ISS-018.
+1. Review and merge the release-closeout record PR without self-merging.
+2. Select and approve a focused M6 plan before expanding the public surface.
+3. Include the corrected package README when the next patch release is independently justified and
+   approved, then resolve ISS-018.
 
 ## Important Context
 
-- The current follow-up plan is `docs/2026-08-06-csv-to-signal-release.md`; the completed packaging
-  plan remains `docs/2026-08-06-signal-hub-release-readiness-plan.md`.
-- `pnpm release:check` is the complete local release-candidate gate; `release:package` is the
-  package-only compatibility check used for alternate local Node runtimes and now always rebuilds
-  the CLI dependency subtree before inspecting the tarball.
-- The root and internal libraries remain private; only the CLI manifest is publishable.
-- The published tarball is 8,517 bytes with integrity
-  `sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`
-  and shasum `21fd10bf3f04aa8846f7c33790cfdbefe3d640bb`.
-- PR #10 and `v0.2.0` preserve the rejected identity candidate; PR #11 and `v0.2.1` preserve the
-  successfully published release.
-- ADR-014 records the new public identity and ADR-015 records the exact approved publication.
+- `csv-to-signal@0.2.1` remains the npm `latest` version with integrity
+  `sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`.
+- The source package README is already corrected; only the immutable npm 0.2.1 tarball retains the
+  outdated sentence.
+- The primary workspace remains on its prior branch with pre-existing uncommitted work and must not
+  be reset or discarded during cleanup.
