@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Project: Signal Hub
 
-_Last updated: 2026-08-06_
+_Last updated: 2026-08-07_
 
 ## Summary
 
@@ -63,6 +63,7 @@ SignalHub/
 | 2026-08-06 | npm accepted security-key authentication but rejected unscoped `signal-hub` as too similar to `signalhub@4.9.0`; the owner selected public package and command `csv-to-signal` with candidate version `0.2.1`, preserving the pushed `v0.2.0` tag |
 | 2026-08-06 | The renamed branch candidate passed the full release check: 87 tests, typecheck, both audits, four-file package inspection, isolated install, and `csv-to-signal` execution; the 8,517-byte artifact remains unpublished |
 | 2026-08-06 | Merged PR #11 as `a3a0069`, pushed `v0.2.1`, published `csv-to-signal@0.2.1` with integrity `sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`, and verified `latest`, clean registry installation, execution, output, and local database placement |
+| 2026-08-07 | Published GitHub Release `v0.2.1` as the latest stable release; release notes record npm verification and defer ISS-018 to the next approved patch without an immediate documentation-only 0.2.2 |
 
 ## Constraints
 
