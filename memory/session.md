@@ -24,6 +24,9 @@ workspace API. One uncommitted documentation-session update was present on `main
   `codex/task-024-windowed-cli`; no direct commit was made to `main`.
 - [x] Planned and completed TASK-024.
 - [x] Prepared and fully verified an unpublished `csv-to-signal@0.3.0` candidate.
+- [x] Rebuilt and executed the CLI from a clean temporary working directory with
+  `examples/prices.csv --window-hours 24`; it emitted two consecutive-change signals and one
+  windowed-change signal and created the local SQLite database as expected.
 
 ## Completed This Session
 
@@ -44,7 +47,7 @@ workspace API. One uncommitted documentation-session update was present on `main
 
 - ADR-016 records the approved additive CLI surface and unreleased `0.3.0` candidate boundary.
 - ISS-019 records the resolved nanoid advisory discovered during the full audit.
-- The published npm latest remains `csv-to-signal@0.2.1`; no tag, push, PR, or publication occurred.
+- The published npm latest remains `csv-to-signal@0.2.1`; no tag, PR, or publication occurred.
 
 ## Next Session: To-Do
 
