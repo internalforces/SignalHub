@@ -17,7 +17,7 @@ npm install --global csv-to-signal
 ## Usage
 
 ```text
-csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]
+csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>] [--window-hours <n>]
 ```
 
 Example input:
@@ -32,7 +32,7 @@ demo.price,2026-08-03T00:00:00Z,100
 Example command:
 
 ```bash
-csv-to-signal analyze prices.csv --min-score 40 --threshold 120
+csv-to-signal analyze prices.csv --min-score 40 --threshold 120 --window-hours 24
 ```
 
 The command writes ranked JSON to standard output. It opens or creates `data.db` in the current
@@ -54,16 +54,18 @@ or other RFC 4180 features.
 
 - `--min-score <n>` returns only signals with a score at least `n`; the default is `0`.
 - `--threshold <n>` also detects an initial value at or above `n` and later upward crossings.
+- `--window-hours <n>` also compares the latest value with the newest observation at or before the
+  requested positive, finite hour window.
 
 Options require finite numeric values and must be supplied in flag/value pairs. When repeated,
 the last value wins.
 
 ## Scope
 
-The published CLI surface contains CSV analysis, consecutive percentage changes, optional upward
-threshold crossings, score filtering, SQLite persistence, and JSON output. The repository also
-contains GitHub and CoinGecko connectors and windowed analysis APIs, but those are private
-workspace libraries and are not CLI commands.
+The CLI surface contains CSV analysis, consecutive percentage changes, optional upward threshold
+crossings, optional windowed changes, score filtering, SQLite persistence, and JSON output. The
+repository also contains GitHub and CoinGecko connectors, but those are private workspace
+libraries and are not CLI commands.
 
 ## License
 

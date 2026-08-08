@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Completed Tasks — Signal Hub
 
-_Last updated: 2026-08-07_
+_Last updated: 2026-08-08_
 
 | ID | Task | Completed | Owner | Notes |
 |----|------|-----------|-------|-------|
@@ -36,3 +36,4 @@ _Last updated: 2026-08-07_
 | TASK-022 | CLI Release Readiness | 2026-08-06 | Implementer | Prepared `signal-hub@0.2.0` as an Apache-2.0 standalone bundle; strict four-file tarball, isolated Node 20/22/24 install/execute checks, 87 tests, typecheck, audits, and release-check automation pass; no publication performed |
 | TASK-023 | CSV to Signal 0.2.1 Release | 2026-08-06 | Implementer | Replaced npm-rejected `signal-hub` identity, merged independently reviewed PR #11, tagged exact commit `a3a0069` as `v0.2.1`, published `csv-to-signal@0.2.1`, and verified registry metadata, integrity, latest dist-tag, clean install, CLI output, and database placement |
 | — | GitHub Release v0.2.1 closeout | 2026-08-07 | Implementer | Published the stable GitHub Release from the existing verified tag, recorded npm provenance and ISS-018 deferral, and removed clean temporary release worktrees |
+| TASK-024 | Windowed Analysis CLI Integration | 2026-08-08 | Implementer | Added additive `--window-hours <n>` composition, strict positive finite validation, English/Korean guidance, and an unpublished `0.3.0` candidate; 90 tests, typecheck, audits, four-file package inspection, isolated install, and installed windowed execution pass |

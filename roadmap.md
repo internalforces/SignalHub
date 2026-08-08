@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # roadmap.md — Signal Hub Roadmap
 
-_Last updated: 2026-08-06_
+_Last updated: 2026-08-08_
 
 ## Goal
 
@@ -65,13 +65,18 @@ and `better-sqlite3` external:
 
 - [CSV to Signal 0.2.1 release identity plan](docs/2026-08-06-csv-to-signal-release.md)
 
-### M6 — Consumption and Explanation (proposed)
+### M6 — Windowed Analysis CLI Integration
 
-- [ ] Proposed only: a minimal read-only local API, opt-in alerts, and deterministic template-based
-  explanations. Each external side effect and public interface requires a separate approved plan.
+- Completed plan: [`docs/2026-08-08-signal-hub-m6-windowed-cli.md`](docs/2026-08-08-signal-hub-m6-windowed-cli.md)
+- [x] TASK-024: exposed the existing `WindowedChangeDetector` through additive
+  `--window-hours <n>` composition and verified an unpublished `csv-to-signal@0.3.0` candidate.
+
+M6 does not publish `0.3.0`, integrate network connectors, change the signal or database schema,
+or add scheduling, alerts, APIs, dashboards, or explanations.
 
 ## Backlog Ideas
 
+- Deterministic template-based explanations
 - Scheduler for recurring ingestion (design review Phase 4)
 - Minimal REST API (design review Phase 4)
 - Template-based explanation engine, then LLM adapter (design review Phase 4/5)

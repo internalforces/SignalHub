@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -62,9 +62,48 @@ describe("runCli", () => {
     expect(signals.some((signal: { type: string }) => signal.type === "threshold")).toBe(true);
   });
 
+  it("includes a windowed signal when --window-hours is passed", async () => {
+    writeCsv(
+      "metricId,timestamp,value",
+      "m1,2026-08-01T23:00:00Z,100",
+      "m1,2026-08-02T12:00:00Z,110",
+      "m1,2026-08-03T00:00:00Z,150",
+    );
+
+    const signals = JSON.parse(
+      await runCli(["analyze", "data.csv", "--window-hours", "24"]),
+    ) as Array<{ id: string; changePercent: number }>;
+    const windowed = signals.find((signal) => JSON.parse(signal.id)[0] === "windowed-change");
+
+    expect(windowed?.changePercent).toBe(50);
+  });
+
+  it("uses the last repeated --window-hours value", async () => {
+    writeCsv(
+      "metricId,timestamp,value",
+      "m1,2026-08-01T23:00:00Z,100",
+      "m1,2026-08-02T12:00:00Z,110",
+      "m1,2026-08-03T00:00:00Z,150",
+    );
+
+    const signals = JSON.parse(
+      await runCli([
+        "analyze",
+        "data.csv",
+        "--window-hours",
+        "24",
+        "--window-hours",
+        "12",
+      ]),
+    ) as Array<{ id: string; changePercent: number }>;
+    const windowed = signals.find((signal) => JSON.parse(signal.id)[0] === "windowed-change");
+
+    expect(windowed?.changePercent).toBeCloseTo(36.363636, 5);
+  });
+
   it("throws a usage error when the file argument is missing", async () => {
     await expect(runCli(["analyze"])).rejects.toThrow(
-      "Usage: csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]",
+      "Usage: csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>] [--window-hours <n>]",
     );
   });
 
@@ -77,5 +116,11 @@ describe("runCli", () => {
     await expect(runCli(["analyze", "data.csv", "--threshold"])).rejects.toThrow(/Usage/);
     await expect(runCli(["analyze", "data.csv", "--min-score", "nope"])).rejects.toThrow(/Usage/);
     await expect(runCli(["analyze", "data.csv", "--min-score", ""])).rejects.toThrow(/Usage/);
+    await expect(runCli(["analyze", "data.csv", "--window-hours"])).rejects.toThrow(/Usage/);
+    await expect(runCli(["analyze", "data.csv", "--window-hours", "0"])).rejects.toThrow(/Usage/);
+    await expect(runCli(["analyze", "data.csv", "--window-hours", "-1"])).rejects.toThrow(/Usage/);
+    await expect(runCli(["analyze", "data.csv", "--window-hours", "nope"])).rejects.toThrow(/Usage/);
+    await expect(runCli(["analyze", "data.csv", "--window-hours", "1e308"])).rejects.toThrow(/Usage/);
+    expect(existsSync(join(directory, "data.db"))).toBe(false);
   });
 });

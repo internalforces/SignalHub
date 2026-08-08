@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-08-06_
+_Last updated: 2026-08-08_
 
 ## Template
 
@@ -367,3 +367,32 @@ already correct.
 **Consequences**: ISS-018 remains open and must be checked during the next patch release. GitHub
 Release v0.2.1 discloses the known issue and the deferral; no npm version, tag, code, API, schema,
 dependency, or runtime behavior changes as part of this decision.
+
+---
+
+### ADR-017: Expose Windowed Analysis Through One Additive CLI Option
+
+- **Date**: 2026-08-08
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner
+
+**Context**: `WindowedChangeDetector` was implemented and tested in M4, but remained inaccessible
+to users of the public CSV CLI. Network connector commands, APIs, alerts, and explanations would
+introduce larger interfaces or side effects.
+
+**Decision**: Make M6 a focused TASK-024 that adds `--window-hours <n>` to `csv-to-signal analyze`.
+The option accepts a positive finite number, adds the existing detector beside the default
+percentage detector and optional threshold detector, and preserves last-value-wins parsing. Prepare
+an unpublished `0.3.0` candidate without changing Core, shared contracts, JSON, or the database.
+
+**Rationale**: This exposes already verified deterministic functionality through the smallest
+user-facing extension and preserves all existing default behavior.
+
+**Trade-offs**: A run may emit both consecutive and windowed signals, and the CLI does not expose
+the detector library's minimum-change constructor argument. The new flag requires a minor version
+release before npm users can access it.
+
+**Consequences**: TASK-024 is complete with 90 passing tests, typecheck, clear production/full
+audits, and an independently installable four-file `csv-to-signal@0.3.0` candidate. No Git tag or
+npm publication was authorized or performed. A newly disclosed development-only nanoid advisory
+encountered during verification was resolved at patched version 3.3.17 and recorded as ISS-019.

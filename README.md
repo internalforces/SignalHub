@@ -20,11 +20,13 @@ persists observations and signals in SQLite.
 - Consecutive percentage-change signals by default.
 - Optional upward threshold-crossing signals.
 - Score filtering and deterministic JSON output.
-- GitHub commit history, CoinGecko price history, and windowed change analysis as workspace
-  libraries. These are not connected to the CLI.
+- Optional windowed change signals through `--window-hours`.
+- GitHub commit history and CoinGecko price history as workspace libraries. These are not connected
+  to the CLI.
 
 CSV to Signal `0.2.1` is published on npm as
-[`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal). It does not provide scheduling,
+[`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal). The repository currently contains
+an unpublished `0.3.0` candidate with windowed CLI analysis. It does not provide scheduling,
 alerts, a REST API,
 a dashboard, YAML configuration, Polymarket or generic REST ingestion, or ML-style anomaly,
 trend, spike, and change-point detection.
@@ -84,7 +86,7 @@ The command prints ranked JSON:
 ## CLI reference
 
 ```text
-csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]
+csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>] [--window-hours <n>]
 ```
 
 | Argument | Meaning |
@@ -92,11 +94,12 @@ csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]
 | `<file.csv>` | CSV path, resolved from the current working directory |
 | `--min-score <n>` | Return only signals whose score is at least `n`; defaults to `0` |
 | `--threshold <n>` | Also emit a signal for an initial value at or above `n`, or a later upward crossing from below it |
+| `--window-hours <n>` | Also compare the latest value with the newest observation at or before a positive, finite hour window |
 
 For example:
 
 ```bash
-node apps/cli/dist/index.js analyze examples/prices.csv --min-score 45 --threshold 120
+node apps/cli/dist/index.js analyze examples/prices.csv --min-score 45 --threshold 120 --window-hours 24
 ```
 
 Flags require finite numeric values and are parsed in flag/value pairs. If a flag is repeated,
@@ -140,8 +143,8 @@ temporary tarball is deleted after verification. It never authenticates to npm o
 package.
 
 The release candidate contains only the bundled CLI executable, package metadata, its package
-README, and the Apache-2.0 license. GitHub, CoinGecko, and windowed-analysis workspaces remain
-private and are not runtime dependencies of the tarball.
+README, and the Apache-2.0 license. GitHub and CoinGecko workspaces remain private and are not
+runtime dependencies of the tarball; the private analysis workspace is bundled into the CLI.
 
 ## More documentation
 
@@ -149,4 +152,6 @@ private and are not runtime dependencies of the tarball.
 - [Development guide](docs/development.md): repository layout, commands, tests, and dependency rules.
 - [CSV to Signal 0.2.1 release plan](docs/2026-08-06-csv-to-signal-release.md): approved public
   package and executable identity after npm rejected the original unscoped name.
+- [M6 windowed CLI plan](docs/2026-08-08-signal-hub-m6-windowed-cli.md): approved scope for the
+  unpublished `0.3.0` candidate.
 - [MVP implementation plan](docs/2026-07-27-signal-hub-mvp.md): historical task-level implementation detail.

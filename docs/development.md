@@ -102,7 +102,8 @@ The CLI creates `data.db` in its current working directory. Tests that use stora
 SQLite's `:memory:` path.
 
 The workspace root and internal libraries remain private. The `csv-to-signal@0.2.1` CLI is
-published on npm. Its build bundles private workspace code
+published on npm, while the repository contains an unpublished `0.3.0` candidate with windowed CLI
+analysis. Its build bundles private workspace code
 and keeps `better-sqlite3` as the only external runtime dependency. A strict file allowlist prevents
 source, tests, caches, logs, configuration, and local databases from entering the tarball.
 

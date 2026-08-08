@@ -18,14 +18,14 @@ CSV -> Core -> Detector -> Signal -> CLI
 - `csv-to-signal analyze` CLI를 통한 CSV 입력
 - 기본 연속 구간 변화율 신호
 - 선택적 상향 임계값 통과 신호
+- `--window-hours`를 통한 선택적 윈도우 변화 신호
 - 점수 필터링과 결정론적 JSON 출력
-- 워크스페이스 라이브러리 형태의 GitHub 커밋 기록, CoinGecko 가격 기록,
-  윈도우 변화 분석
+- 워크스페이스 라이브러리 형태의 GitHub 커밋 기록과 CoinGecko 가격 기록
 
-GitHub, CoinGecko, 윈도우 분석은 현재 CLI에 연결되어 있지 않습니다. CSV to Signal
-`0.2.1`은 npm에 `csv-to-signal`로 공개됐으며, 스케줄링, 알림, REST API, 대시보드,
-YAML 설정, Polymarket 또는 범용 REST 수집, ML 방식의 이상·추세·스파이크·변화점 탐지를
-제공하지 않습니다.
+GitHub와 CoinGecko는 현재 CLI에 연결되어 있지 않습니다. CSV to Signal `0.2.1`은 npm에
+`csv-to-signal`로 공개됐으며, 저장소에는 윈도우 CLI 분석을 포함한 미공개 `0.3.0` 후보가
+있습니다. 스케줄링, 알림, REST API, 대시보드, YAML 설정, Polymarket 또는 범용 REST
+수집, ML 방식의 이상·추세·스파이크·변화점 탐지는 제공하지 않습니다.
 
 ## 실행 요구 사항
 
@@ -82,7 +82,7 @@ demo.price,2026-08-03T00:00:00Z,100
 ## CLI 옵션
 
 ```text
-csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]
+csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>] [--window-hours <n>]
 ```
 
 | 인자 | 설명 |
@@ -90,11 +90,12 @@ csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>]
 | `<file.csv>` | 현재 작업 디렉터리를 기준으로 해석하는 CSV 경로 |
 | `--min-score <n>` | 점수가 `n` 이상인 신호만 반환합니다. 기본값은 `0`입니다 |
 | `--threshold <n>` | 첫 관측값이 `n` 이상이거나 이후 값이 아래에서 위로 `n`을 통과할 때 임계값 신호를 추가합니다 |
+| `--window-hours <n>` | 최신 값을 양의 유한한 시간 윈도우 경계 또는 그 이전의 가장 최신 관측값과 비교합니다 |
 
 예를 들면 다음과 같습니다.
 
 ```bash
-node apps/cli/dist/index.js analyze examples/prices.csv --min-score 45 --threshold 120
+node apps/cli/dist/index.js analyze examples/prices.csv --min-score 45 --threshold 120 --window-hours 24
 ```
 
 옵션 값은 유한한 숫자여야 하며, 플래그와 값의 쌍으로 해석됩니다. 같은 플래그를 여러 번
@@ -129,4 +130,5 @@ CLI를 실행할 때마다 입력 CSV의 위치가 아닌 현재 작업 디렉�
 - [라이브러리 사용법](library-usage.md): GitHub, CoinGecko,
   `WindowedChangeDetector` 예제(영문)
 - [개발 안내](development.md): 저장소 구조, 개발 명령, 테스트, 의존성 규칙(영문)
+- [M6 윈도우 CLI 계획](2026-08-08-signal-hub-m6-windowed-cli.md): 미공개 `0.3.0` 후보의 승인 범위(영문)
 - [MVP 구현 계획](2026-07-27-signal-hub-mvp.md): 작업 단위의 과거 구현 기록(영문)

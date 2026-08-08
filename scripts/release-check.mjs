@@ -71,7 +71,7 @@ function assertPackage(pack) {
   }
   if (
     manifest.name !== "csv-to-signal" ||
-    manifest.version !== "0.2.1" ||
+    manifest.version !== "0.3.0" ||
     manifest.license !== "Apache-2.0" ||
     manifest.bin?.["csv-to-signal"] !== "./dist/index.js"
   ) {
@@ -150,12 +150,20 @@ try {
     "metricId,timestamp,value\ndemo.price,2026-08-01T00:00:00Z,100\ndemo.price,2026-08-02T00:00:00Z,125\n",
   );
 
-  const stdout = run(executable, ["analyze", "prices.csv"], {
+  const stdout = run(executable, ["analyze", "prices.csv", "--window-hours", "24"], {
     cwd: temporaryRoot,
     capture: true,
   });
   const signals = JSON.parse(stdout);
-  if (!Array.isArray(signals) || signals.length !== 1 || signals[0].metricId !== "demo.price") {
+  const windowedSignal = Array.isArray(signals)
+    ? signals.find((signal) => JSON.parse(signal.id)[0] === "windowed-change")
+    : undefined;
+  if (
+    !Array.isArray(signals) ||
+    signals.length !== 2 ||
+    signals[0].metricId !== "demo.price" ||
+    windowedSignal?.changePercent !== 25
+  ) {
     throw new Error("Installed CLI did not produce the expected signal output");
   }
   if (!existsSync(join(temporaryRoot, "data.db"))) {
