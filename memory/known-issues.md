@@ -11,9 +11,7 @@ _Last updated: 2026-08-08_
 
 ## Active Bugs
 
-| ID | Severity | Description | Found | Owner | Target resolution |
-|----|----------|-------------|-------|-------|-------------------|
-| ISS-018 | Low documentation | The immutable `csv-to-signal@0.2.1` npm tarball README still says the release has not occurred, although registry publication succeeded | 2026-08-06 | Documenter | Source README corrected; include it in the next separately approved patch release, but do not rush 0.2.2 solely for this wording issue |
+No active bugs.
 
 ## Technical Debt
 
@@ -22,6 +20,7 @@ _Last updated: 2026-08-08_
 | DEBT-001 | `CsvConnector` (Task 8 of the implementation plan) parses rows with a plain `split(",")` — no RFC 4180 quoting/escaping support, so values containing commas or quoted fields will misparse | Low for the MVP (canonical `metricId,timestamp,value` files); would break on hand-exported CSVs with embedded commas | Revisit if Phase 2+ needs richer CSV input, or if a user reports a real file that breaks it |
 | DEBT-002 | No ESLint/Prettier configured; `standards.md` code style section is only partially specified (indentation is inferred, max line length and coverage threshold are TBD) | Style drift risk as more agents contribute | Add before M2 (GitHub connector) once more contributors are active |
 | DEBT-003 | Isolated npm installation warns that transitive `prebuild-install@7.1.3` is deprecated through `better-sqlite3@11.x` | No known vulnerability or runtime failure; adds maintenance noise during consumer installation | Reassess during the next approved `better-sqlite3` major-version maintenance task |
+| DEBT-004 | GitHub warns that the Node 20 runtime embedded in `actions/checkout@v4` and `actions/setup-node@v4` is deprecated and forces those actions to Node 24 | CI still passes for the Node 20/22/24 project matrix; warning concerns the actions runner runtime, not the tested application runtime | Review an actions-version upgrade in a separately approved infrastructure-maintenance task |
 
 ### ISS-013: CLI release tarball is unsafe and cannot install independently
 
@@ -60,6 +59,7 @@ _Last updated: 2026-08-08_
 | ISS-012 | The authoritative MVP plan still showed Vitest 2 package snippets without the explicit patched Vite peer | 2026-08-05 | Updated all eight package snippets to Vitest 4.1.10 and Vite 6.4.3; synchronized the root Node type dependency |
 | ISS-013 | The CLI tarball contained local/development artifacts and could not install outside the workspace | 2026-08-06 | Bundled private workspace code, kept `better-sqlite3` external, added a four-file allowlist, and verified isolated npm installation/execution on Node 20/22/24 |
 | ISS-017 | npm rejected unscoped `signal-hub` as too similar to existing `signalhub@4.9.0` | 2026-08-06 | Renamed the public package and executable to `csv-to-signal`, independently reviewed and merged the change, and successfully published `csv-to-signal@0.2.1` |
+| ISS-018 | The immutable `csv-to-signal@0.2.1` npm tarball README said publication had not occurred | 2026-08-08 | Shipped the corrected README in the separately approved `csv-to-signal@0.3.0` release; the historical `0.2.1` artifact remains immutable |
 | ISS-019 | Development-only PostCSS resolved nanoid 3.3.16, affected by GHSA-2v37-7h3g-55p8 | 2026-08-08 | Added a workspace resolution override to nanoid 3.3.17, refreshed the lockfile, and verified frozen install plus full/production audits with no known vulnerabilities |
 | — | — | — | — |
 

@@ -22,9 +22,9 @@ CSV -> Core -> Detector -> Signal -> CLI
 - 점수 필터링과 결정론적 JSON 출력
 - 워크스페이스 라이브러리 형태의 GitHub 커밋 기록과 CoinGecko 가격 기록
 
-GitHub와 CoinGecko는 현재 CLI에 연결되어 있지 않습니다. CSV to Signal `0.2.1`은 npm에
-`csv-to-signal`로 공개됐으며, 저장소에는 윈도우 CLI 분석을 포함한 미공개 `0.3.0` 후보가
-있습니다. 스케줄링, 알림, REST API, 대시보드, YAML 설정, Polymarket 또는 범용 REST
+GitHub와 CoinGecko는 현재 CLI에 연결되어 있지 않습니다. 윈도우 CLI 분석을 포함한
+CSV to Signal `0.3.0`은 npm에 `csv-to-signal`로 공개됐습니다. 스케줄링, 알림, REST API,
+대시보드, YAML 설정, Polymarket 또는 범용 REST
 수집, ML 방식의 이상·추세·스파이크·변화점 탐지는 제공하지 않습니다.
 
 ## 실행 요구 사항
@@ -130,5 +130,6 @@ CLI를 실행할 때마다 입력 CSV의 위치가 아닌 현재 작업 디렉�
 - [라이브러리 사용법](library-usage.md): GitHub, CoinGecko,
   `WindowedChangeDetector` 예제(영문)
 - [개발 안내](development.md): 저장소 구조, 개발 명령, 테스트, 의존성 규칙(영문)
-- [M6 윈도우 CLI 계획](2026-08-08-signal-hub-m6-windowed-cli.md): 미공개 `0.3.0` 후보의 승인 범위(영문)
+- [M6 윈도우 CLI 계획](2026-08-08-signal-hub-m6-windowed-cli.md): `0.3.0`으로 공개된
+  윈도우 CLI 통합 범위(영문)
 - [MVP 구현 계획](2026-07-27-signal-hub-mvp.md): 작업 단위의 과거 구현 기록(영문)

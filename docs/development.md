@@ -47,7 +47,7 @@ pnpm test                          # run all Vitest suites
 pnpm typecheck                     # type-check all workspaces without emitting files
 pnpm audit --prod --audit-level=high
 pnpm audit                         # full dependency audit for maintenance work
-pnpm release:check                 # validate the unpublished CLI tarball end to end
+pnpm release:check                 # validate a local CLI tarball end to end
 ```
 
 To work on one package:
@@ -101,13 +101,12 @@ These rules are enforced through package manifests and review rather than lint t
 The CLI creates `data.db` in its current working directory. Tests that use storage must use
 SQLite's `:memory:` path.
 
-The workspace root and internal libraries remain private. The `csv-to-signal@0.2.1` CLI is
-published on npm, while the repository contains an unpublished `0.3.0` candidate with windowed CLI
-analysis. Its build bundles private workspace code
+The workspace root and internal libraries remain private. The `csv-to-signal@0.3.0` CLI with
+windowed analysis is published on npm. Its build bundles private workspace code
 and keeps `better-sqlite3` as the only external runtime dependency. A strict file allowlist prevents
 source, tests, caches, logs, configuration, and local databases from entering the tarball.
 
 `pnpm release:check` creates package artifacts only in a temporary directory, installs the tarball
-into an isolated consumer project, exercises valid and invalid CLI paths, prints candidate metadata,
+into an isolated consumer project, exercises valid and invalid CLI paths, prints artifact metadata,
 and deletes the temporary files. Any npm publish, registry access change, tag, release, or deployment
 still requires separate explicit human approval.
