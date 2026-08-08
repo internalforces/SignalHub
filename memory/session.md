@@ -9,48 +9,53 @@ Harness Version: 1.1
 
 ## Session Info
 
-- **Date**: 2026-08-07
-- **Agent Role**: Documenter
-- **Session Goal**: Draft accurate English and Korean GitHub-facing project descriptions from the
-  shipped implementation and current public release state.
+- **Date**: 2026-08-08
+- **Agent Role**: Implementer
+- **Session Goal**: Clean the Git state and complete approved TASK-024 windowed CLI integration.
 
 ## Previous Session Summary
 
-The project completed and published `csv-to-signal@0.2.1`. The public CLI supports local CSV
-analysis, deterministic percentage-change and optional upward threshold signals, score filtering,
-JSON output, and SQLite persistence. GitHub and CoinGecko connectors and windowed analysis remain
-private workspace libraries and are not exposed through the CLI.
+The project had published `csv-to-signal@0.2.1`, while `WindowedChangeDetector` remained a private
+workspace API. One uncommitted documentation-session update was present on `main`.
 
 ## Current Work
 
-- [x] Reviewed the project constitution, current state, architecture, terminology, implementation
-  plan, and English/Korean user documentation.
-- [x] Prepared a Korean project description that distinguishes the Signal Hub engine from the
-  published CSV to Signal CLI and avoids presenting deferred features as shipped functionality.
-- [x] Refined the copy into concise English and Korean variants suitable for the GitHub repository
-  About section.
+- [x] Preserved the existing session update in a separate commit on
+  `codex/task-024-windowed-cli`; no direct commit was made to `main`.
+- [x] Planned and completed TASK-024.
+- [x] Prepared and fully verified an unpublished `csv-to-signal@0.3.0` candidate.
 
 ## Completed This Session
 
-- [x] Produced a reusable Korean introduction covering the problem, processing flow, key design
-  properties, current scope, implementation stack, and intended users.
-- [x] Produced matching one-sentence English and Korean GitHub descriptions.
+- [x] Added positive finite `--window-hours <n>` parsing with existing last-value-wins behavior.
+- [x] Composed `WindowedChangeDetector` alongside the default percentage detector and optional
+  threshold detector without changing default behavior, JSON, Core, Storage, or schemas.
+- [x] Added source-level and bundled-executable regression tests, including invalid-value paths
+  that do not create `data.db`.
+- [x] Updated English/Korean user, package, library, and development documentation.
+- [x] Bumped the local package candidate to `0.3.0` and extended isolated package verification to
+  execute windowed analysis.
+- [x] Resolved development-only GHSA-2v37-7h3g-55p8 by pinning nanoid 3.3.17 through the workspace
+  resolution configuration; no new dependency was added.
+- [x] Passed a frozen install, all workspace builds, 90 tests, typecheck, full and production
+  audits, four-file tarball inspection, isolated install, and installed CLI execution.
 
 ## Issues Found / Decisions Made
 
-- No new architecture decisions or project issues were introduced.
-- The description uses “Signal Hub” for the overall project and “CSV to Signal” for the published
-  `csv-to-signal` CLI package.
+- ADR-016 records the approved additive CLI surface and unreleased `0.3.0` candidate boundary.
+- ISS-019 records the resolved nanoid advisory discovered during the full audit.
+- The published npm latest remains `csv-to-signal@0.2.1`; no tag, push, PR, or publication occurred.
 
 ## Next Session: To-Do
 
-1. Select and approve a focused M6 plan before expanding the public surface.
-2. If the project description is adopted in repository documentation, tailor its length and tone
-   to the target location before editing the relevant file.
+1. Independently review TASK-024 and merge it through the normal pull-request workflow.
+2. If a public `0.3.0` release is desired, obtain separate approval for tagging and npm publication.
+3. Select a focused follow-up milestone; deferred features still require their own plan and approval.
 
 ## Important Context
 
-- The public package is `csv-to-signal@0.2.1` and is available on npm.
-- The CLI is the only public user-facing interface; workspace connector and analysis libraries are
-  implemented but private.
-- Deferred functionality must not be described as currently available.
+- The local candidate tarball contains exactly four files, is 8,906 bytes, and verified with
+  integrity `sha512-k1z2wk1Ub+9QE0yHLOv2iLBJCGLIhFnW7zTO1PcN4FNhTuvP0e0M5VSv7yA0CPZN3y7MGmy0nayMgR9JrExa6Q==`.
+- The source command is
+  `csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>] [--window-hours <n>]`.
+- `v0.2.0` and `v0.2.1` remain immutable historical tags.

@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Architecture — Signal Hub
 
-_Last updated: 2026-08-06_
+_Last updated: 2026-08-08_
 
 ## System Overview
 
@@ -60,6 +60,7 @@ CSV file, GitHub commits endpoint, or CoinGecko market chart
 | Focused M3 | CoinGecko connector library only; no CLI, Core, Storage, or schema changes | 2026-08-04 |
 | Focused M4 | Deterministic windowed detector library only; no CLI, Core, Storage, or schema changes | 2026-08-05 |
 | CLI release topology | Publish one bundled CLI artifact; keep internal workspaces private and `better-sqlite3` external | 2026-08-06 |
+| Windowed CLI composition | Add `WindowedChangeDetector` only when `--window-hours` supplies a positive finite duration | 2026-08-08 |
 
 ## Architecture Constraints
 
@@ -97,3 +98,6 @@ Do not implement without a new plan and human approval:
 
 The CoinGecko connector was separately planned and approved as TASK-017. That approval does not
 extend to CLI integration, persistence changes, or the remaining deferred connectors.
+
+TASK-024 separately approved windowed-analysis CLI integration only. It does not authorize other
+detectors, connector commands, schema changes, or any item on the DEFER list.

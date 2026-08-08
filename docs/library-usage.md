@@ -1,8 +1,9 @@
 # Library usage
 
 The GitHub and CoinGecko connectors and `WindowedChangeDetector` are implemented workspace
-libraries. They are not wired into the `csv-to-signal analyze` CLI, so callers must compose them in
-TypeScript or JavaScript.
+libraries. The connectors are not wired into the `csv-to-signal analyze` CLI. Windowed analysis is
+available in the CLI through `--window-hours` and can also be composed directly in TypeScript or
+JavaScript.
 
 Build the workspace before using the generated packages:
 
@@ -93,6 +94,7 @@ The second constructor argument is the optional minimum absolute percentage chan
 to zero. The detector returns at most one signal. It returns none when history is insufficient,
 the reference value is zero, the values are unchanged, or the change is below the minimum.
 
-The detector is not selected by the CLI. To persist and rank signals from a library connector,
-compose the connector, `SqliteStorage`, the desired detectors, and `runPipeline` in a workspace
-application. That integration remains application code rather than a new public CLI option.
+The CLI selects the detector when `--window-hours <n>` is supplied; its library constructor also
+supports a minimum absolute percentage change that the CLI does not expose. To persist and rank
+signals from a library connector, compose the connector, `SqliteStorage`, the desired detectors,
+and `runPipeline` in a workspace application.

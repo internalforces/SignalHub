@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Project: Signal Hub
 
-_Last updated: 2026-08-06_
+_Last updated: 2026-08-08_
 
 ## Summary
 
@@ -15,9 +15,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: v0.2.1 (`csv-to-signal`; published)
-- **Phase**: M5 complete
-- **Next milestone**: Select and approve a focused M6 plan before expanding the public surface
+- **Version**: `csv-to-signal@0.3.0` candidate (unpublished); npm latest remains v0.2.1
+- **Phase**: M6 complete on the TASK-024 branch
+- **Next milestone**: Independent review and merge; any `0.3.0` tag or npm publication needs separate approval
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -63,6 +63,8 @@ SignalHub/
 | 2026-08-06 | npm accepted security-key authentication but rejected unscoped `signal-hub` as too similar to `signalhub@4.9.0`; the owner selected public package and command `csv-to-signal` with candidate version `0.2.1`, preserving the pushed `v0.2.0` tag |
 | 2026-08-06 | The renamed branch candidate passed the full release check: 87 tests, typecheck, both audits, four-file package inspection, isolated install, and `csv-to-signal` execution; the 8,517-byte artifact remains unpublished |
 | 2026-08-06 | Merged PR #11 as `a3a0069`, pushed `v0.2.1`, published `csv-to-signal@0.2.1` with integrity `sha512-2yy8IYlFEohj3KxTJuG7JcHTrkU4yh5QTPClJQNXBazQ3QnFNj2YtwyaaDdi1F5IfNZiqzjt7oEVoWK3V+Ustg==`, and verified `latest`, clean registry installation, execution, output, and local database placement |
+| 2026-08-08 | Completed TASK-024 on its branch: additive `--window-hours`, `0.3.0` candidate metadata, 90 tests, typecheck, clear audits, four-file tarball inspection, isolated install, and installed windowed execution; no tag or publication |
+| 2026-08-08 | Resolved newly reported nanoid GHSA-2v37-7h3g-55p8 in development tooling by pinning the allowed transitive patch 3.3.17; production and full audits report no known vulnerabilities |
 
 ## Constraints
 
@@ -70,6 +72,6 @@ SignalHub/
 - No YAML config loader (`config` package) without a separate focused plan and human approval
 - GitHub commit ingestion is available as a connector package; CLI integration remains deferred because it changes the public CLI surface
 - CoinGecko ingestion is available as a library package; Polymarket, generic REST, and CoinGecko CLI integration remain deferred
-- Windowed change analysis is available from `@signal-hub/analysis`; Core and CLI integration remain outside M4
+- Windowed change analysis is available from `@signal-hub/analysis` and through the unreleased CLI candidate's `--window-hours`; Core defaults remain unchanged
 - Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, analysis, storage, types` (CLI composes these dependencies but contains no pipeline logic)
 - Timestamps must be normalized to ISO 8601 UTC by connectors before returning `DataPoint`s
