@@ -24,10 +24,9 @@ persists observations and signals in SQLite.
 - GitHub commit history and CoinGecko price history as workspace libraries. These are not connected
   to the CLI.
 
-CSV to Signal `0.2.1` is published on npm as
-[`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal). The repository currently contains
-an unpublished `0.3.0` candidate with windowed CLI analysis. It does not provide scheduling,
-alerts, a REST API,
+CSV to Signal `0.3.0` is published on npm as
+[`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal) and includes windowed CLI analysis.
+It does not provide scheduling, alerts, a REST API,
 a dashboard, YAML configuration, Polymarket or generic REST ingestion, or ML-style anomaly,
 trend, spike, and change-point detection.
 
@@ -129,9 +128,9 @@ is ignored by Git.
 
 Use a dedicated working directory if you want separate databases for separate analyses.
 
-## Release-candidate verification
+## Release verification
 
-Maintainers can build, inspect, install, and execute the unpublished npm tarball locally:
+Maintainers can build, inspect, install, and execute the npm tarball locally before publication:
 
 ```bash
 pnpm release:check
@@ -142,7 +141,7 @@ audits, strict package-content validation, and an isolated tarball install/CLI s
 temporary tarball is deleted after verification. It never authenticates to npm or publishes a
 package.
 
-The release candidate contains only the bundled CLI executable, package metadata, its package
+The release artifact contains only the bundled CLI executable, package metadata, its package
 README, and the Apache-2.0 license. GitHub and CoinGecko workspaces remain private and are not
 runtime dependencies of the tarball; the private analysis workspace is bundled into the CLI.
 
@@ -153,5 +152,5 @@ runtime dependencies of the tarball; the private analysis workspace is bundled i
 - [CSV to Signal 0.2.1 release plan](docs/2026-08-06-csv-to-signal-release.md): approved public
   package and executable identity after npm rejected the original unscoped name.
 - [M6 windowed CLI plan](docs/2026-08-08-signal-hub-m6-windowed-cli.md): approved scope for the
-  unpublished `0.3.0` candidate.
+  windowed CLI integration released in `0.3.0`.
 - [MVP implementation plan](docs/2026-07-27-signal-hub-mvp.md): historical task-level implementation detail.

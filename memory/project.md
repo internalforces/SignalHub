@@ -15,9 +15,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: `csv-to-signal@0.3.0` candidate (unpublished); npm latest remains v0.2.1
-- **Phase**: M6 complete on the TASK-024 branch
-- **Next milestone**: Independent review and merge; any `0.3.0` tag or npm publication needs separate approval
+- **Version**: `csv-to-signal@0.3.0` published and npm `latest`
+- **Phase**: M6 released
+- **Next milestone**: Select and separately approve a focused follow-up plan
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -26,7 +26,7 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 |-------|-------|
 | Language | TypeScript (strict, Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`) |
 | Framework | None — plain Node.js CLI |
-| Infrastructure | `csv-to-signal@0.2.1` published on npm; no service infrastructure deployed |
+| Infrastructure | `csv-to-signal@0.3.0` published on npm; no service infrastructure deployed |
 | Repo Structure | Monorepo (pnpm workspaces + Turborepo) |
 
 ## Key Paths
@@ -66,6 +66,7 @@ SignalHub/
 | 2026-08-07 | Published GitHub Release `v0.2.1` as the latest stable release; release notes record npm verification and defer ISS-018 to the next approved patch without an immediate documentation-only 0.2.2 |
 | 2026-08-08 | Completed TASK-024 on its branch: additive `--window-hours`, `0.3.0` candidate metadata, 90 tests, typecheck, clear audits, four-file tarball inspection, isolated install, and installed windowed execution; no tag or publication |
 | 2026-08-08 | Resolved newly reported nanoid GHSA-2v37-7h3g-55p8 in development tooling by pinning the allowed transitive patch 3.3.17; production and full audits report no known vulnerabilities |
+| 2026-08-08 | Merged PR #14 as `59ec92e`, tagged it `v0.3.0`, published `csv-to-signal@0.3.0` with integrity `sha512-k1z2wk1Ub+9QE0yHLOv2iLBJCGLIhFnW7zTO1PcN4FNhTuvP0e0M5VSv7yA0CPZN3y7MGmy0nayMgR9JrExa6Q==`, verified the registry artifact and clean consumer execution, and published GitHub Release `v0.3.0` |
 
 ## Constraints
 
@@ -73,6 +74,6 @@ SignalHub/
 - No YAML config loader (`config` package) without a separate focused plan and human approval
 - GitHub commit ingestion is available as a connector package; CLI integration remains deferred because it changes the public CLI surface
 - CoinGecko ingestion is available as a library package; Polymarket, generic REST, and CoinGecko CLI integration remain deferred
-- Windowed change analysis is available from `@signal-hub/analysis` and through the unreleased CLI candidate's `--window-hours`; Core defaults remain unchanged
+- Windowed change analysis is available from `@signal-hub/analysis` and the published CLI's `--window-hours`; Core defaults remain unchanged
 - Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, analysis, storage, types` (CLI composes these dependencies but contains no pipeline logic)
 - Timestamps must be normalized to ISO 8601 UTC by connectors before returning `DataPoint`s

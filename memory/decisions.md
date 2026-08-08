@@ -396,3 +396,33 @@ release before npm users can access it.
 audits, and an independently installable four-file `csv-to-signal@0.3.0` candidate. No Git tag or
 npm publication was authorized or performed. A newly disclosed development-only nanoid advisory
 encountered during verification was resolved at patched version 3.3.17 and recorded as ISS-019.
+
+---
+
+### ADR-018: Publish CSV to Signal 0.3.0 from the Exact Reviewed Merge
+
+- **Date**: 2026-08-08
+- **Status**: Accepted and executed
+- **Decided by**: Project owner
+
+**Context**: TASK-024 was independently reviewed and merged through PR #14 as exact commit
+`59ec92e37dbd11226391f8eef59965b6821f8023`. The project owner explicitly requested validation and
+deployment of `0.3.0`. A complete release check reproduced an 8,906-byte four-file artifact with
+shasum `871169642169e4504dbf60265f76aafb5b04d143` and integrity
+`sha512-k1z2wk1Ub+9QE0yHLOv2iLBJCGLIhFnW7zTO1PcN4FNhTuvP0e0M5VSv7yA0CPZN3y7MGmy0nayMgR9JrExa6Q==`.
+
+**Decision**: Tag the exact merge as `v0.3.0`, publish `csv-to-signal@0.3.0` to npm with the
+`latest` dist-tag, verify the registry artifact in a clean consumer, and publish a stable GitHub
+Release from the same tag.
+
+**Rationale**: One reviewed commit, one verified artifact, and matching Git/npm release identities
+preserve release provenance while making the approved windowed CLI feature available to users.
+
+**Trade-offs**: npm publication and Git tags are immutable. The CLI still intentionally omits
+network connector commands and all separately deferred service features.
+
+**Consequences**: `csv-to-signal@0.3.0` is npm `latest`; its registry shasum and integrity match the
+locally validated artifact. A clean consumer installed and executed `--window-hours 24`, created
+its database outside the package, and found no packaged database file. GitHub Release `v0.3.0` is
+the latest stable release. ISS-018 is resolved by the corrected README in this new version while
+the historical `0.2.1` artifact remains unchanged.

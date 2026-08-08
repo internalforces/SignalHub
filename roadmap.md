@@ -69,10 +69,12 @@ and `better-sqlite3` external:
 
 - Completed plan: [`docs/2026-08-08-signal-hub-m6-windowed-cli.md`](docs/2026-08-08-signal-hub-m6-windowed-cli.md)
 - [x] TASK-024: exposed the existing `WindowedChangeDetector` through additive
-  `--window-hours <n>` composition and verified an unpublished `csv-to-signal@0.3.0` candidate.
+  `--window-hours <n>` composition and verified the `csv-to-signal@0.3.0` release artifact.
+- [x] Published the exact reviewed M6 merge as `csv-to-signal@0.3.0`, verified the npm registry
+  artifact and clean consumer execution, and published GitHub Release `v0.3.0`.
 
-M6 does not publish `0.3.0`, integrate network connectors, change the signal or database schema,
-or add scheduling, alerts, APIs, dashboards, or explanations.
+M6 does not integrate network connectors, change the signal or database schema, or add scheduling,
+alerts, APIs, dashboards, or explanations.
 
 ## Backlog Ideas
 

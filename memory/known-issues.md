@@ -11,9 +11,7 @@ _Last updated: 2026-08-08_
 
 ## Active Bugs
 
-| ID | Severity | Description | Found | Owner | Target resolution |
-|----|----------|-------------|-------|-------|-------------------|
-| ISS-018 | Low documentation | The immutable `csv-to-signal@0.2.1` npm tarball README still says the release has not occurred, although registry publication succeeded | 2026-08-06 | Documenter | Source README corrected; include it in the next separately approved patch release, but do not rush 0.2.2 solely for this wording issue |
+No active bugs.
 
 ## Technical Debt
 
@@ -60,6 +58,7 @@ _Last updated: 2026-08-08_
 | ISS-012 | The authoritative MVP plan still showed Vitest 2 package snippets without the explicit patched Vite peer | 2026-08-05 | Updated all eight package snippets to Vitest 4.1.10 and Vite 6.4.3; synchronized the root Node type dependency |
 | ISS-013 | The CLI tarball contained local/development artifacts and could not install outside the workspace | 2026-08-06 | Bundled private workspace code, kept `better-sqlite3` external, added a four-file allowlist, and verified isolated npm installation/execution on Node 20/22/24 |
 | ISS-017 | npm rejected unscoped `signal-hub` as too similar to existing `signalhub@4.9.0` | 2026-08-06 | Renamed the public package and executable to `csv-to-signal`, independently reviewed and merged the change, and successfully published `csv-to-signal@0.2.1` |
+| ISS-018 | The immutable `csv-to-signal@0.2.1` npm tarball README said publication had not occurred | 2026-08-08 | Shipped the corrected README in the separately approved `csv-to-signal@0.3.0` release; the historical `0.2.1` artifact remains immutable |
 | ISS-019 | Development-only PostCSS resolved nanoid 3.3.16, affected by GHSA-2v37-7h3g-55p8 | 2026-08-08 | Added a workspace resolution override to nanoid 3.3.17, refreshed the lockfile, and verified frozen install plus full/production audits with no known vulnerabilities |
 | — | — | — | — |
 

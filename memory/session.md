@@ -11,58 +11,55 @@ Harness Version: 1.1
 
 - **Date**: 2026-08-08
 - **Agent Role**: Implementer
-- **Session Goal**: Complete TASK-024 and reconcile its branch with the latest release-closeout
-  records from `origin/main`.
+- **Session Goal**: Validate and publish `csv-to-signal@0.3.0`, then record the release closeout.
 
 ## Previous Session Summary
 
-The project published `csv-to-signal@0.2.1` to npm and subsequently published the stable GitHub
-Release from the existing `v0.2.1` tag. The low-impact immutable package README defect remains
-deferred under ISS-018 and ADR-016. TASK-024 then prepared an unpublished `0.3.0` candidate that
-exposes the existing windowed detector through the CSV CLI.
+TASK-024 added `--window-hours <n>`, prepared a four-file `csv-to-signal@0.3.0` artifact, passed
+90 tests and the complete release check, and was merged through PR #14. The project owner then
+explicitly approved validation and deployment of `0.3.0`.
 
 ## Current Work
 
-- [x] Planned and completed TASK-024 on `codex/task-024-windowed-cli`.
-- [x] Prepared and fully verified an unpublished `csv-to-signal@0.3.0` candidate.
-- [x] Rebuilt and executed the CLI from a clean temporary working directory with
-  `examples/prices.csv --window-hours 24`; it emitted two consecutive-change signals and one
-  windowed-change signal and created the local SQLite database as expected.
-- [x] Fetched and merged the latest `origin/main`, preserving both the v0.2.1 GitHub Release
-  closeout records and the newer TASK-024 records.
+- [x] Fast-forwarded local `main` to exact reviewed merge
+  `59ec92e37dbd11226391f8eef59965b6821f8023`.
+- [x] Re-ran the complete release check on that exact commit.
+- [x] Created and pushed annotated tag `v0.3.0`.
+- [x] Published `csv-to-signal@0.3.0` to npm after security-key authentication.
+- [x] Verified registry metadata, integrity, `latest`, clean installation, windowed execution,
+  and local database placement.
+- [x] Published the stable GitHub Release `v0.3.0`.
+- [x] Prepared release records on `codex/v0.3.0-release-closeout` for independent review.
 
 ## Completed This Session
 
-- [x] Added positive finite `--window-hours <n>` parsing with existing last-value-wins behavior.
-- [x] Composed `WindowedChangeDetector` alongside the default percentage detector and optional
-  threshold detector without changing default behavior, JSON, Core, Storage, or schemas.
-- [x] Added source-level and bundled-executable regression tests, including invalid-value paths
-  that do not create `data.db`.
-- [x] Updated English/Korean user, package, library, and development documentation.
-- [x] Bumped the local package candidate to `0.3.0` and extended isolated package verification to
-  execute windowed analysis.
-- [x] Resolved development-only GHSA-2v37-7h3g-55p8 by pinning nanoid 3.3.17 through the workspace
-  resolution configuration; no new dependency was added.
-- [x] Passed a frozen install, all workspace builds, 90 tests, typecheck, full and production
-  audits, four-file tarball inspection, isolated install, and installed CLI execution.
+- [x] Confirmed all nine workspaces build and typecheck, all 90 tests pass, and both full and
+  production audits report no known vulnerabilities.
+- [x] Confirmed the exact four-file tarball is 8,906 bytes with shasum
+  `871169642169e4504dbf60265f76aafb5b04d143` and registry-matching integrity.
+- [x] Installed the registry package in a clean consumer and ran `--window-hours 24`; it emitted
+  three signals including a -20% windowed change and created `data.db` outside the package.
+- [x] Confirmed the installed package contains no database file.
+- [x] Created the stable GitHub Release at
+  `https://github.com/internalforces/SignalHub/releases/tag/v0.3.0`.
+- [x] Removed the exact temporary release-artifact and clean-consumer directories after verification.
 
 ## Issues Found / Decisions Made
 
-- ADR-016 remains the v0.2.1 README correction deferral decision from the release closeout.
-- ADR-017 records the approved additive windowed CLI surface and unreleased `0.3.0` boundary.
-- ISS-019 records the resolved nanoid advisory discovered during the full audit.
-- The published npm latest and GitHub Release remain `v0.2.1`; no new tag or publication occurred.
+- ADR-018 records publication of the exact reviewed merge after explicit owner approval.
+- ISS-018 is resolved because the corrected README ships in `0.3.0`; the immutable `0.2.1`
+  artifact remains unchanged as historical provenance.
+- npm `latest` and the latest stable GitHub Release are now `0.3.0`.
 
 ## Next Session: To-Do
 
-1. Independently review TASK-024 and merge it through the normal pull-request workflow.
-2. If a public `0.3.0` release is desired, obtain separate approval for tagging and npm publication.
-3. Select a focused follow-up milestone; deferred features still require their own plan and approval.
+1. Review and merge the release-closeout documentation PR.
+2. Select a focused follow-up milestone; deferred features still require their own plan and approval.
 
 ## Important Context
 
-- The local candidate tarball contains exactly four files, is 8,906 bytes, and verified with
+- The published tarball contains exactly four files, is 8,906 bytes, and is verified with
   integrity `sha512-k1z2wk1Ub+9QE0yHLOv2iLBJCGLIhFnW7zTO1PcN4FNhTuvP0e0M5VSv7yA0CPZN3y7MGmy0nayMgR9JrExa6Q==`.
 - The source command is
   `csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>] [--window-hours <n>]`.
-- `v0.2.0` and `v0.2.1` remain immutable historical tags.
+- `v0.2.0`, `v0.2.1`, and `v0.3.0` are immutable historical/release tags.

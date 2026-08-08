@@ -52,6 +52,14 @@ Completion result: all nine workspaces build and typecheck, all 90 tests pass, f
 audits report no known vulnerabilities, and the 8,906-byte four-file `csv-to-signal@0.3.0` tarball
 installs and runs `--window-hours 24` in an isolated consumer. No tag or publication occurred.
 
+## Subsequent release
+
+After TASK-024 was independently reviewed and merged, the project owner separately approved the
+release. Exact merge commit `59ec92e37dbd11226391f8eef59965b6821f8023` was tagged `v0.3.0`,
+published to npm as `csv-to-signal@0.3.0`, verified from the registry in a clean consumer, and
+published as GitHub Release `v0.3.0` on 2026-08-08. This subsequent approval did not expand the
+implementation scope listed below.
+
 ## Not in TASK-024
 
 - npm publication or Git tagging;
