@@ -11,22 +11,25 @@ Harness Version: 1.1
 
 - **Date**: 2026-08-08
 - **Agent Role**: Implementer
-- **Session Goal**: Clean the Git state and complete approved TASK-024 windowed CLI integration.
+- **Session Goal**: Complete TASK-024 and reconcile its branch with the latest release-closeout
+  records from `origin/main`.
 
 ## Previous Session Summary
 
-The project had published `csv-to-signal@0.2.1`, while `WindowedChangeDetector` remained a private
-workspace API. One uncommitted documentation-session update was present on `main`.
+The project published `csv-to-signal@0.2.1` to npm and subsequently published the stable GitHub
+Release from the existing `v0.2.1` tag. The low-impact immutable package README defect remains
+deferred under ISS-018 and ADR-016. TASK-024 then prepared an unpublished `0.3.0` candidate that
+exposes the existing windowed detector through the CSV CLI.
 
 ## Current Work
 
-- [x] Preserved the existing session update in a separate commit on
-  `codex/task-024-windowed-cli`; no direct commit was made to `main`.
-- [x] Planned and completed TASK-024.
+- [x] Planned and completed TASK-024 on `codex/task-024-windowed-cli`.
 - [x] Prepared and fully verified an unpublished `csv-to-signal@0.3.0` candidate.
 - [x] Rebuilt and executed the CLI from a clean temporary working directory with
   `examples/prices.csv --window-hours 24`; it emitted two consecutive-change signals and one
   windowed-change signal and created the local SQLite database as expected.
+- [x] Fetched and merged the latest `origin/main`, preserving both the v0.2.1 GitHub Release
+  closeout records and the newer TASK-024 records.
 
 ## Completed This Session
 
@@ -45,9 +48,10 @@ workspace API. One uncommitted documentation-session update was present on `main
 
 ## Issues Found / Decisions Made
 
-- ADR-016 records the approved additive CLI surface and unreleased `0.3.0` candidate boundary.
+- ADR-016 remains the v0.2.1 README correction deferral decision from the release closeout.
+- ADR-017 records the approved additive windowed CLI surface and unreleased `0.3.0` boundary.
 - ISS-019 records the resolved nanoid advisory discovered during the full audit.
-- The published npm latest remains `csv-to-signal@0.2.1`; no tag, PR, or publication occurred.
+- The published npm latest and GitHub Release remain `v0.2.1`; no new tag or publication occurred.
 
 ## Next Session: To-Do
 

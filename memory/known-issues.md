@@ -13,7 +13,7 @@ _Last updated: 2026-08-08_
 
 | ID | Severity | Description | Found | Owner | Target resolution |
 |----|----------|-------------|-------|-------|-------------------|
-| ISS-018 | Low documentation | The immutable `csv-to-signal@0.2.1` npm tarball README still says the release has not occurred, although registry publication succeeded | 2026-08-06 | Documenter | Source README corrected; publish the correction only as part of a separately approved future patch release |
+| ISS-018 | Low documentation | The immutable `csv-to-signal@0.2.1` npm tarball README still says the release has not occurred, although registry publication succeeded | 2026-08-06 | Documenter | Source README corrected; include it in the next separately approved patch release, but do not rush 0.2.2 solely for this wording issue |
 
 ## Technical Debt
 
