@@ -49,6 +49,8 @@ explicitly approved validation and deployment of `0.3.0`.
 - ADR-018 records publication of the exact reviewed merge after explicit owner approval.
 - ISS-018 is resolved because the corrected README ships in `0.3.0`; the immutable `0.2.1`
   artifact remains unchanged as historical provenance.
+- DEBT-004 records GitHub's Actions v4 internal Node 20 runtime deprecation warning; all project
+  matrix jobs still pass, and any workflow upgrade requires separate infrastructure approval.
 - npm `latest` and the latest stable GitHub Release are now `0.3.0`.
 
 ## Next Session: To-Do

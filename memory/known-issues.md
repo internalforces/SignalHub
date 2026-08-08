@@ -20,6 +20,7 @@ No active bugs.
 | DEBT-001 | `CsvConnector` (Task 8 of the implementation plan) parses rows with a plain `split(",")` — no RFC 4180 quoting/escaping support, so values containing commas or quoted fields will misparse | Low for the MVP (canonical `metricId,timestamp,value` files); would break on hand-exported CSVs with embedded commas | Revisit if Phase 2+ needs richer CSV input, or if a user reports a real file that breaks it |
 | DEBT-002 | No ESLint/Prettier configured; `standards.md` code style section is only partially specified (indentation is inferred, max line length and coverage threshold are TBD) | Style drift risk as more agents contribute | Add before M2 (GitHub connector) once more contributors are active |
 | DEBT-003 | Isolated npm installation warns that transitive `prebuild-install@7.1.3` is deprecated through `better-sqlite3@11.x` | No known vulnerability or runtime failure; adds maintenance noise during consumer installation | Reassess during the next approved `better-sqlite3` major-version maintenance task |
+| DEBT-004 | GitHub warns that the Node 20 runtime embedded in `actions/checkout@v4` and `actions/setup-node@v4` is deprecated and forces those actions to Node 24 | CI still passes for the Node 20/22/24 project matrix; warning concerns the actions runner runtime, not the tested application runtime | Review an actions-version upgrade in a separately approved infrastructure-maintenance task |
 
 ### ISS-013: CLI release tarball is unsafe and cannot install independently
 
