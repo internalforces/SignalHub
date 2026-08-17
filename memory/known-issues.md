@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Known Issues — Signal Hub
 
-_Last updated: 2026-08-08_
+_Last updated: 2026-08-17_
 
 ## Active Bugs
 
@@ -19,8 +19,7 @@ No active bugs.
 |----|-------------|--------|--------------------|
 | DEBT-001 | `CsvConnector` (Task 8 of the implementation plan) parses rows with a plain `split(",")` — no RFC 4180 quoting/escaping support, so values containing commas or quoted fields will misparse | Low for the MVP (canonical `metricId,timestamp,value` files); would break on hand-exported CSVs with embedded commas | Revisit if Phase 2+ needs richer CSV input, or if a user reports a real file that breaks it |
 | DEBT-002 | No ESLint/Prettier configured; `standards.md` code style section is only partially specified (indentation is inferred, max line length and coverage threshold are TBD) | Style drift risk as more agents contribute | Add before M2 (GitHub connector) once more contributors are active |
-| DEBT-003 | Isolated npm installation warns that transitive `prebuild-install@7.1.3` is deprecated through `better-sqlite3@11.x` | No known vulnerability or runtime failure; adds maintenance noise during consumer installation | Reassess during the next approved `better-sqlite3` major-version maintenance task |
-| DEBT-004 | GitHub warns that the Node 20 runtime embedded in `actions/checkout@v4` and `actions/setup-node@v4` is deprecated and forces those actions to Node 24 | CI still passes for the Node 20/22/24 project matrix; warning concerns the actions runner runtime, not the tested application runtime | Review an actions-version upgrade in a separately approved infrastructure-maintenance task |
+| DEBT-003 | Isolated npm installation warns that transitive `prebuild-install@7.1.3` is deprecated through `better-sqlite3@12.9.0` | No known vulnerability or runtime failure; adds maintenance noise during consumer installation | Reassessed during TASK-027; retain while Node 20 support prevents adopting better-sqlite3 13.x, then revisit with the next runtime-support decision |
 
 ### ISS-013: CLI release tarball is unsafe and cannot install independently
 
@@ -61,6 +60,10 @@ No active bugs.
 | ISS-017 | npm rejected unscoped `signal-hub` as too similar to existing `signalhub@4.9.0` | 2026-08-06 | Renamed the public package and executable to `csv-to-signal`, independently reviewed and merged the change, and successfully published `csv-to-signal@0.2.1` |
 | ISS-018 | The immutable `csv-to-signal@0.2.1` npm tarball README said publication had not occurred | 2026-08-08 | Shipped the corrected README in the separately approved `csv-to-signal@0.3.0` release; the historical `0.2.1` artifact remains immutable |
 | ISS-019 | Development-only PostCSS resolved nanoid 3.3.16, affected by GHSA-2v37-7h3g-55p8 | 2026-08-08 | Added a workspace resolution override to nanoid 3.3.17, refreshed the lockfile, and verified frozen install plus full/production audits with no known vulnerabilities |
+| ISS-020 | GHSA-2v37-7h3g-55p8 expanded its vulnerable range to include development-only nanoid 3.3.17 | 2026-08-17 | Updated the workspace override and lockfile to nanoid 3.3.18; frozen install, 90 tests, typecheck, full/production audits, and the release check pass |
+| ISS-021 | better-sqlite3 11.10.0 aborts in `RemoveEnvironmentCleanupHook` when the built CLI exits on Node 24.19.0 | 2026-08-17 | Pinned better-sqlite3 12.9.0 after owner approval; clean Node 24.19.0 tests and PR CI on Node 20/22/24 pass |
+| ISS-022 | The public `>=24.0.0` engine range claimed Node 26+ support beyond better-sqlite3 12.9.0's declared Node 20–25 range | 2026-08-17 | Bounded root and CLI engines to `^20.0.0 || ^22.0.0 || ^24.0.0` and synchronized current support documentation |
+| DEBT-004 | GitHub Actions v4 embedded the deprecated Node 20 action runtime | 2026-08-17 | Upgraded checkout/setup-node to v6 and added a weekly plus manually triggered full dependency audit after explicit infrastructure approval |
 | — | — | — | — |
 
 ## Issue Template

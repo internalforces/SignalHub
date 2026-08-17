@@ -6,7 +6,7 @@ identities for equal inputs and detector configuration.
 
 ## Requirements
 
-- Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`
+- Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`
 
 ## Installation
 

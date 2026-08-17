@@ -31,9 +31,9 @@ describe("CLI release package", () => {
       name: "csv-to-signal",
       version: "0.3.0",
       license: "Apache-2.0",
-      engines: { node: "^20.0.0 || ^22.0.0 || >=24.0.0" },
+      engines: { node: "^20.0.0 || ^22.0.0 || ^24.0.0" },
       files: ["dist/index.js", "README.md", "LICENSE"],
-      dependencies: { "better-sqlite3": "^11.3.0" },
+      dependencies: { "better-sqlite3": "12.9.0" },
       bin: { "csv-to-signal": "./dist/index.js" },
     });
     expect(manifest.private).not.toBe(true);

@@ -6,11 +6,11 @@
 
 **Architecture:** A pnpm/Turborepo monorepo with strict one-directional dependencies (`cli → {core, connectors/csv, analysis, storage, types}`, `core → {storage, analysis, connector-sdk, types}`, `connectors/csv → {connector-sdk, types}`). The CSV connector maps raw rows to canonical `DataPoint`s. The CLI composes the connector, storage, and detectors; Core validates and deduplicates them into SQLite, runs stateless detectors per metric, scores the resulting signals, persists them, and returns them sorted for the CLI to print.
 
-**Tech Stack:** TypeScript (strict, Node `^20.0.0 || ^22.0.0 || >=24.0.0`, ESM/NodeNext), pnpm workspaces, Turborepo, Vitest, better-sqlite3.
+**Tech Stack:** TypeScript (strict, Node `^20.0.0 || ^22.0.0 || ^24.0.0`, ESM/NodeNext), pnpm workspaces, Turborepo, Vitest, better-sqlite3.
 
 ## Global Constraints
 
-- Language: TypeScript strict mode, target ES2022, module/moduleResolution NodeNext, Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`.
+- Language: TypeScript strict mode, target ES2022, module/moduleResolution NodeNext, Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`.
 - Package manager: pnpm workspaces (`packageManager: pnpm@9.7.0`), task orchestration via Turborepo.
 - Test runner: Vitest 4.1.10 with explicit Vite 6.4.3, zero-config, tests live in each package's `tests/` directory; in-memory SQLite (`:memory:`) for storage-touching tests.
 - Signal model uses the simplified shape from the design review (no `confidence`/`baseline` fields): `{ id, metricId, type, score, direction, timestamp, value, changePercent }`.
@@ -69,7 +69,7 @@ Each package/connector/app follows the same internal shape: `package.json`, `tsc
   "name": "signal-hub",
   "private": true,
   "packageManager": "pnpm@9.7.0",
-  "engines": { "node": "^20.0.0 || ^22.0.0 || >=24.0.0" },
+  "engines": { "node": "^20.0.0 || ^22.0.0 || ^24.0.0" },
   "scripts": {
     "build": "turbo run build",
     "test": "turbo run test",
@@ -477,7 +477,7 @@ git commit -m "feat(connector-sdk): add isValidDataPoint validation"
   },
   "dependencies": {
     "@signal-hub/types": "workspace:*",
-    "better-sqlite3": "^11.3.0"
+    "better-sqlite3": "12.9.0"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",

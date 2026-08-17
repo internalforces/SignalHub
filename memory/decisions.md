@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-08-08_
+_Last updated: 2026-08-17_
 
 ## Template
 
@@ -426,3 +426,93 @@ locally validated artifact. A clean consumer installed and executed `--window-ho
 its database outside the package, and found no packaged database file. GitHub Release `v0.3.0` is
 the latest stable release. ISS-018 is resolved by the corrected README in this new version while
 the historical `0.2.1` artifact remains unchanged.
+
+---
+
+### ADR-019: Patch Development Tooling and Add Recurring Dependency Audits
+
+- **Date**: 2026-08-17
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner
+
+**Context**: GHSA-2v37-7h3g-55p8 expanded its vulnerable range to include nanoid 3.3.17, causing
+the full workspace audit and release check to fail nine days after the previous clear audit. The
+existing CI ran only for pull requests, and checkout/setup-node v4 used a deprecated embedded
+Node 20 runtime.
+
+**Decision**: Raise the workspace nanoid override to 3.3.18, upgrade checkout and setup-node to
+v6, grant workflows read-only repository permissions, and add a separate Node 24 workflow that
+runs a full dependency audit every Monday at 00:00 UTC and on manual dispatch.
+
+**Rationale**: The patch restores a reproducible clear dependency audit, while recurring checks
+detect advisories that appear after merge without changing application behavior or adding a new
+dependency.
+
+**Trade-offs**: The scheduled workflow consumes a small amount of GitHub Actions capacity and
+reports findings without applying automatic dependency changes.
+
+**Consequences**: TASK-025 and TASK-026 are complete. Frozen install, all 90 tests, typecheck,
+full and production audits, package inspection, isolated installation, and installed CLI execution
+pass. DEBT-004 and ISS-020 are resolved; no runtime, public API, schema, or release version changed.
+
+---
+
+### ADR-020: Pin better-sqlite3 12.9.0 for the Supported Node Matrix
+
+- **Date**: 2026-08-17
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner
+
+**Context**: PR #16 passed on Node 20 and 22 but its Node 24.19.0 check aborted after the built CLI
+test with a native `RemoveEnvironmentCleanupHook` assertion in better-sqlite3 11.10.0. The public
+package advertises Node 20, 22, and 24 support. better-sqlite3 13.x no longer supports Node 20, and
+12.10.0 removed Node 20 prebuilt binaries even though its engine metadata still includes Node 20.
+Upstream identifies 12.9.0 as the viable release immediately before that packaging change.
+
+**Decision**: Pin better-sqlite3 exactly to 12.9.0 in `@signal-hub/storage` and `csv-to-signal`,
+refresh the lockfile, and update the release manifest assertion. Do not broaden the range into
+12.10+ and do not reduce Signal Hub's advertised Node support.
+
+**Rationale**: One runtime-dependency upgrade fixes the component named by the native stack while
+preserving the existing Node 20/22/24 contract. An exact pin prevents future installs from silently
+selecting a release without Node 20 prebuilt binaries.
+
+**Trade-offs**: This is a major dependency upgrade and was implemented only after explicit owner
+approval. better-sqlite3 12.9.0 still depends on deprecated prebuild-install, so DEBT-003 remains
+open. Node 20 support also prevents adopting better-sqlite3 13.x.
+
+**Consequences**: TASK-027 resolves ISS-021 locally. A clean Node 24.19.0 installation builds the
+CLI and passes both built-executable regression tests; the complete release check also passes with
+90 tests and clear full/production audits. PR #16 also passes its Node 20/22/24 matrix. The database
+schema, shared contracts, CLI flags/output, package version, and deployment state are unchanged.
+
+---
+
+### ADR-021: Bound the Public Node Engine Contract to Tested Releases
+
+- **Date**: 2026-08-17
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner through PR review-fix authorization
+
+**Context**: After better-sqlite3 was pinned to 12.9.0, PR #16 review identified that the public
+`>=24.0.0` engine range also advertised Node 26 and every later release. The native dependency
+declares support only for Node 20 through 25, and Signal Hub validates Node 20, 22, and 24 in CI.
+With engine-strict installation, the previous contract could reject or mislead Node 26+ consumers.
+
+**Decision**: Advertise `^20.0.0 || ^22.0.0 || ^24.0.0` in the root workspace, public CLI,
+project constitution, release assertion, and current support documentation. Keep the existing
+Node 20/22/24 CI matrix. This supersedes ADR-020 only where it said not to reduce the formerly
+unbounded advertised range.
+
+**Rationale**: Package metadata should claim the releases jointly supported by the tested project
+matrix and pinned native runtime dependency. Excluding untested Node 25 and unsupported Node 26+
+is safer than relying on engine warnings or source-build behavior outside the validation matrix.
+
+**Trade-offs**: Consumers on Node 25+ receive an engine incompatibility warning or failure even
+though some versions may work. Adding a future Node release requires updating the native dependency,
+expanding CI, and making a deliberate support decision.
+
+**Consequences**: TASK-028 resolves ISS-022 locally. The release manifest regression test first
+failed against the unbounded range and passes after the root and CLI metadata change; the complete
+release check passes with 90 tests and clear audits, and PR #16 passes on Node 20/22/24. CLI
+behavior, flags, output, database schema, package version, publication, and deployment are unchanged.

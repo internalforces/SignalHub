@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # tech-stack.md — Signal Hub Technology Stack
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-17_
 
 Versions below reflect the current lockfile and verified local toolchain. Manifest ranges are
 shown where they define the supported contract.
@@ -16,16 +16,16 @@ shown where they define the supported contract.
 
 | Layer | Technology | Current / supported version | Rationale |
 |-------|-----------|-----------------------------|-----------|
-| Runtime | Node.js | `^20.0.0 || ^22.0.0 || >=24.0.0`; CI uses 20 | Supported range matches Vitest 4.1.10 and the package engine contract |
+| Runtime | Node.js | `^20.0.0 || ^22.0.0 || ^24.0.0`; PR CI uses 20/22/24 | Supported range matches the tested matrix and better-sqlite3 12.9.0 instead of claiming unverified Node 25+ compatibility |
 | Language | TypeScript | 5.9.3 resolved (`^5.5.4`) | Strict typing across package boundaries |
 | Framework | None | — | Signal Hub is a local CLI and library workspace |
-| Database | SQLite via `better-sqlite3` | 11.10.0 resolved (`^11.3.0`) | Embedded, synchronous storage with no service dependency |
+| Database | SQLite via `better-sqlite3` | 12.9.0 (exact) | Embedded, synchronous storage with Node 20/22/24 native-binary support and no service dependency |
 | Package manager | pnpm workspaces | pnpm 9.7.0 | `workspace:*` links the monorepo packages |
 | Task orchestration | Turborepo | 2.10.7 resolved (`^2.0.9`) | Dependency-ordered build, test, and type-check tasks |
 | Test runner | Vitest | 4.1.10 | TypeScript tests and in-memory SQLite coverage |
 | Test build dependency | Vite | 6.4.3 | Explicit patched Vite version for the Vitest stack |
-| CI | GitHub Actions | Node 20 | Frozen install, production audit, build, test, and type-check on pull requests |
-| Infrastructure | None | — | No deployment exists; npm publishing is planned but not authorized or configured |
+| CI | GitHub Actions v6 | Node 20/22/24 PR matrix; Node 24 weekly audit | Pull requests run frozen install, production audit, build, tests, typecheck, and release verification; scheduled/manual workflow runs the full dependency audit |
+| Distribution | npm | `csv-to-signal@0.3.0` | Public CLI package; no service infrastructure is deployed |
 
 ## Workspace Structure
 
@@ -46,17 +46,20 @@ dependency ordering ensures package entry points exist before consumers build or
   packages; the CLI composes Core with CSV, Analysis, Storage, and Types.
 - **Storage access**: repository pattern through `DataPointRepository` and `SignalRepository`.
   No package outside Storage talks directly to SQLite.
-- **Interfaces**: the CSV CLI is the only user-facing interface. GitHub, CoinGecko, and windowed
-  analysis are library-only APIs.
+- **Interfaces**: the CSV CLI is the only user-facing interface. GitHub and CoinGecko remain
+  library-only APIs; windowed analysis is available both as a library and through `--window-hours`.
 - **State**: detectors are stateless. The CLI persists points and signals to `data.db` in its
   current working directory.
-- **Build**: ESM/NodeNext output targeting ES2022; no bundler, web framework, or migration tool.
+- **Build**: internal workspaces emit ESM/NodeNext targeting ES2022; the public CLI release uses
+  esbuild to bundle private workspace code while keeping `better-sqlite3` external. There is no
+  web framework or migration tool.
 
 ## Environments
 
 | Environment | Purpose | Access |
 |-------------|---------|--------|
 | Local | Development, tests, and CSV CLI use | `node apps/cli/dist/index.js analyze <file.csv>` after `pnpm build` |
-| Pull-request CI | Verification on Node 20 | GitHub Actions workflow in `.github/workflows/ci.yml` |
+| Pull-request CI | Verification on Node 20, 22, and 24 | GitHub Actions workflow in `.github/workflows/ci.yml` |
+| Scheduled audit | Weekly and manual full dependency audit on Node 24 | GitHub Actions workflow in `.github/workflows/dependency-audit.yml` |
 | Staging | Not defined | — |
-| Production | Not deployed or published | — |
+| npm distribution | Published public CLI `csv-to-signal@0.3.0`; no service deployment | npm registry and GitHub Release `v0.3.0` |
