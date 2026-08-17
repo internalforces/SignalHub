@@ -19,7 +19,7 @@ shown where they define the supported contract.
 | Runtime | Node.js | `^20.0.0 || ^22.0.0 || >=24.0.0`; PR CI uses 20/22/24 | Supported range matches Vitest 4.1.10 and the package engine contract |
 | Language | TypeScript | 5.9.3 resolved (`^5.5.4`) | Strict typing across package boundaries |
 | Framework | None | — | Signal Hub is a local CLI and library workspace |
-| Database | SQLite via `better-sqlite3` | 11.10.0 resolved (`^11.3.0`) | Embedded, synchronous storage with no service dependency |
+| Database | SQLite via `better-sqlite3` | 12.9.0 (exact) | Embedded, synchronous storage with Node 20/22/24 native-binary support and no service dependency |
 | Package manager | pnpm workspaces | pnpm 9.7.0 | `workspace:*` links the monorepo packages |
 | Task orchestration | Turborepo | 2.10.7 resolved (`^2.0.9`) | Dependency-ordered build, test, and type-check tasks |
 | Test runner | Vitest | 4.1.10 | TypeScript tests and in-memory SQLite coverage |

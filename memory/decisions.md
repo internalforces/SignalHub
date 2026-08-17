@@ -454,3 +454,34 @@ reports findings without applying automatic dependency changes.
 **Consequences**: TASK-025 and TASK-026 are complete. Frozen install, all 90 tests, typecheck,
 full and production audits, package inspection, isolated installation, and installed CLI execution
 pass. DEBT-004 and ISS-020 are resolved; no runtime, public API, schema, or release version changed.
+
+---
+
+### ADR-020: Pin better-sqlite3 12.9.0 for the Supported Node Matrix
+
+- **Date**: 2026-08-17
+- **Status**: Accepted and implemented locally
+- **Decided by**: Project owner
+
+**Context**: PR #16 passed on Node 20 and 22 but its Node 24.19.0 check aborted after the built CLI
+test with a native `RemoveEnvironmentCleanupHook` assertion in better-sqlite3 11.10.0. The public
+package advertises Node 20, 22, and 24 support. better-sqlite3 13.x no longer supports Node 20, and
+12.10.0 removed Node 20 prebuilt binaries even though its engine metadata still includes Node 20.
+Upstream identifies 12.9.0 as the viable release immediately before that packaging change.
+
+**Decision**: Pin better-sqlite3 exactly to 12.9.0 in `@signal-hub/storage` and `csv-to-signal`,
+refresh the lockfile, and update the release manifest assertion. Do not broaden the range into
+12.10+ and do not reduce Signal Hub's advertised Node support.
+
+**Rationale**: One runtime-dependency upgrade fixes the component named by the native stack while
+preserving the existing Node 20/22/24 contract. An exact pin prevents future installs from silently
+selecting a release without Node 20 prebuilt binaries.
+
+**Trade-offs**: This is a major dependency upgrade and was implemented only after explicit owner
+approval. better-sqlite3 12.9.0 still depends on deprecated prebuild-install, so DEBT-003 remains
+open. Node 20 support also prevents adopting better-sqlite3 13.x.
+
+**Consequences**: TASK-027 resolves ISS-021 locally. A clean Node 24.19.0 installation builds the
+CLI and passes both built-executable regression tests; the complete release check also passes with
+90 tests and clear full/production audits. The database schema, shared contracts, CLI flags/output,
+package version, and deployment state are unchanged; PR CI confirmation is pending.

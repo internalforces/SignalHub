@@ -68,6 +68,7 @@ SignalHub/
 | 2026-08-08 | Resolved newly reported nanoid GHSA-2v37-7h3g-55p8 in development tooling by pinning the allowed transitive patch 3.3.17; production and full audits report no known vulnerabilities |
 | 2026-08-08 | Merged PR #14 as `59ec92e`, tagged it `v0.3.0`, published `csv-to-signal@0.3.0` with integrity `sha512-k1z2wk1Ub+9QE0yHLOv2iLBJCGLIhFnW7zTO1PcN4FNhTuvP0e0M5VSv7yA0CPZN3y7MGmy0nayMgR9JrExa6Q==`, verified the registry artifact and clean consumer execution, and published GitHub Release `v0.3.0` |
 | 2026-08-17 | Completed approved post-release maintenance TASK-025 and TASK-026: patched development-only nanoid to 3.3.18, upgraded GitHub Actions to v6, added a weekly/manual full dependency audit, and passed the complete release check with 90 tests and clear audits |
+| 2026-08-17 | Completed local TASK-027 remediation for PR #16's Node 24.19.0 failure: pinned better-sqlite3 12.9.0, passed clean Node 24.19.0 built-CLI regression tests and the full release check; PR CI recheck remains pending |
 
 ## Constraints
 

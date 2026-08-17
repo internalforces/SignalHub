@@ -477,7 +477,7 @@ git commit -m "feat(connector-sdk): add isValidDataPoint validation"
   },
   "dependencies": {
     "@signal-hub/types": "workspace:*",
-    "better-sqlite3": "^11.3.0"
+    "better-sqlite3": "12.9.0"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",
