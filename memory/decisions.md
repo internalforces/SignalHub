@@ -485,3 +485,34 @@ open. Node 20 support also prevents adopting better-sqlite3 13.x.
 CLI and passes both built-executable regression tests; the complete release check also passes with
 90 tests and clear full/production audits. PR #16 also passes its Node 20/22/24 matrix. The database
 schema, shared contracts, CLI flags/output, package version, and deployment state are unchanged.
+
+---
+
+### ADR-021: Bound the Public Node Engine Contract to Tested Releases
+
+- **Date**: 2026-08-17
+- **Status**: Accepted and implemented locally
+- **Decided by**: Project owner through PR review-fix authorization
+
+**Context**: After better-sqlite3 was pinned to 12.9.0, PR #16 review identified that the public
+`>=24.0.0` engine range also advertised Node 26 and every later release. The native dependency
+declares support only for Node 20 through 25, and Signal Hub validates Node 20, 22, and 24 in CI.
+With engine-strict installation, the previous contract could reject or mislead Node 26+ consumers.
+
+**Decision**: Advertise `^20.0.0 || ^22.0.0 || ^24.0.0` in the root workspace, public CLI,
+project constitution, release assertion, and current support documentation. Keep the existing
+Node 20/22/24 CI matrix. This supersedes ADR-020 only where it said not to reduce the formerly
+unbounded advertised range.
+
+**Rationale**: Package metadata should claim the releases jointly supported by the tested project
+matrix and pinned native runtime dependency. Excluding untested Node 25 and unsupported Node 26+
+is safer than relying on engine warnings or source-build behavior outside the validation matrix.
+
+**Trade-offs**: Consumers on Node 25+ receive an engine incompatibility warning or failure even
+though some versions may work. Adding a future Node release requires updating the native dependency,
+expanding CI, and making a deliberate support decision.
+
+**Consequences**: TASK-028 resolves ISS-022 locally. The release manifest regression test first
+failed against the unbounded range and passes after the root and CLI metadata change; the complete
+release check passes with 90 tests and clear audits. CLI behavior, flags, output, database schema,
+package version, publication, and deployment are unchanged; PR CI confirmation is pending.

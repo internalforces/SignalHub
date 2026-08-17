@@ -2,7 +2,7 @@
 
 ## Prerequisites and setup
 
-Signal Hub supports Node.js `^20.0.0 || ^22.0.0 || >=24.0.0` and pins pnpm 9.7.0 through the
+Signal Hub supports Node.js `^20.0.0 || ^22.0.0 || ^24.0.0` and pins pnpm 9.7.0 through the
 root manifest.
 
 ```bash

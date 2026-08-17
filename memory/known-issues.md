@@ -62,6 +62,7 @@ No active bugs.
 | ISS-019 | Development-only PostCSS resolved nanoid 3.3.16, affected by GHSA-2v37-7h3g-55p8 | 2026-08-08 | Added a workspace resolution override to nanoid 3.3.17, refreshed the lockfile, and verified frozen install plus full/production audits with no known vulnerabilities |
 | ISS-020 | GHSA-2v37-7h3g-55p8 expanded its vulnerable range to include development-only nanoid 3.3.17 | 2026-08-17 | Updated the workspace override and lockfile to nanoid 3.3.18; frozen install, 90 tests, typecheck, full/production audits, and the release check pass |
 | ISS-021 | better-sqlite3 11.10.0 aborts in `RemoveEnvironmentCleanupHook` when the built CLI exits on Node 24.19.0 | 2026-08-17 | Pinned better-sqlite3 12.9.0 after owner approval; clean Node 24.19.0 tests and PR CI on Node 20/22/24 pass |
+| ISS-022 | The public `>=24.0.0` engine range claimed Node 26+ support beyond better-sqlite3 12.9.0's declared Node 20–25 range | 2026-08-17 | Bounded root and CLI engines to `^20.0.0 || ^22.0.0 || ^24.0.0` and synchronized current support documentation |
 | DEBT-004 | GitHub Actions v4 embedded the deprecated Node 20 action runtime | 2026-08-17 | Upgraded checkout/setup-node to v6 and added a weekly plus manually triggered full dependency audit after explicit infrastructure approval |
 | — | — | — | — |
 

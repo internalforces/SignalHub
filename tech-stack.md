@@ -16,7 +16,7 @@ shown where they define the supported contract.
 
 | Layer | Technology | Current / supported version | Rationale |
 |-------|-----------|-----------------------------|-----------|
-| Runtime | Node.js | `^20.0.0 || ^22.0.0 || >=24.0.0`; PR CI uses 20/22/24 | Supported range matches Vitest 4.1.10 and the package engine contract |
+| Runtime | Node.js | `^20.0.0 || ^22.0.0 || ^24.0.0`; PR CI uses 20/22/24 | Supported range matches the tested matrix and better-sqlite3 12.9.0 instead of claiming unverified Node 25+ compatibility |
 | Language | TypeScript | 5.9.3 resolved (`^5.5.4`) | Strict typing across package boundaries |
 | Framework | None | — | Signal Hub is a local CLI and library workspace |
 | Database | SQLite via `better-sqlite3` | 12.9.0 (exact) | Embedded, synchronous storage with Node 20/22/24 native-binary support and no service dependency |

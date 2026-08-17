@@ -24,7 +24,7 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 | Field | Value |
 |-------|-------|
-| Language | TypeScript (strict, Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`) |
+| Language | TypeScript (strict, Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`) |
 | Framework | None — plain Node.js CLI |
 | Infrastructure | `csv-to-signal@0.3.0` published on npm; no service infrastructure deployed |
 | Repo Structure | Monorepo (pnpm workspaces + Turborepo) |
@@ -69,6 +69,7 @@ SignalHub/
 | 2026-08-08 | Merged PR #14 as `59ec92e`, tagged it `v0.3.0`, published `csv-to-signal@0.3.0` with integrity `sha512-k1z2wk1Ub+9QE0yHLOv2iLBJCGLIhFnW7zTO1PcN4FNhTuvP0e0M5VSv7yA0CPZN3y7MGmy0nayMgR9JrExa6Q==`, verified the registry artifact and clean consumer execution, and published GitHub Release `v0.3.0` |
 | 2026-08-17 | Completed approved post-release maintenance TASK-025 and TASK-026: patched development-only nanoid to 3.3.18, upgraded GitHub Actions to v6, added a weekly/manual full dependency audit, and passed the complete release check with 90 tests and clear audits |
 | 2026-08-17 | Completed TASK-027 remediation for PR #16's Node 24.19.0 failure: pinned better-sqlite3 12.9.0; clean Node 24.19.0 built-CLI tests, the full release check, and PR CI on Node 20/22/24 pass |
+| 2026-08-17 | Addressed PR #16 review as TASK-028 by bounding the advertised engine contract to tested Node 20/22/24 releases, matching better-sqlite3 12.9.0 instead of claiming unsupported Node 26+ compatibility |
 
 ## Constraints
 

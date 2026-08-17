@@ -82,8 +82,13 @@ alerts, APIs, dashboards, or explanations.
   range expanded.
 - [x] TASK-026: upgraded GitHub Actions to v6 and added a read-only Node 24 full dependency audit
   every Monday at 00:00 UTC with manual dispatch support.
+- [x] TASK-027: pinned better-sqlite3 12.9.0 to restore Node 24.19.0 native compatibility while
+  retaining Node 20 support.
+- [x] TASK-028: bounded the advertised engine contract to the tested Node 20/22/24 matrix and the
+  pinned native dependency's support range.
 
-M7 changes no runtime behavior, public interface, database schema, or published package version.
+M7 changes no CLI behavior, flags, output, database schema, or published package version. It does
+update runtime dependency and supported-engine metadata for compatibility.
 
 ## Backlog Ideas
 

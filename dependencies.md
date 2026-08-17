@@ -55,6 +55,7 @@ _Last updated: 2026-08-17_
 | TASK-022 / ISS-013 | Project owner, 2026-08-06 | esbuild available only transitively through Vite | esbuild 0.25.12 declared directly by the CLI | Approved for the standalone CLI bundle; no package publication authorized |
 | TASK-025 / ISS-020 | Project owner, 2026-08-17 | nanoid 3.3.17 became vulnerable after the advisory range expanded | nanoid 3.3.18 enforced through the workspace override | Completed; frozen install, 90 tests, typecheck, full/production audits, and release check passed |
 | TASK-027 / ISS-021 | Project owner, 2026-08-17 | better-sqlite3 11.10.0 aborts during native cleanup on Node 24.19.0 | better-sqlite3 pinned to 12.9.0 in Storage and the public CLI | Completed; clean Node 24.19.0 regression tests, the full release check, and PR CI on Node 20/22/24 pass |
+| TASK-028 / ISS-022 | Project owner, 2026-08-17 | The unbounded `>=24.0.0` engine contract included Node 26+, outside better-sqlite3 12.9.0's declared support | Root and public CLI engines bounded to `^20.0.0 || ^22.0.0 || ^24.0.0` | Completed locally; RED/GREEN manifest regression and full release check pass; PR CI recheck pending |
 
-The workspace advertises Node.js `^20.0.0 || ^22.0.0 || >=24.0.0`, matching Vitest 4.1.10's
-published engine range instead of claiming support for unsupported Node 21.x or 23.x releases.
+The workspace advertises Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`, matching the tested CI matrix,
+Vitest 4.1.10, and better-sqlite3 12.9.0 without claiming unverified Node 21/23 or 25+ releases.

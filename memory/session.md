@@ -11,7 +11,7 @@ Harness Version: 1.1
 
 - **Date**: 2026-08-17
 - **Agent Role**: Implementer
-- **Session Goal**: Diagnose and fix PR #16's Node 24 CI failure after explicit dependency-major approval.
+- **Session Goal**: Resolve PR #16's Node 24 failure and align the public engine contract with review feedback.
 
 ## Previous Session Summary
 
@@ -27,6 +27,8 @@ statement cleanup after the built CLI completed windowed analysis.
 - [x] Pinned better-sqlite3 12.9.0 in Storage and the public CLI, then refreshed the lockfile.
 - [x] Updated the release-metadata regression test and dependency/project records.
 - [x] Pushed the focused fix and confirmed all PR #16 checks pass on Node 20, 22, and 24.
+- [x] Verified the unresolved review thread about unbounded Node 26+ support against package metadata.
+- [x] Bounded current root, CLI, and documentation support to Node 20, 22, and 24 releases.
 
 ## Completed This Session
 
@@ -36,6 +38,7 @@ statement cleanup after the built CLI completed windowed analysis.
 - [x] The complete release check passes with frozen install, nine builds, 90 tests, typecheck,
   full and production audits, package inspection, isolated installation, and installed execution.
 - [x] better-sqlite3 remains the only external CLI runtime dependency.
+- [x] TASK-028 resolves the public engine-range mismatch without changing CLI behavior or output.
 
 ## Issues Found / Decisions Made
 
@@ -43,8 +46,11 @@ statement cleanup after the built CLI completed windowed analysis.
   shutdown path.
 - ADR-020 records the exact 12.9.0 pin: it supports Node 20/22/24, while 12.10+ removed Node 20
   prebuilt binaries and 13.x dropped Node 20 from its engine range.
+- ADR-021 supersedes ADR-020's unbounded-support assumption and advertises only the tested Node
+  20/22/24 release lines supported by the pinned native dependency.
 - DEBT-003 remains active because better-sqlite3 12.9.0 still uses deprecated prebuild-install.
-- No public API, schema, package version, publication, or deployment change occurred.
+- The package engine metadata changed; CLI flags/output, schema, package version, publication, and
+  deployment remain unchanged.
 
 ## Next Session: To-Do
 
@@ -54,6 +60,6 @@ statement cleanup after the built CLI completed windowed analysis.
 ## Important Context
 
 - `csv-to-signal@0.3.0` remains the published npm `latest`; this work does not create a release.
-- better-sqlite3 is exactly pinned to 12.9.0 so future installs cannot drift into 12.10+, whose
-  release stopped shipping Node 20 prebuilt binaries.
+- better-sqlite3 is exactly pinned to 12.9.0, and the public engine range is bounded to
+  `^20.0.0 || ^22.0.0 || ^24.0.0`.
 - Deferred features still require a dedicated plan and explicit human approval.
