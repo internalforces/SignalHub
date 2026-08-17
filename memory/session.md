@@ -29,6 +29,7 @@ statement cleanup after the built CLI completed windowed analysis.
 - [x] Pushed the focused fix and confirmed all PR #16 checks pass on Node 20, 22, and 24.
 - [x] Verified the unresolved review thread about unbounded Node 26+ support against package metadata.
 - [x] Bounded current root, CLI, and documentation support to Node 20, 22, and 24 releases.
+- [x] Committed and pushed the review fix, then confirmed the Node 20/22/24 PR matrix passes.
 
 ## Completed This Session
 
@@ -54,7 +55,7 @@ statement cleanup after the built CLI completed windowed analysis.
 
 ## Next Session: To-Do
 
-1. Hand off PR #16 for review and merge by another reviewer.
+1. Hand off the updated PR #16 for review and merge by another reviewer.
 2. Select the next separately approved maintenance or product milestone.
 
 ## Important Context
