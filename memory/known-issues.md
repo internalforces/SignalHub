@@ -61,7 +61,7 @@ No active bugs.
 | ISS-018 | The immutable `csv-to-signal@0.2.1` npm tarball README said publication had not occurred | 2026-08-08 | Shipped the corrected README in the separately approved `csv-to-signal@0.3.0` release; the historical `0.2.1` artifact remains immutable |
 | ISS-019 | Development-only PostCSS resolved nanoid 3.3.16, affected by GHSA-2v37-7h3g-55p8 | 2026-08-08 | Added a workspace resolution override to nanoid 3.3.17, refreshed the lockfile, and verified frozen install plus full/production audits with no known vulnerabilities |
 | ISS-020 | GHSA-2v37-7h3g-55p8 expanded its vulnerable range to include development-only nanoid 3.3.17 | 2026-08-17 | Updated the workspace override and lockfile to nanoid 3.3.18; frozen install, 90 tests, typecheck, full/production audits, and the release check pass |
-| ISS-021 | better-sqlite3 11.10.0 aborts in `RemoveEnvironmentCleanupHook` when the built CLI exits on Node 24.19.0 | 2026-08-17 | Pinned better-sqlite3 12.9.0 after owner approval; a clean Node 24.19.0 install builds and passes both built-CLI regression tests |
+| ISS-021 | better-sqlite3 11.10.0 aborts in `RemoveEnvironmentCleanupHook` when the built CLI exits on Node 24.19.0 | 2026-08-17 | Pinned better-sqlite3 12.9.0 after owner approval; clean Node 24.19.0 tests and PR CI on Node 20/22/24 pass |
 | DEBT-004 | GitHub Actions v4 embedded the deprecated Node 20 action runtime | 2026-08-17 | Upgraded checkout/setup-node to v6 and added a weekly plus manually triggered full dependency audit after explicit infrastructure approval |
 | — | — | — | — |
 

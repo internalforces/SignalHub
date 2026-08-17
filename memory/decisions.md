@@ -460,7 +460,7 @@ pass. DEBT-004 and ISS-020 are resolved; no runtime, public API, schema, or rele
 ### ADR-020: Pin better-sqlite3 12.9.0 for the Supported Node Matrix
 
 - **Date**: 2026-08-17
-- **Status**: Accepted and implemented locally
+- **Status**: Accepted and implemented
 - **Decided by**: Project owner
 
 **Context**: PR #16 passed on Node 20 and 22 but its Node 24.19.0 check aborted after the built CLI
@@ -483,5 +483,5 @@ open. Node 20 support also prevents adopting better-sqlite3 13.x.
 
 **Consequences**: TASK-027 resolves ISS-021 locally. A clean Node 24.19.0 installation builds the
 CLI and passes both built-executable regression tests; the complete release check also passes with
-90 tests and clear full/production audits. The database schema, shared contracts, CLI flags/output,
-package version, and deployment state are unchanged; PR CI confirmation is pending.
+90 tests and clear full/production audits. PR #16 also passes its Node 20/22/24 matrix. The database
+schema, shared contracts, CLI flags/output, package version, and deployment state are unchanged.

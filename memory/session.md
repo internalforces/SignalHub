@@ -26,7 +26,7 @@ statement cleanup after the built CLI completed windowed analysis.
 - [x] Received explicit owner approval for the better-sqlite3 major upgrade.
 - [x] Pinned better-sqlite3 12.9.0 in Storage and the public CLI, then refreshed the lockfile.
 - [x] Updated the release-metadata regression test and dependency/project records.
-- [ ] Push the focused fix and confirm all PR #16 checks pass.
+- [x] Pushed the focused fix and confirmed all PR #16 checks pass on Node 20, 22, and 24.
 
 ## Completed This Session
 
@@ -48,8 +48,8 @@ statement cleanup after the built CLI completed windowed analysis.
 
 ## Next Session: To-Do
 
-1. Push the TASK-027 fix to PR #16 and wait for the Node 20/22/24 matrix.
-2. If all checks pass, hand off PR #16 for review and merge by another reviewer.
+1. Hand off PR #16 for review and merge by another reviewer.
+2. Select the next separately approved maintenance or product milestone.
 
 ## Important Context
 
