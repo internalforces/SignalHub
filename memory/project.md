@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Project: Signal Hub
 
-_Last updated: 2026-08-08_
+_Last updated: 2026-08-17_
 
 ## Summary
 
@@ -16,7 +16,7 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 ## Current State
 
 - **Version**: `csv-to-signal@0.3.0` published and npm `latest`
-- **Phase**: M6 released
+- **Phase**: M7 maintenance complete; M6 remains the latest product release
 - **Next milestone**: Select and separately approve a focused follow-up plan
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
@@ -67,6 +67,7 @@ SignalHub/
 | 2026-08-08 | Completed TASK-024 on its branch: additive `--window-hours`, `0.3.0` candidate metadata, 90 tests, typecheck, clear audits, four-file tarball inspection, isolated install, and installed windowed execution; no tag or publication |
 | 2026-08-08 | Resolved newly reported nanoid GHSA-2v37-7h3g-55p8 in development tooling by pinning the allowed transitive patch 3.3.17; production and full audits report no known vulnerabilities |
 | 2026-08-08 | Merged PR #14 as `59ec92e`, tagged it `v0.3.0`, published `csv-to-signal@0.3.0` with integrity `sha512-k1z2wk1Ub+9QE0yHLOv2iLBJCGLIhFnW7zTO1PcN4FNhTuvP0e0M5VSv7yA0CPZN3y7MGmy0nayMgR9JrExa6Q==`, verified the registry artifact and clean consumer execution, and published GitHub Release `v0.3.0` |
+| 2026-08-17 | Completed approved post-release maintenance TASK-025 and TASK-026: patched development-only nanoid to 3.3.18, upgraded GitHub Actions to v6, added a weekly/manual full dependency audit, and passed the complete release check with 90 tests and clear audits |
 
 ## Constraints
 

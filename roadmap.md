@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # roadmap.md — Signal Hub Roadmap
 
-_Last updated: 2026-08-08_
+_Last updated: 2026-08-17_
 
 ## Goal
 
@@ -75,6 +75,15 @@ and `better-sqlite3` external:
 
 M6 does not integrate network connectors, change the signal or database schema, or add scheduling,
 alerts, APIs, dashboards, or explanations.
+
+### M7 — Security and CI Maintenance
+
+- [x] TASK-025: raised the nanoid security override to patched version 3.3.18 after the advisory
+  range expanded.
+- [x] TASK-026: upgraded GitHub Actions to v6 and added a read-only Node 24 full dependency audit
+  every Monday at 00:00 UTC with manual dispatch support.
+
+M7 changes no runtime behavior, public interface, database schema, or published package version.
 
 ## Backlog Ideas
 

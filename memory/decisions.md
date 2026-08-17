@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-08-08_
+_Last updated: 2026-08-17_
 
 ## Template
 
@@ -426,3 +426,31 @@ locally validated artifact. A clean consumer installed and executed `--window-ho
 its database outside the package, and found no packaged database file. GitHub Release `v0.3.0` is
 the latest stable release. ISS-018 is resolved by the corrected README in this new version while
 the historical `0.2.1` artifact remains unchanged.
+
+---
+
+### ADR-019: Patch Development Tooling and Add Recurring Dependency Audits
+
+- **Date**: 2026-08-17
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner
+
+**Context**: GHSA-2v37-7h3g-55p8 expanded its vulnerable range to include nanoid 3.3.17, causing
+the full workspace audit and release check to fail nine days after the previous clear audit. The
+existing CI ran only for pull requests, and checkout/setup-node v4 used a deprecated embedded
+Node 20 runtime.
+
+**Decision**: Raise the workspace nanoid override to 3.3.18, upgrade checkout and setup-node to
+v6, grant workflows read-only repository permissions, and add a separate Node 24 workflow that
+runs a full dependency audit every Monday at 00:00 UTC and on manual dispatch.
+
+**Rationale**: The patch restores a reproducible clear dependency audit, while recurring checks
+detect advisories that appear after merge without changing application behavior or adding a new
+dependency.
+
+**Trade-offs**: The scheduled workflow consumes a small amount of GitHub Actions capacity and
+reports findings without applying automatic dependency changes.
+
+**Consequences**: TASK-025 and TASK-026 are complete. Frozen install, all 90 tests, typecheck,
+full and production audits, package inspection, isolated installation, and installed CLI execution
+pass. DEBT-004 and ISS-020 are resolved; no runtime, public API, schema, or release version changed.

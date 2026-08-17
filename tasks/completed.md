@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Completed Tasks — Signal Hub
 
-_Last updated: 2026-08-08_
+_Last updated: 2026-08-17_
 
 | ID | Task | Completed | Owner | Notes |
 |----|------|-----------|-------|-------|
@@ -38,3 +38,5 @@ _Last updated: 2026-08-08_
 | — | GitHub Release v0.2.1 closeout | 2026-08-07 | Implementer | Published the stable GitHub Release from the existing verified tag, recorded npm provenance and ISS-018 deferral, and removed clean temporary release worktrees |
 | TASK-024 | Windowed Analysis CLI Integration | 2026-08-08 | Implementer | Added additive `--window-hours <n>` composition, strict positive finite validation, English/Korean guidance, and a verified `0.3.0` release artifact; 90 tests, typecheck, audits, four-file package inspection, isolated install, and installed windowed execution pass |
 | — | CSV to Signal 0.3.0 Release | 2026-08-08 | Implementer | Published exact merged commit `59ec92e` as tag and GitHub Release `v0.3.0` plus npm `csv-to-signal@0.3.0`; registry integrity, latest dist-tag, clean installation, windowed execution, and database placement verified |
+| TASK-025 | nanoid Security Patch | 2026-08-17 | Implementer | Updated the transitive security override and lockfile from nanoid 3.3.17 to 3.3.18 after the GHSA vulnerable range expanded; full and production audits are clear |
+| TASK-026 | Scheduled Dependency Audit and Actions v6 | 2026-08-17 | Implementer | Upgraded checkout/setup-node to v6 with read-only permissions and added a Node 24 full dependency audit every Monday at 00:00 UTC plus manual dispatch |

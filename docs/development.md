@@ -72,6 +72,9 @@ command.
 - CLI tests use temporary directories and real CSV files, including the built executable.
 - Pull-request CI validates Node 20, 22, and 24 with a frozen install, production dependency audit,
   build, tests, and type-checking. Node 22 additionally runs the complete release-candidate check.
+- A separate Node 24 dependency-audit workflow runs the full dependency audit every Monday at
+  00:00 UTC and can also be triggered manually. Both workflows use Actions v6 with read-only
+  repository permissions.
 
 When documentation includes a command or output example, run it against the built code before
 requesting review.
