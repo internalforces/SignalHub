@@ -10,15 +10,15 @@ corepack enable
 pnpm install --frozen-lockfile
 ```
 
-No environment file, service, or local database setup is required for the test suite. GitHub and
-CoinGecko credentials are needed only when a caller chooses to exercise authenticated live API
-requests.
+No environment file, service, or local database setup is required for the test suite. Optional
+live credentials are `GITHUB_TOKEN` and `COINGECKO_DEMO_API_KEY`; they are needed only when a
+caller chooses to exercise authenticated live API requests.
 
 ## Repository structure
 
 ```text
 SignalHub/
-├── apps/cli/                 # CSV command-line application
+├── apps/cli/                 # CSV, GitHub, and CoinGecko CLI composition root
 ├── connectors/
 │   ├── csv/                  # strict local CSV input
 │   ├── github/               # UTC daily GitHub commit counts
@@ -68,6 +68,7 @@ command.
 - Unit tests cover shared contracts, validation, repositories, each detector, scoring, and output
   formatting.
 - Connector tests mock network requests; normal test runs do not call GitHub or CoinGecko.
+- CLI external-source tests mock `globalThis.fetch` and never call providers.
 - Core tests use an in-memory SQLite database.
 - CLI tests use temporary directories and real CSV files, including the built executable.
 - Pull-request CI validates Node 20, 22, and 24 with a frozen install, production dependency audit,
@@ -88,7 +89,7 @@ connectors/* -> connector-sdk, types
 storage      -> types
 analysis     -> types
 core         -> storage, analysis, connector-sdk, types
-apps/cli     -> core, connectors/csv, analysis, storage, types
+apps/cli     -> core, connectors/{csv,github,coingecko}, analysis, storage, types
 ```
 
 - Connectors must never import Core.
