@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # roadmap.md — Signal Hub Roadmap
 
-_Last updated: 2026-08-17_
+_Last updated: 2026-08-22_
 
 ## Goal
 
@@ -89,6 +89,18 @@ alerts, APIs, dashboards, or explanations.
 
 M7 changes no CLI behavior, flags, output, database schema, or published package version. It does
 update runtime dependency and supported-engine metadata for compatibility.
+
+### M8 — Runtime Modernization
+
+- Plan: [`docs/2026-08-22-signal-hub-m8-runtime-modernization.md`](docs/2026-08-22-signal-hub-m8-runtime-modernization.md)
+- [x] TASK-029: removed EOL Node 20 from the root, public CLI, and PR CI support contract.
+- [x] Pinned `better-sqlite3` 13.0.3 and aligned the workspace with Node 22 type definitions and
+  a Node 22 bundle target.
+- [x] Passed the full release check with 90 tests, clear audits, the unchanged four-file tarball,
+  and an isolated installed execution.
+
+M8 changes runtime compatibility metadata and the existing native dependency only. It does not
+change CLI behavior, flags, output, database schema, package version, publication, or deployment.
 
 ## Backlog Ideas
 

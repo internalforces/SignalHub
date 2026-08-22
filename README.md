@@ -32,7 +32,7 @@ trend, spike, and change-point detection.
 
 ## Requirements
 
-- Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`
+- Node.js `^22.0.0 || ^24.0.0`
 - Corepack with pnpm 9.7.0
 
 ## Quick start

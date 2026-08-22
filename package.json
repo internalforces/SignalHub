@@ -2,7 +2,7 @@
   "name": "signal-hub",
   "private": true,
   "packageManager": "pnpm@9.7.0",
-  "engines": { "node": "^20.0.0 || ^22.0.0 || ^24.0.0" },
+  "engines": { "node": "^22.0.0 || ^24.0.0" },
   "scripts": {
     "build": "turbo run build",
     "test": "turbo run test",
@@ -11,7 +11,7 @@
     "release:package": "node scripts/release-check.mjs --package-only"
   },
   "devDependencies": {
-    "@types/node": "^20.19.43",
+    "@types/node": "^22.20.1",
     "typescript": "^5.5.4",
     "turbo": "^2.0.9",
     "vite": "6.4.3",

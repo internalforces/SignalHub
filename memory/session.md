@@ -64,3 +64,24 @@ statement cleanup after the built CLI completed windowed analysis.
 - better-sqlite3 is exactly pinned to 12.9.0, and the public engine range is bounded to
   `^20.0.0 || ^22.0.0 || ^24.0.0`.
 - Deferred features still require a dedicated plan and explicit human approval.
+
+## Session Update — 2026-08-22
+
+- **Agent Role**: Implementer
+- **Session Goal**: Complete approved M8 runtime modernization without publishing.
+- Created `codex/m8-runtime-modernization` from merged `origin/main` in an isolated worktree and
+  confirmed the 90-test baseline.
+- Added TASK-029 and the focused M8 plan, then observed the release-manifest regression test fail
+  against the old Node 20/22/24 contract before changing runtime metadata.
+- Narrowed root and public CLI engines to `^22.0.0 || ^24.0.0`, aligned `@types/node` to 22.20.1,
+  changed the bundle target to Node 22, and reduced PR CI to Node 22/24.
+- Pinned `better-sqlite3` 13.0.3 in Storage and the CLI; the lockfile now uses `node-addon-api` and
+  has no `prebuild-install` dependency path.
+- Confirmed clean npm and pnpm consumer probes load the bundled native prebuild and execute an
+  in-memory SQLite query. pnpm workspace installation may still run a `node-gyp` configuration
+  step when native build scripts are allowed, but it does not replace the bundled prebuild.
+- Complete Node 22 and 24.19.0 release checks pass with nine builds, 90 tests, typecheck, full and
+  production audits, the unchanged four-file tarball, isolated installation, installed windowed
+  execution, database placement, and invalid-input checks.
+- No CLI behavior, flag, output, schema, package version, tag, publication, deployment, or deferred
+  feature changed. Next step is independent review and merge.
