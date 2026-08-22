@@ -7,6 +7,8 @@ Harness Version: 1.1
 
 # Current Session — Signal Hub
 
+_Last updated: 2026-08-22_
+
 ## Session Info
 
 - **Date**: 2026-08-17
@@ -64,3 +66,11 @@ statement cleanup after the built CLI completed windowed analysis.
 - better-sqlite3 is exactly pinned to 12.9.0, and the public engine range is bounded to
   `^20.0.0 || ^22.0.0 || ^24.0.0`.
 - Deferred features still require a dedicated plan and explicit human approval.
+
+## 2026-08-22 (External connector CLI implementation)
+
+- TASK-029 completed the approved GitHub and CoinGecko CLI integration.
+- Existing CSV behavior, JSON output, SQLite schema, Core pipeline, and connector implementations remain unchanged.
+- Optional credentials are environment-only and were covered with synthetic, redaction-safe tests.
+- Frozen install, build, all tests, typecheck, both audits, package inspection, and release check pass.
+- `csv-to-signal@0.3.0` remains npm `latest`; no tag, publication, deployment, or live API request occurred.

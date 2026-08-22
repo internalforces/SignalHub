@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-08-17_
+_Last updated: 2026-08-22_
 
 ## Template
 
@@ -516,3 +516,30 @@ expanding CI, and making a deliberate support decision.
 failed against the unbounded range and passes after the root and CLI metadata change; the complete
 release check passes with 90 tests and clear audits, and PR #16 passes on Node 20/22/24. CLI
 behavior, flags, output, database schema, package version, publication, and deployment are unchanged.
+
+---
+
+### ADR-022: Add Backward-Compatible External Connector CLI Commands
+
+- **Date**: 2026-08-22
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner
+
+**Context**: GitHub and CoinGecko connectors were complete private workspace libraries, but users
+of the CLI could analyze only CSV files. Replacing the existing `analyze <file.csv>` shape would
+break published scripts, while connector-specific normalization already belongs in the libraries.
+
+**Decision**: Preserve `analyze <file.csv>` and add sibling `github <owner>/<repo>` and
+`coingecko <coin-id>` commands. Reuse the existing detector options and Core pipeline. Read optional
+credentials only from `GITHUB_TOKEN` and `COINGECKO_DEMO_API_KEY`, bundle both private connectors,
+and keep `better-sqlite3` as the sole registry runtime dependency.
+
+**Rationale**: Additive commands provide clear source-specific validation without changing shared
+contracts, schema, output, or existing CSV invocations.
+
+**Trade-offs**: The public package name remains CSV-oriented, connector diagnostics remain internal,
+and the repository feature is not available from npm until a separately approved release.
+
+**Consequences**: TASK-029 exposes both existing connectors through the repository-built CLI with
+mocked-network regression coverage. No package version, publication, deployment, schema, Core, or
+connector implementation changed.
