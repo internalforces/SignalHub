@@ -1,8 +1,18 @@
 # GitHub and CoinGecko CLI Integration Design
 
-**Date:** 2026-08-22  
+**Date:** 2026-08-22
 **Status:** Approved by the project owner
 **Scope:** Add CLI composition for the existing GitHub and CoinGecko connector libraries
+
+## 2026-08-22 Execution Ruling Addendum
+
+Concurrent mainline work consumed M8/TASK-029/ADR-022 for runtime modernization and
+TASK-030/ADR-023 for the published `csv-to-signal@0.4.0` release. This connector integration is
+therefore executed as M9 TASK-031 under ADR-024 on the merged Node.js 22/24,
+`better-sqlite3` 13.0.3, and esbuild `node22` baseline. npm `0.4.0` remains `latest` and predates
+the repository-built GitHub and CoinGecko commands; this work does not publish a new version.
+Original planning statements below are retained as historical design context and are superseded
+where they conflict with this ruling.
 
 ## Goal
 

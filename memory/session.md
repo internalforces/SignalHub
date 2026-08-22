@@ -67,10 +67,71 @@ statement cleanup after the built CLI completed windowed analysis.
   `^20.0.0 || ^22.0.0 || ^24.0.0`.
 - Deferred features still require a dedicated plan and explicit human approval.
 
+## Session Update — 2026-08-22
+
+- **Agent Role**: Implementer
+- **Session Goal**: Complete approved M8 runtime modernization without publishing.
+- Created `codex/m8-runtime-modernization` from merged `origin/main` in an isolated worktree and
+  confirmed the 90-test baseline.
+- Added TASK-029 and the focused M8 plan, then observed the release-manifest regression test fail
+  against the old Node 20/22/24 contract before changing runtime metadata.
+- Narrowed root and public CLI engines to `^22.0.0 || ^24.0.0`, aligned `@types/node` to 22.20.1,
+  changed the bundle target to Node 22, and reduced PR CI to Node 22/24.
+- Pinned `better-sqlite3` 13.0.3 in Storage and the CLI; the lockfile now uses `node-addon-api` and
+  has no `prebuild-install` dependency path.
+- Confirmed clean npm and pnpm consumer probes load the bundled native prebuild and execute an
+  in-memory SQLite query. pnpm workspace installation may still run a `node-gyp` configuration
+  step when native build scripts are allowed, but it does not replace the bundled prebuild.
+- Complete Node 22 and 24.19.0 release checks pass with nine builds, 90 tests, typecheck, full and
+  production audits, the unchanged four-file tarball, isolated installation, installed windowed
+  execution, database placement, and invalid-input checks.
+- No CLI behavior, flag, output, schema, package version, tag, publication, deployment, or deferred
+  feature changed. Next step is independent review and merge.
+
+## Session Update — 2026-08-22: v0.4.0 Release Candidate Preparation
+
+- **Agent Role**: Implementer
+- **Session Goal**: Record the approved `csv-to-signal@0.4.0` release candidate and its immutable-action boundary.
+- The public CLI manifest and its regression test now lock the unmerged candidate identity as
+  `csv-to-signal@0.4.0`.
+- `csv-to-signal@0.3.0` remains the published npm `latest`; `0.4.0` is not published, tagged, or
+  released on GitHub.
+- Node 22/24 candidate verification and independent review are complete. TASK-030 remains active
+  pending pull-request merge, exact retained-artifact verification and owner approval, publication,
+  registry verification, and GitHub Release verification.
+- No tag, `npm publish`, registry/dist-tag change, or GitHub Release may occur until the exact
+  merged tarball metadata is presented and the project owner explicitly approves those immutable
+  actions.
+- Final review added retained-tarball producer and existing-tarball verifier modes so one exact
+  merged artifact can be installed and exercised under Node 22 and Node 24 before approval.
+
+## Session Update — 2026-08-22: v0.4.0 Publication and Closeout
+
+- **Agent Role**: Implementer / Release Manager
+- **Session Goal**: Publish the exact approved `csv-to-signal@0.4.0` artifact and close TASK-030.
+- Merged reviewed release PR #18 as
+  `9b98ec93568d7b7121d767e0b89e8cebd45ee96f` without committing directly to `main`.
+- Produced and retained one 8,902-byte tarball, then verified that exact file on Node 22.22.3 and
+  Node 24.19.0. Its SHA-256 is
+  `db1edfe4f79762ad616bdffbd53c663b81b405868ae62ddec6fdffa2130109ce`.
+- After explicit deployment approval, pushed annotated tag `v0.4.0` at the exact merge and
+  published the retained artifact to the public npm registry with the `latest` dist-tag.
+- Verified npm version and `latest` as `0.4.0`; registry SHA-1
+  `73a096381205b9a1a5f9603f7b955be902210d28` and SHA-512 integrity
+  `sha512-HEE2cDmU7Zz+NA35dzMMMliOb2y63mdKrQgGtPGyIguGn7EPbFHUKhcwG42gMUJkJ4xsRPnAoDNdG66I3cUkZQ==`
+  match the retained tarball.
+- A clean registry consumer installed and executed the CLI, emitted the expected 25% consecutive
+  and 24-hour windowed signals, created `data.db` in the consumer working directory, and placed no
+  database inside the installed package.
+- Published GitHub Release `v0.4.0` from the exact tag. No new issue, architecture change, schema
+  change, CLI surface change, or deferred feature was introduced.
+- TASK-030 is complete; no task remains active. The next milestone requires separate selection and
+  any approval required by `AGENTS.md`.
+
 ## 2026-08-22 (External connector CLI implementation)
 
-- TASK-029 completed the approved GitHub and CoinGecko CLI integration.
+- M9 TASK-031 completed the approved GitHub and CoinGecko CLI integration.
 - Existing CSV behavior, JSON output, SQLite schema, Core pipeline, and connector implementations remain unchanged.
 - Optional credentials are environment-only and were covered with synthetic, redaction-safe tests.
 - Frozen install, build, all tests, typecheck, both audits, package inspection, and release check pass.
-- `csv-to-signal@0.3.0` remains npm `latest`; no tag, publication, deployment, or live API request occurred.
+- npm `csv-to-signal@0.4.0` remains `latest` and predates these repository-built commands; no tag, publication, deployment, or live provider API request occurred.

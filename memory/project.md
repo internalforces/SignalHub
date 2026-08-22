@@ -15,18 +15,19 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: `csv-to-signal@0.3.0` published and npm `latest`
-- **Phase**: M8 implementation complete; M6 remains the latest published product release
-- **Next milestone**: Independently review and merge TASK-029, then separately approve any release
+- **Published version**: `csv-to-signal@0.4.0` is published and npm `latest`
+- **Release candidate**: None — TASK-031 does not change the package version or publish a release
+- **Phase**: M9 TASK-031 external connector CLI implementation complete; 0.4.0 remains the latest published release
+- **Next milestone**: Independently review and merge TASK-031, then separately approve any release
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
 
 | Field | Value |
 |-------|-------|
-| Language | TypeScript (strict, Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`) |
+| Language | TypeScript (strict, Node.js `^22.0.0 || ^24.0.0`) |
 | Framework | None — plain Node.js CLI |
-| Infrastructure | `csv-to-signal@0.3.0` published on npm; no service infrastructure deployed |
+| Infrastructure | `csv-to-signal@0.4.0` published on npm; no service infrastructure deployed |
 | Repo Structure | Monorepo (pnpm workspaces + Turborepo) |
 
 ## Key Paths
@@ -70,13 +71,17 @@ SignalHub/
 | 2026-08-17 | Completed approved post-release maintenance TASK-025 and TASK-026: patched development-only nanoid to 3.3.18, upgraded GitHub Actions to v6, added a weekly/manual full dependency audit, and passed the complete release check with 90 tests and clear audits |
 | 2026-08-17 | Completed TASK-027 remediation for PR #16's Node 24.19.0 failure: pinned better-sqlite3 12.9.0; clean Node 24.19.0 built-CLI tests, the full release check, and PR CI on Node 20/22/24 pass |
 | 2026-08-17 | Addressed PR #16 review as TASK-028 by bounding the advertised engine contract to tested Node 20/22/24 releases, matching better-sqlite3 12.9.0 instead of claiming unsupported Node 26+ compatibility; the full release check and PR matrix pass |
-| 2026-08-22 | Completed TASK-029: repository builds expose backward-compatible `github <owner>/<repo>` and `coingecko <coin-id>` commands with environment-only optional credentials, mocked-network coverage, and complete package verification; no publication performed |
+| 2026-08-22 | Completed approved M8 TASK-029 on its review branch: removed EOL Node 20 from the support contract and CI, migrated to N-API-based better-sqlite3 13.0.3, and passed 90 tests, typecheck, clear audits, four-file package inspection, isolated installation, and installed execution without publishing |
+| 2026-08-22 | Locked the public `csv-to-signal@0.4.0` candidate identity and opened TASK-030 release preparation; `0.3.0` remains npm `latest`, and no `v0.4.0` tag, npm publication, dist-tag change, or GitHub Release is authorized before exact merged-artifact approval |
+| 2026-08-22 | Completed Node 22/24 candidate verification and independent review; PR merge, exact retained-artifact approval, publication, registry verification, and GitHub Release remain pending |
+| 2026-08-22 | Merged release PR #18 as `9b98ec9`, retained and verified one 8,902-byte tarball on Node 22/24, received explicit deployment approval, tagged the exact merge as `v0.4.0`, published `csv-to-signal@0.4.0` as npm `latest`, matched registry shasum/integrity, verified clean consumer execution and database placement, and published GitHub Release `v0.4.0` |
+| 2026-08-22 | Completed M9 TASK-031: repository builds expose backward-compatible `github <owner>/<repo>` and `coingecko <coin-id>` commands with environment-only optional credentials, mocked-network coverage, and complete package verification; npm `csv-to-signal@0.4.0` remains `latest` and no publication occurred |
 
 ## Constraints
 
 - Only `percentage-change` and `threshold` detectors ship in the MVP — no spike/anomaly/trend/change-point detection
 - No YAML config loader (`config` package) without a separate focused plan and human approval
-- Repository builds expose GitHub and CoinGecko ingestion through additive CLI commands; npm `csv-to-signal@0.3.0` remains the latest published release and does not include TASK-029
+- Repository builds expose GitHub and CoinGecko ingestion through additive CLI commands; npm `csv-to-signal@0.4.0` remains the latest published release and predates TASK-031, so it does not include those commands
 - Polymarket and generic REST connectors remain deferred
 - Windowed change analysis is available from `@signal-hub/analysis` and the published CLI's `--window-hours`; Core defaults remain unchanged
 - Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, connectors/github, connectors/coingecko, analysis, storage, types` (CLI composes these dependencies but contains no pipeline logic)

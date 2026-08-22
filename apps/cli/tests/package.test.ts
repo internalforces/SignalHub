@@ -18,6 +18,7 @@ interface PackageManifest {
   engines?: { node?: string };
   files?: string[];
   bin?: Record<string, string>;
+  scripts?: Record<string, string>;
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
   publishConfig?: { access?: string; registry?: string };
@@ -27,12 +28,16 @@ const cliDirectory = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const manifest = JSON.parse(
   readFileSync(resolve(cliDirectory, "package.json"), "utf-8"),
 ) as PackageManifest;
+const rootManifest = JSON.parse(
+  readFileSync(resolve(cliDirectory, "..", "..", "package.json"), "utf-8"),
+) as PackageManifest;
 
 describe("CLI release package", () => {
   it("has approved release metadata and no workspace runtime dependency", () => {
+    expect(rootManifest.engines?.node).toBe("^22.0.0 || ^24.0.0");
     expect(manifest).toMatchObject({
       name: "csv-to-signal",
-      version: "0.3.0",
+      version: "0.4.0",
       description:
         "Deterministic CSV, GitHub, and CoinGecko time-series signal analysis from the command line",
       keywords: [
@@ -45,9 +50,9 @@ describe("CLI release package", () => {
         "time-series",
       ],
       license: "Apache-2.0",
-      engines: { node: "^20.0.0 || ^22.0.0 || ^24.0.0" },
+      engines: { node: "^22.0.0 || ^24.0.0" },
       files: ["dist/index.js", "README.md", "LICENSE"],
-      dependencies: { "better-sqlite3": "12.9.0" },
+      dependencies: { "better-sqlite3": "13.0.3" },
       bin: { "csv-to-signal": "./dist/index.js" },
       publishConfig: {
         access: "public",
@@ -58,6 +63,7 @@ describe("CLI release package", () => {
       "@signal-hub/connector-coingecko": "0.1.0",
       "@signal-hub/connector-github": "0.1.0",
     });
+    expect(manifest.scripts?.build).toContain("--target=node22");
     expect(manifest.private).not.toBe(true);
     expect(Object.keys(manifest.dependencies ?? {})).toEqual(["better-sqlite3"]);
 

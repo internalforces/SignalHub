@@ -7,13 +7,13 @@ Harness Version: 1.1
 
 # dependencies.md — Signal Hub Dependencies
 
-_Last updated: 2026-08-17_
+_Last updated: 2026-08-22_
 
 ## Core Dependencies
 
 | Package | Version | Purpose | License |
 |---------|---------|---------|---------|
-| better-sqlite3 | 12.9.0 | Embedded SQLite engine backing `@signal-hub/storage`; exact pin preserves Node 20/22/24 prebuilt-binary support and remains the bundled CLI's only runtime dependency | MIT |
+| better-sqlite3 | 13.0.3 | Embedded N-API SQLite engine backing `@signal-hub/storage`; exact pin supports the Node 22/24 contract and remains the bundled CLI's only runtime dependency | MIT |
 
 ## Dev Dependencies
 
@@ -23,7 +23,7 @@ _Last updated: 2026-08-17_
 | vitest | ^4.1.10 | Test runner (used in every package's `tests/`) |
 | vite | 6.4.3 | Explicit Vitest peer pinned for the supported Node engine range |
 | turbo | ^2.0.9 | Monorepo build/test/typecheck orchestration |
-| @types/node | ^20.19.43 | Node 20 built-in module type definitions for workspace compilation |
+| @types/node | ^22.20.1 | Node 22 built-in module type definitions for the minimum supported runtime line |
 | @types/better-sqlite3 | ^7.6.11 | Type definitions for `better-sqlite3` (used in `@signal-hub/storage`) |
 | esbuild | 0.25.12 | Approved direct CLI bundler for producing a standalone npm runtime artifact |
 
@@ -56,6 +56,7 @@ _Last updated: 2026-08-17_
 | TASK-025 / ISS-020 | Project owner, 2026-08-17 | nanoid 3.3.17 became vulnerable after the advisory range expanded | nanoid 3.3.18 enforced through the workspace override | Completed; frozen install, 90 tests, typecheck, full/production audits, and release check passed |
 | TASK-027 / ISS-021 | Project owner, 2026-08-17 | better-sqlite3 11.10.0 aborts during native cleanup on Node 24.19.0 | better-sqlite3 pinned to 12.9.0 in Storage and the public CLI | Completed; clean Node 24.19.0 regression tests, the full release check, and PR CI on Node 20/22/24 pass |
 | TASK-028 / ISS-022 | Project owner, 2026-08-17 | The unbounded `>=24.0.0` engine contract included Node 26+, outside better-sqlite3 12.9.0's declared support | Root and public CLI engines bounded to `^20.0.0 || ^22.0.0 || ^24.0.0` | Completed; RED/GREEN manifest regression, full release check, and PR CI on Node 20/22/24 pass |
+| TASK-029 / DEBT-003 / DEBT-005 | Project owner, 2026-08-22 | EOL Node 20 forced the runtime to stay on deprecated `prebuild-install` packaging | Root and public CLI engines reduced to `^22.0.0 || ^24.0.0`; `better-sqlite3` pinned to N-API-based 13.0.3; `@types/node` raised to 22.20.1 | Completed locally; Node 22 and 24.19.0 release checks pass with 90 tests, typecheck, clear audits, four-file package inspection, isolated install, and installed execution; no publication performed |
 
-The workspace advertises Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`, matching the tested CI matrix,
-Vitest 4.1.10, and better-sqlite3 12.9.0 without claiming unverified Node 21/23 or 25+ releases.
+The workspace advertises Node.js `^22.0.0 || ^24.0.0`, matching the tested CI matrix, Vitest
+4.1.10, and better-sqlite3 13.0.3 without claiming EOL Node 20 or unverified Node 21/23/25+ releases.

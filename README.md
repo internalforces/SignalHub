@@ -24,18 +24,18 @@ and persist observations and signals in SQLite.
 - GitHub commit history and CoinGecko price history through the repository-built CLI and as
   workspace libraries.
 
-CSV to Signal `0.3.0` is published on npm as
-[`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal) and includes windowed CLI analysis.
+CSV to Signal `0.4.0` is published on npm as
+[`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal/v/0.4.0) and supports Node.js 22 and 24.
+It includes the existing windowed CLI analysis with no CLI flag or output-format changes.
 The repository build also includes the GitHub and CoinGecko commands below; they are not part of
-the previously published npm `csv-to-signal@0.3.0` artifact, and TASK-029 does not publish a new
-version.
+the published npm `csv-to-signal@0.4.0` artifact, and TASK-031 does not publish a new version.
 It does not provide scheduling, alerts, a REST API,
 a dashboard, YAML configuration, Polymarket or generic REST ingestion, or ML-style anomaly,
 trend, spike, and change-point detection.
 
 ## Requirements
 
-- Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`
+- Node.js `^22.0.0 || ^24.0.0`
 - Corepack with pnpm 9.7.0
 
 ## Quick start
@@ -164,4 +164,8 @@ runtime dependencies of the tarball; the private analysis workspace is bundled i
   package and executable identity after npm rejected the original unscoped name.
 - [M6 windowed CLI plan](docs/2026-08-08-signal-hub-m6-windowed-cli.md): approved scope for the
   windowed CLI integration released in `0.3.0`.
+- [M8 runtime modernization plan](docs/2026-08-22-signal-hub-m8-runtime-modernization.md): Node
+  22/24 support and the N-API SQLite runtime released in `0.4.0`.
+- [CSV to Signal 0.4.0 release plan](docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md):
+  exact-artifact verification, approval, publication, and closeout record.
 - [MVP implementation plan](docs/2026-07-27-signal-hub-mvp.md): historical task-level implementation detail.

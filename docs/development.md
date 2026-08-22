@@ -2,7 +2,7 @@
 
 ## Prerequisites and setup
 
-Signal Hub supports Node.js `^20.0.0 || ^22.0.0 || ^24.0.0` and pins pnpm 9.7.0 through the
+Signal Hub supports Node.js `^22.0.0 || ^24.0.0` and pins pnpm 9.7.0 through the
 root manifest.
 
 ```bash
@@ -71,7 +71,7 @@ command.
 - CLI external-source tests mock `globalThis.fetch` and never call providers.
 - Core tests use an in-memory SQLite database.
 - CLI tests use temporary directories and real CSV files, including the built executable.
-- Pull-request CI validates Node 20, 22, and 24 with a frozen install, production dependency audit,
+- Pull-request CI validates Node 22 and 24 with a frozen install, production dependency audit,
   build, tests, and type-checking. Node 22 additionally runs the complete release-candidate check.
 - A separate Node 24 dependency-audit workflow runs the full dependency audit every Monday at
   00:00 UTC and can also be triggered manually. Both workflows use Actions v6 with read-only
@@ -105,10 +105,12 @@ These rules are enforced through package manifests and review rather than lint t
 The CLI creates `data.db` in its current working directory. Tests that use storage must use
 SQLite's `:memory:` path.
 
-The workspace root and internal libraries remain private. The `csv-to-signal@0.3.0` CLI with
-windowed analysis is published on npm. Its build bundles private workspace code
-and keeps `better-sqlite3` as the only external runtime dependency. A strict file allowlist prevents
-source, tests, caches, logs, configuration, and local databases from entering the tarball.
+The workspace root and internal libraries remain private. The Node 22/24
+`csv-to-signal@0.4.0` CLI with windowed analysis is published on npm. Its build bundles private
+workspace code and keeps `better-sqlite3` as the only external runtime dependency. A strict file
+allowlist prevents source, tests, caches, logs, configuration, and local databases from entering
+the tarball. The repository build additionally exposes GitHub and CoinGecko commands; published
+`0.4.0` predates TASK-031 and does not contain them, and TASK-031 performs no publication.
 
 `pnpm release:check` creates package artifacts only in a temporary directory, installs the tarball
 into an isolated consumer project, exercises valid and invalid CLI paths, prints artifact metadata,

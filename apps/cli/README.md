@@ -6,7 +6,7 @@ identities for equal inputs and detector configuration.
 
 ## Requirements
 
-- Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`
+- Node.js `^22.0.0 || ^24.0.0`
 
 ## Installation
 
@@ -29,8 +29,8 @@ csv-to-signal coingecko <coin-id> [--vs-currency <currency>] [--days <n>] [--min
 - Credentials are read from the environment only and are never accepted as CLI arguments.
 
 These commands are available in the repository build. The published npm
-`csv-to-signal@0.3.0` artifact is the previously released CSV/windowed CLI and does not include
-the GitHub or CoinGecko commands; TASK-029 does not publish a new version.
+`csv-to-signal@0.4.0` artifact predates this integration and does not include the GitHub or
+CoinGecko commands; TASK-031 does not publish a new version.
 
 Example input:
 

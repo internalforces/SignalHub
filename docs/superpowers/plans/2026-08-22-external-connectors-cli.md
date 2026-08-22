@@ -10,6 +10,17 @@
 
 **Spec:** `docs/superpowers/specs/2026-08-22-external-connectors-cli-design.md`
 
+## 2026-08-22 Execution Ruling Addendum
+
+While this plan was being executed, current main consumed M8/TASK-029/ADR-022 for runtime
+modernization and TASK-030/ADR-023 for the published `csv-to-signal@0.4.0` release. The connector
+integration now executes as M9 TASK-031 and is recorded by ADR-024. Its merged baseline is Node.js
+`^22.0.0 || ^24.0.0`, `@types/node` 22.20.1, `better-sqlite3` 13.0.3, esbuild target `node22`, and
+package version 0.4.0. npm `0.4.0` remains `latest` and predates these repository-built commands;
+this task does not publish a new version. The original M8/TASK-029/ADR-022/0.3.0/Node 20 planning
+text below is retained transparently as historical context and is superseded for execution by this
+addendum.
+
 ## Global Constraints
 
 - Keep `csv-to-signal analyze <file.csv>` backward compatible.

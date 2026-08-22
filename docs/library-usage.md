@@ -2,7 +2,7 @@
 
 The GitHub and CoinGecko connectors can be composed directly as private workspace libraries and
 are also available through the repository-built `csv-to-signal github` and
-`csv-to-signal coingecko` commands. The published npm `0.3.0` artifact predates these commands.
+`csv-to-signal coingecko` commands. The published npm `0.4.0` artifact predates these commands.
 `WindowedChangeDetector` is available in the CLI through `--window-hours` and can also be composed
 directly in TypeScript or JavaScript.
 

@@ -11,7 +11,8 @@ _Last updated: 2026-08-22_
 
 ## In Progress
 
-No active task.
+No active task. Select the next milestone from `roadmap.md` and obtain any required approval before
+starting implementation.
 
 ## Task Detail Template
 

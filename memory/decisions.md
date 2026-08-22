@@ -519,7 +519,78 @@ behavior, flags, output, database schema, package version, publication, and depl
 
 ---
 
-### ADR-022: Add Backward-Compatible External Connector CLI Commands
+### ADR-022: Remove EOL Node 20 and Adopt the N-API SQLite Runtime
+
+- **Date**: 2026-08-22
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner
+
+**Context**: Node 20 reached upstream end-of-life on 2026-03-24 and no longer receives security
+fixes. Its continued support forced Signal Hub to remain on `better-sqlite3` 12.9.0, whose
+deprecated `prebuild-install` dependency remained as DEBT-003. `better-sqlite3` 13.0.3 requires
+Node 22+, uses N-API, bundles platform prebuilds, and removes that deprecated dependency path.
+
+**Decision**: Advertise only `^22.0.0 || ^24.0.0`, validate Node 22 and 24 in pull-request CI,
+target Node 22 in the public esbuild bundle, align `@types/node` to 22.20.1, and pin
+`better-sqlite3` exactly to 13.0.3 in Storage and the public CLI.
+
+**Rationale**: The supported contract should contain maintained LTS releases rather than an EOL
+runtime. The N-API line removes the deprecated installer while keeping SQLite embedded and
+external to the bundled JavaScript.
+
+**Trade-offs**: Node 20 consumers of a future release will receive an engine incompatibility
+warning or failure. Node 26 remains excluded until it is deliberately added to the tested support
+matrix. pnpm may still invoke `node-gyp` configuration when native build scripts are permitted,
+but the package contains and loads its bundled prebuild on supported platforms.
+
+**Consequences**: TASK-029 resolves DEBT-003 and DEBT-005 locally. The release-manifest test was
+observed failing before the metadata change and passing afterward. Complete Node 22 and 24.19.0
+release checks pass with nine builds, 90 tests, typecheck, clear full and production audits, the
+unchanged four-file tarball, isolated npm installation, and installed CLI execution. CLI behavior,
+flags, output, database schema, package version, publication, and deployment are unchanged.
+
+---
+
+### ADR-023: Publish CSV to Signal 0.4.0 as a Gated Runtime-Support Release
+
+- **Date**: 2026-08-22
+- **Status**: Accepted and executed
+- **Decided by**: Project owner
+
+**Context**: The reviewed M8 modernization removes the EOL Node 20 support contract and adopts
+the Node 22+ N-API SQLite runtime without changing CLI behavior, flags, JSON output, shared
+contracts, SQLite schema, dependencies beyond the already approved runtime migration, or the
+four-file package allowlist. At the decision checkpoint, `csv-to-signal@0.3.0` was the published
+npm `latest` release.
+
+**Decision**: Prepare the unmerged candidate as `csv-to-signal@0.4.0` and, only after all release
+gates succeed, target npm registry `https://registry.npmjs.org/`, dist-tag `latest`, and annotated
+Git tag `v0.4.0`. Because this project is pre-1.0 and removal of Node 20 changes the supported
+runtime contract, release the change as the approved `0.4.0` minor version rather than silently
+altering the published `0.3.0` support promise.
+
+**Rationale**: A new minor version makes the Node 20 support removal visible to consumers while
+preserving the immutable `0.3.0` artifact and its `latest` status until the candidate is fully
+verified. Separating candidate preparation from immutable actions preserves exact artifact
+provenance.
+
+**Trade-offs**: Node 20 consumers must remain on `0.3.0`; completing the release requires a
+second verification pass after merge and an explicit approval checkpoint before tag creation,
+publication, or GitHub Release creation.
+
+**Consequences**: TASK-030 is complete. PR #18 merged as
+`9b98ec93568d7b7121d767e0b89e8cebd45ee96f`; an exact 8,902-byte tarball was retained and verified
+on Node 22 and 24 before explicit owner approval. Annotated tag `v0.4.0` points to that merge, and
+`csv-to-signal@0.4.0` is npm `latest`. Registry SHA-1
+`73a096381205b9a1a5f9603f7b955be902210d28` and SHA-512 integrity
+`sha512-HEE2cDmU7Zz+NA35dzMMMliOb2y63mdKrQgGtPGyIguGn7EPbFHUKhcwG42gMUJkJ4xsRPnAoDNdG66I3cUkZQ==`
+match the retained artifact. A clean registry consumer produced the expected percentage and
+windowed signals and created `data.db` outside the installed package. GitHub Release `v0.4.0` was
+published from the exact tag.
+
+---
+
+### ADR-024: Add Backward-Compatible External Connector CLI Commands
 
 - **Date**: 2026-08-22
 - **Status**: Accepted and implemented
@@ -540,6 +611,7 @@ contracts, schema, output, or existing CSV invocations.
 **Trade-offs**: The public package name remains CSV-oriented, connector diagnostics remain internal,
 and the repository feature is not available from npm until a separately approved release.
 
-**Consequences**: TASK-029 exposes both existing connectors through the repository-built CLI with
-mocked-network regression coverage. No package version, publication, deployment, schema, Core, or
-connector implementation changed.
+**Consequences**: M9 TASK-031 exposes both existing connectors through the repository-built CLI
+with mocked-network regression coverage. npm `csv-to-signal@0.4.0` remains `latest` and predates
+these commands. No package version, publication, deployment, schema, Core, or connector
+implementation changed.

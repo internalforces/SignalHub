@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # roadmap.md — Signal Hub Roadmap
 
-_Last updated: 2026-08-17_
+_Last updated: 2026-08-22_
 
 ## Goal
 
@@ -89,6 +89,43 @@ alerts, APIs, dashboards, or explanations.
 
 M7 changes no CLI behavior, flags, output, database schema, or published package version. It does
 update runtime dependency and supported-engine metadata for compatibility.
+
+### M8 — Runtime Modernization
+
+- Plan: [`docs/2026-08-22-signal-hub-m8-runtime-modernization.md`](docs/2026-08-22-signal-hub-m8-runtime-modernization.md)
+- [x] TASK-029: removed EOL Node 20 from the root, public CLI, and PR CI support contract.
+- [x] Pinned `better-sqlite3` 13.0.3 and aligned the workspace with Node 22 type definitions and
+  a Node 22 bundle target.
+- [x] Passed the full release check with 90 tests, clear audits, the unchanged four-file tarball,
+  and an isolated installed execution.
+
+M8 changes runtime compatibility metadata and the existing native dependency only. It does not
+change CLI behavior, flags, output, or database schema.
+
+### CSV to Signal 0.4.0 Release
+
+- Release plan: [`docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md`](docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md)
+- [x] Locked the public package identity as `csv-to-signal@0.4.0`.
+- [x] Verified the candidate on Node 22 and Node 24 and completed independent review.
+- [x] TASK-030: merged PR #18, verified one exact retained artifact, obtained explicit owner
+  approval, published it as npm `latest`, verified a clean registry consumer, and created GitHub
+  Release `v0.4.0` from the exact merge tag.
+
+`csv-to-signal@0.4.0` is published on npm with the `latest` dist-tag. Its registry shasum and
+integrity match the retained 8,902-byte tarball, and GitHub Release `v0.4.0` points to exact merge
+commit `9b98ec93568d7b7121d767e0b89e8cebd45ee96f`.
+
+### M9 — External Connector CLI Integration
+
+- Design: [`docs/superpowers/specs/2026-08-22-external-connectors-cli-design.md`](docs/superpowers/specs/2026-08-22-external-connectors-cli-design.md)
+- Plan: [`docs/superpowers/plans/2026-08-22-external-connectors-cli.md`](docs/superpowers/plans/2026-08-22-external-connectors-cli.md)
+- [x] TASK-031: preserved `analyze <file.csv>` and added repository-built `github <owner>/<repo>`
+  and `coingecko <coin-id>` commands through the unchanged Core pipeline.
+- [x] Added environment-only optional credentials, strict source-specific validation, mocked-network
+  CLI coverage, and bundled private connector workspaces without adding a registry dependency.
+
+npm `csv-to-signal@0.4.0` remains `latest` and predates the M9 commands. M9 does not publish,
+tag, deploy, change the database schema, or change shared connector/Core contracts.
 
 ## Backlog Ideas
 
