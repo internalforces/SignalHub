@@ -171,16 +171,16 @@ of unrelated API/schema/dependency changes.
 - Consumes: the reviewed release PR with passing Node 22/24 CI.
 - Produces: one retained `csv-to-signal-0.4.0.tgz` plus its size, shasum, integrity, and merge SHA.
 
-- [ ] **Step 1: Push the branch and create a PR against `main`**
+- [x] **Step 1: Push the branch and create a PR against `main`**
 
 Use title `chore(release): prepare csv-to-signal 0.4.0` and include Node 22/24 verification in the
 PR body.
 
-- [ ] **Step 2: Wait for CI and merge through the PR**
+- [x] **Step 2: Wait for CI and merge through the PR**
 
 Do not push a direct commit to `main`. Record the exact merge SHA after the PR is merged.
 
-- [ ] **Step 3: Produce once and verify the exact tarball on Node 22 and Node 24**
+- [x] **Step 3: Produce once and verify the exact tarball on Node 22 and Node 24**
 
 In a clean detached worktree at the merge SHA, run `pnpm install --frozen-lockfile`. Create and
 validate an explicit caller-owned artifact directory outside the repository, then run:
@@ -196,7 +196,7 @@ The first command must run on Node 22, produce exactly one retained `csv-to-sign
 and install and exercise it. The Node 24 command must install and exercise that same absolute path
 without packing again. Do not rebuild or replace the retained tarball after either verification.
 
-- [ ] **Step 4: Verify unpublished status, access, ownership, and artifact metadata**
+- [x] **Step 4: Verify unpublished status, access, ownership, and artifact metadata**
 
 ```bash
 if npm view csv-to-signal@0.4.0 version \
@@ -218,7 +218,7 @@ SHA-512 integrity, and SHA-256 only after both exact-tarball verification runs s
 checksum must be computed from `<absolute-retained-tarball-path>`, and only that path may be
 presented for approval or publication.
 
-- [ ] **Step 5: Stop for final immutable-action approval**
+- [x] **Step 5: Stop for final immutable-action approval**
 
 Present merge SHA, tarball path, size, checksums, registry, access, dist-tag, tag, test results, and
 the exact intended commands. Do not tag or publish until the owner explicitly approves.
@@ -244,8 +244,8 @@ the exact intended commands. Do not tag or publish until the owner explicitly ap
 - Produces: npm `latest` `csv-to-signal@0.4.0`, tag/GitHub Release `v0.4.0`, registry verification,
   and project closeout records.
 
-- [ ] **Step 1: After final approval, create and push annotated tag `v0.4.0` at the merge SHA**
-- [ ] **Step 2: Publish only the retained tarball with explicit public release settings**
+- [x] **Step 1: After final approval, create and push annotated tag `v0.4.0` at the merge SHA**
+- [x] **Step 2: Publish only the retained tarball with explicit public release settings**
 
 ```bash
 npm publish <absolute-owner-approved-retained-tarball-path> \
@@ -254,7 +254,7 @@ npm publish <absolute-owner-approved-retained-tarball-path> \
   --registry https://registry.npmjs.org/
 ```
 
-- [ ] **Step 3: Verify npm metadata, integrity, clean install, execution, output, and database path**
+- [x] **Step 3: Verify npm metadata, integrity, clean install, execution, output, and database path**
 
 ```bash
 npm view csv-to-signal@0.4.0 version dist.integrity dist.shasum dist.tarball \
@@ -267,8 +267,8 @@ Run the install in a clean consumer directory. Confirm the registry version and 
 are `0.4.0`, the registry SHA-1 and SHA-512 values match the retained file, and the installed CLI
 preserves the approved output and local database placement.
 
-- [ ] **Step 4: Create stable GitHub Release `v0.4.0` from the exact tag**
-- [ ] **Step 5: Update current-version documentation and close TASK-030 through a follow-up PR**
+- [x] **Step 4: Create stable GitHub Release `v0.4.0` from the exact tag**
+- [x] **Step 5: Update current-version documentation and close TASK-030 through a follow-up PR**
 
 Update the current release references in `AGENTS.md`, `README.md`, `docs/README.ko.md`,
 `docs/development.md`, `tech-stack.md`, `memory/project.md`, `memory/session.md`, and `roadmap.md`.

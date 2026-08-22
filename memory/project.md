@@ -15,10 +15,10 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Published version**: `csv-to-signal@0.3.0` is published and npm `latest`
-- **Release candidate**: `csv-to-signal@0.4.0` is an unmerged, verified, independently reviewed candidate from the M8 runtime modernization; it is not published
-- **Phase**: TASK-030 release preparation is active; PR merge, exact-artifact approval, publication, registry verification, and GitHub Release remain required
-- **Next milestone**: Merge the reviewed candidate through a pull request, then retain and verify one exact merged tarball before approval
+- **Published version**: `csv-to-signal@0.4.0` is published and npm `latest`
+- **Release candidate**: None — the reviewed M8 runtime modernization is released
+- **Phase**: TASK-030 and the CSV to Signal 0.4.0 release are complete
+- **Next milestone**: Select and explicitly approve the next focused maintenance or product milestone
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -27,7 +27,7 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 |-------|-------|
 | Language | TypeScript (strict, Node.js `^22.0.0 || ^24.0.0`) |
 | Framework | None — plain Node.js CLI |
-| Infrastructure | `csv-to-signal@0.3.0` published on npm; no service infrastructure deployed |
+| Infrastructure | `csv-to-signal@0.4.0` published on npm; no service infrastructure deployed |
 | Repo Structure | Monorepo (pnpm workspaces + Turborepo) |
 
 ## Key Paths
@@ -74,6 +74,7 @@ SignalHub/
 | 2026-08-22 | Completed approved M8 TASK-029 on its review branch: removed EOL Node 20 from the support contract and CI, migrated to N-API-based better-sqlite3 13.0.3, and passed 90 tests, typecheck, clear audits, four-file package inspection, isolated installation, and installed execution without publishing |
 | 2026-08-22 | Locked the public `csv-to-signal@0.4.0` candidate identity and opened TASK-030 release preparation; `0.3.0` remains npm `latest`, and no `v0.4.0` tag, npm publication, dist-tag change, or GitHub Release is authorized before exact merged-artifact approval |
 | 2026-08-22 | Completed Node 22/24 candidate verification and independent review; PR merge, exact retained-artifact approval, publication, registry verification, and GitHub Release remain pending |
+| 2026-08-22 | Merged release PR #18 as `9b98ec9`, retained and verified one 8,902-byte tarball on Node 22/24, received explicit deployment approval, tagged the exact merge as `v0.4.0`, published `csv-to-signal@0.4.0` as npm `latest`, matched registry shasum/integrity, verified clean consumer execution and database placement, and published GitHub Release `v0.4.0` |
 
 ## Constraints
 
