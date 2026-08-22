@@ -46,7 +46,9 @@
   },
   "devDependencies": {
     "@signal-hub/analysis": "0.1.0",
+    "@signal-hub/connector-coingecko": "0.1.0",
     "@signal-hub/connector-csv": "0.1.0",
+    "@signal-hub/connector-github": "0.1.0",
     "@signal-hub/core": "0.1.0",
     "@signal-hub/storage": "0.1.0",
     "@signal-hub/types": "0.1.0",
