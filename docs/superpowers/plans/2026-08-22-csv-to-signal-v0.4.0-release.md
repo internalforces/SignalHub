@@ -176,13 +176,15 @@ Run `pnpm install --frozen-lockfile`, then the Node 22 and Node 24 release check
 
 ```bash
 pnpm --filter csv-to-signal pack --pack-destination <validated-temporary-directory>
-npm view csv-to-signal@0.4.0 version
+npm view csv-to-signal@0.4.0 version 2>&1 | rg "E404"
 npm whoami
 ```
 
-Expected: the tarball contains the approved four files, npm reports `0.4.0` as unpublished, and
-the authenticated account is the package owner. Compute and retain size, SHA-1 shasum, SHA-512
-integrity, and SHA-256 for the exact file.
+Expected: the tarball contains the approved four files; the guarded version lookup matches `E404`,
+which confirms that `0.4.0` is unpublished; and the authenticated account is the package owner.
+The command must fail if the version exists (the lookup succeeds without `E404`) or if the lookup
+fails for any reason other than `E404`. Compute and retain size, SHA-1 shasum, SHA-512 integrity,
+and SHA-256 for the exact file.
 
 - [ ] **Step 5: Stop for final immutable-action approval**
 
