@@ -20,6 +20,7 @@ interface PackageManifest {
   bin?: Record<string, string>;
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
+  publishConfig?: { access?: string; registry?: string };
 }
 
 const cliDirectory = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -48,6 +49,10 @@ describe("CLI release package", () => {
       files: ["dist/index.js", "README.md", "LICENSE"],
       dependencies: { "better-sqlite3": "12.9.0" },
       bin: { "csv-to-signal": "./dist/index.js" },
+      publishConfig: {
+        access: "public",
+        registry: "https://registry.npmjs.org/",
+      },
     });
     expect(manifest.devDependencies).toMatchObject({
       "@signal-hub/connector-coingecko": "0.1.0",
