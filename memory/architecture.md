@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Architecture — Signal Hub
 
-_Last updated: 2026-08-08_
+_Last updated: 2026-08-22_
 
 ## System Overview
 
@@ -61,6 +61,7 @@ CSV file, GitHub commits endpoint, or CoinGecko market chart
 | Focused M4 | Deterministic windowed detector library only; no CLI, Core, Storage, or schema changes | 2026-08-05 |
 | CLI release topology | Publish one bundled CLI artifact; keep internal workspaces private and `better-sqlite3` external | 2026-08-06 |
 | Windowed CLI composition | Add `WindowedChangeDetector` only when `--window-hours` supplies a positive finite duration | 2026-08-08 |
+| Runtime modernization | Support Node 22/24 and use N-API-based `better-sqlite3` 13.0.3 without changing the data model or CLI behavior | 2026-08-22 |
 
 ## Architecture Constraints
 

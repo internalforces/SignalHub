@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@signal-hub/types": "workspace:*",
-    "better-sqlite3": "12.9.0"
+    "better-sqlite3": "13.0.3"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",

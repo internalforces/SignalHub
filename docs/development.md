@@ -2,7 +2,7 @@
 
 ## Prerequisites and setup
 
-Signal Hub supports Node.js `^20.0.0 || ^22.0.0 || ^24.0.0` and pins pnpm 9.7.0 through the
+Signal Hub supports Node.js `^22.0.0 || ^24.0.0` and pins pnpm 9.7.0 through the
 root manifest.
 
 ```bash
@@ -70,7 +70,7 @@ command.
 - Connector tests mock network requests; normal test runs do not call GitHub or CoinGecko.
 - Core tests use an in-memory SQLite database.
 - CLI tests use temporary directories and real CSV files, including the built executable.
-- Pull-request CI validates Node 20, 22, and 24 with a frozen install, production dependency audit,
+- Pull-request CI validates Node 22 and 24 with a frozen install, production dependency audit,
   build, tests, and type-checking. Node 22 additionally runs the complete release-candidate check.
 - A separate Node 24 dependency-audit workflow runs the full dependency audit every Monday at
   00:00 UTC and can also be triggered manually. Both workflows use Actions v6 with read-only

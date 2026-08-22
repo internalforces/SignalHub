@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Project: Signal Hub
 
-_Last updated: 2026-08-17_
+_Last updated: 2026-08-22_
 
 ## Summary
 
@@ -16,15 +16,15 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 ## Current State
 
 - **Version**: `csv-to-signal@0.3.0` published and npm `latest`
-- **Phase**: M7 maintenance complete; M6 remains the latest product release
-- **Next milestone**: Select and separately approve a focused follow-up plan
+- **Phase**: M8 runtime modernization complete on its review branch; M6 remains the latest product release
+- **Next milestone**: Review and merge TASK-029 without publishing a new package version
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
 
 | Field | Value |
 |-------|-------|
-| Language | TypeScript (strict, Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`) |
+| Language | TypeScript (strict, Node.js `^22.0.0 || ^24.0.0`) |
 | Framework | None — plain Node.js CLI |
 | Infrastructure | `csv-to-signal@0.3.0` published on npm; no service infrastructure deployed |
 | Repo Structure | Monorepo (pnpm workspaces + Turborepo) |
@@ -70,6 +70,7 @@ SignalHub/
 | 2026-08-17 | Completed approved post-release maintenance TASK-025 and TASK-026: patched development-only nanoid to 3.3.18, upgraded GitHub Actions to v6, added a weekly/manual full dependency audit, and passed the complete release check with 90 tests and clear audits |
 | 2026-08-17 | Completed TASK-027 remediation for PR #16's Node 24.19.0 failure: pinned better-sqlite3 12.9.0; clean Node 24.19.0 built-CLI tests, the full release check, and PR CI on Node 20/22/24 pass |
 | 2026-08-17 | Addressed PR #16 review as TASK-028 by bounding the advertised engine contract to tested Node 20/22/24 releases, matching better-sqlite3 12.9.0 instead of claiming unsupported Node 26+ compatibility; the full release check and PR matrix pass |
+| 2026-08-22 | Completed approved M8 TASK-029 on its review branch: removed EOL Node 20 from the support contract and CI, migrated to N-API-based better-sqlite3 13.0.3, and passed 90 tests, typecheck, clear audits, four-file package inspection, isolated installation, and installed execution without publishing |
 
 ## Constraints
 

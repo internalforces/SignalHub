@@ -16,6 +16,7 @@ interface PackageManifest {
   engines?: { node?: string };
   files?: string[];
   bin?: Record<string, string>;
+  scripts?: Record<string, string>;
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
 }
@@ -24,18 +25,23 @@ const cliDirectory = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const manifest = JSON.parse(
   readFileSync(resolve(cliDirectory, "package.json"), "utf-8"),
 ) as PackageManifest;
+const rootManifest = JSON.parse(
+  readFileSync(resolve(cliDirectory, "..", "..", "package.json"), "utf-8"),
+) as PackageManifest;
 
 describe("CLI release package", () => {
   it("has approved release metadata and no workspace runtime dependency", () => {
+    expect(rootManifest.engines?.node).toBe("^22.0.0 || ^24.0.0");
     expect(manifest).toMatchObject({
       name: "csv-to-signal",
       version: "0.3.0",
       license: "Apache-2.0",
-      engines: { node: "^20.0.0 || ^22.0.0 || ^24.0.0" },
+      engines: { node: "^22.0.0 || ^24.0.0" },
       files: ["dist/index.js", "README.md", "LICENSE"],
-      dependencies: { "better-sqlite3": "12.9.0" },
+      dependencies: { "better-sqlite3": "13.0.3" },
       bin: { "csv-to-signal": "./dist/index.js" },
     });
+    expect(manifest.scripts?.build).toContain("--target=node22");
     expect(manifest.private).not.toBe(true);
     expect(Object.keys(manifest.dependencies ?? {})).toEqual(["better-sqlite3"]);
 

@@ -516,3 +516,35 @@ expanding CI, and making a deliberate support decision.
 failed against the unbounded range and passes after the root and CLI metadata change; the complete
 release check passes with 90 tests and clear audits, and PR #16 passes on Node 20/22/24. CLI
 behavior, flags, output, database schema, package version, publication, and deployment are unchanged.
+
+---
+
+### ADR-022: Remove EOL Node 20 and Adopt the N-API SQLite Runtime
+
+- **Date**: 2026-08-22
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner
+
+**Context**: Node 20 reached upstream end-of-life on 2026-03-24 and no longer receives security
+fixes. Its continued support forced Signal Hub to remain on `better-sqlite3` 12.9.0, whose
+deprecated `prebuild-install` dependency remained as DEBT-003. `better-sqlite3` 13.0.3 requires
+Node 22+, uses N-API, bundles platform prebuilds, and removes that deprecated dependency path.
+
+**Decision**: Advertise only `^22.0.0 || ^24.0.0`, validate Node 22 and 24 in pull-request CI,
+target Node 22 in the public esbuild bundle, align `@types/node` to 22.20.1, and pin
+`better-sqlite3` exactly to 13.0.3 in Storage and the public CLI.
+
+**Rationale**: The supported contract should contain maintained LTS releases rather than an EOL
+runtime. The N-API line removes the deprecated installer while keeping SQLite embedded and
+external to the bundled JavaScript.
+
+**Trade-offs**: Node 20 consumers of a future release will receive an engine incompatibility
+warning or failure. Node 26 remains excluded until it is deliberately added to the tested support
+matrix. pnpm may still invoke `node-gyp` configuration when native build scripts are permitted,
+but the package contains and loads its bundled prebuild on supported platforms.
+
+**Consequences**: TASK-029 resolves DEBT-003 and DEBT-005 locally. The release-manifest test was
+observed failing before the metadata change and passing afterward. Complete Node 22 and 24.19.0
+release checks pass with nine builds, 90 tests, typecheck, clear full and production audits, the
+unchanged four-file tarball, isolated npm installation, and installed CLI execution. CLI behavior,
+flags, output, database schema, package version, publication, and deployment are unchanged.

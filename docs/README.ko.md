@@ -29,7 +29,7 @@ CSV to Signal `0.3.0`은 npm에 `csv-to-signal`로 공개됐습니다. 스케줄
 
 ## 실행 요구 사항
 
-- Node.js `^20.0.0 || ^22.0.0 || ^24.0.0`
+- Node.js `^22.0.0 || ^24.0.0`
 - Corepack과 pnpm 9.7.0
 
 ## 빠른 시작

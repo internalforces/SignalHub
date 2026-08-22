@@ -22,7 +22,7 @@
   ],
   "type": "module",
   "engines": {
-    "node": "^20.0.0 || ^22.0.0 || ^24.0.0"
+    "node": "^22.0.0 || ^24.0.0"
   },
   "files": [
     "dist/index.js",
@@ -35,14 +35,14 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json --noEmit && esbuild src/index.ts --bundle --platform=node --format=esm --target=node20 --external:better-sqlite3 --outfile=dist/index.js",
+    "build": "tsc -p tsconfig.json --noEmit && esbuild src/index.ts --bundle --platform=node --format=esm --target=node22 --external:better-sqlite3 --outfile=dist/index.js",
     "prepack": "pnpm --filter csv-to-signal... build",
     "pretest": "pnpm --filter csv-to-signal... build",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "better-sqlite3": "12.9.0"
+    "better-sqlite3": "13.0.3"
   },
   "devDependencies": {
     "@signal-hub/analysis": "0.1.0",

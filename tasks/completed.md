@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Completed Tasks — Signal Hub
 
-_Last updated: 2026-08-17_
+_Last updated: 2026-08-22_
 
 | ID | Task | Completed | Owner | Notes |
 |----|------|-----------|-------|-------|
@@ -42,3 +42,4 @@ _Last updated: 2026-08-17_
 | TASK-026 | Scheduled Dependency Audit and Actions v6 | 2026-08-17 | Implementer | Upgraded checkout/setup-node to v6 with read-only permissions and added a Node 24 full dependency audit every Monday at 00:00 UTC plus manual dispatch |
 | TASK-027 | Node 24 Native SQLite Compatibility | 2026-08-17 | Implementer | Pinned better-sqlite3 12.9.0 after Node 24.19.0 exposed an 11.10.0 native cleanup abort; clean Node 24.19.0 built-CLI tests, the full release check, and PR CI on Node 20/22/24 pass |
 | TASK-028 | Align Public Node Engine Contract | 2026-08-17 | Implementer | Addressed PR #16 review by bounding root and CLI engines to the tested Node 20/22/24 releases supported by better-sqlite3 12.9.0; full release check and PR CI pass |
+| TASK-029 | Modernize the Supported Node Runtime | 2026-08-22 | Implementer | Removed EOL Node 20 from engines and CI, pinned N-API-based better-sqlite3 13.0.3, aligned Node types and bundle target, and passed the complete release check with 90 tests, clear audits, four-file package inspection, isolated installation, and installed execution; no publication performed |
