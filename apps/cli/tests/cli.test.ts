@@ -241,6 +241,18 @@ describe("runCli", () => {
     expect(existsSync(join(directory, "data.db"))).toBe(false);
   });
 
+  it("rejects invalid earlier repeated options before database or network side effects", async () => {
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+
+    await expect(
+      runCli(["github", "owner/repo", "--window-hours", "0", "--window-hours", "24"]),
+    ).rejects.toThrow(/Usage:/);
+
+    expect(fetch).not.toHaveBeenCalled();
+    expect(existsSync(join(directory, "data.db"))).toBe(false);
+  });
+
   it("does not expose environment credentials in provider errors", async () => {
     const fetch = vi.fn().mockResolvedValue(new Response("forbidden", { status: 403 }));
     vi.stubGlobal("fetch", fetch);

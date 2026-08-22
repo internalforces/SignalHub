@@ -47,7 +47,7 @@ export function parseCliArgs(args: string[]): ParsedCliCommand {
   };
 
   if (command === "analyze") {
-    return { source: "csv", filePath: input, ...detectorOptions };
+    return { source: "csv", filePath: rawInput, ...detectorOptions };
   }
 
   if (command === "github") {
@@ -58,12 +58,8 @@ export function parseCliArgs(args: string[]): ParsedCliCommand {
     return { source: "github", owner: segments[0], repo: segments[1], ...detectorOptions };
   }
 
-  const vsCurrency = (values.get("--vs-currency") ?? "usd").trim();
-  const rawDays = values.get("--days") ?? "30";
-  const historyDays = Number(rawDays);
-  if (!vsCurrency || !Number.isInteger(historyDays) || historyDays <= 0) {
-    throw new Error(USAGE);
-  }
+  const vsCurrency = readTrimmedString(values.get("--vs-currency"), "usd");
+  const historyDays = readPositiveInteger(values.get("--days"), 30);
 
   return {
     source: "coingecko",
@@ -74,42 +70,78 @@ export function parseCliArgs(args: string[]): ParsedCliCommand {
   };
 }
 
-function readFlagValues(args: string[], allowedFlags: ReadonlySet<string>): Map<string, string> {
+function readFlagValues(args: string[], allowedFlags: ReadonlySet<string>): Map<string, string[]> {
   if (args.length % 2 !== 0) {
     throw new Error(USAGE);
   }
 
-  const values = new Map<string, string>();
+  const values = new Map<string, string[]>();
   for (let index = 0; index < args.length; index += 2) {
     const flag = args[index];
     const rawValue = args[index + 1];
     if (!allowedFlags.has(flag) || !rawValue || rawValue.trim().length === 0 || rawValue.startsWith("--")) {
       throw new Error(USAGE);
     }
-    values.set(flag, rawValue);
+    const occurrences = values.get(flag) ?? [];
+    occurrences.push(rawValue);
+    values.set(flag, occurrences);
   }
   return values;
 }
 
-function readFiniteNumber(rawValue: string | undefined): number | undefined {
-  if (rawValue === undefined) {
+function readFiniteNumber(rawValues: readonly string[] | undefined): number | undefined {
+  if (rawValues === undefined) {
     return undefined;
   }
-  const value = Number(rawValue);
-  if (!Number.isFinite(value)) {
-    throw new Error(USAGE);
+  let value = 0;
+  for (const rawValue of rawValues) {
+    value = Number(rawValue);
+    if (!Number.isFinite(value)) {
+      throw new Error(USAGE);
+    }
   }
   return value;
 }
 
-function readWindowMs(rawValue: string | undefined): number | undefined {
-  const hours = readFiniteNumber(rawValue);
-  if (hours === undefined) {
+function readWindowMs(rawValues: readonly string[] | undefined): number | undefined {
+  if (rawValues === undefined) {
     return undefined;
   }
-  const windowMs = hours * HOUR_MS;
-  if (windowMs <= 0 || !Number.isFinite(windowMs)) {
-    throw new Error(USAGE);
+  let windowMs = 0;
+  for (const rawValue of rawValues) {
+    const hours = Number(rawValue);
+    windowMs = hours * HOUR_MS;
+    if (!Number.isFinite(hours) || windowMs <= 0 || !Number.isFinite(windowMs)) {
+      throw new Error(USAGE);
+    }
   }
   return windowMs;
+}
+
+function readPositiveInteger(rawValues: readonly string[] | undefined, defaultValue: number): number {
+  if (rawValues === undefined) {
+    return defaultValue;
+  }
+  let value = 0;
+  for (const rawValue of rawValues) {
+    value = Number(rawValue);
+    if (!Number.isInteger(value) || value <= 0) {
+      throw new Error(USAGE);
+    }
+  }
+  return value;
+}
+
+function readTrimmedString(rawValues: readonly string[] | undefined, defaultValue: string): string {
+  if (rawValues === undefined) {
+    return defaultValue;
+  }
+  let value = "";
+  for (const rawValue of rawValues) {
+    value = rawValue.trim();
+    if (!value) {
+      throw new Error(USAGE);
+    }
+  }
+  return value;
 }

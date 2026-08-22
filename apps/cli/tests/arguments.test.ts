@@ -66,6 +66,32 @@ describe("parseCliArgs", () => {
     ).toMatchObject({ historyDays: 30, windowMs: 43_200_000 });
   });
 
+  it("rejects an invalid earlier repeated numeric option", () => {
+    expect(() =>
+      parseCliArgs(["analyze", "prices.csv", "--min-score", "nope", "--min-score", "40"]),
+    ).toThrow(/Usage:/);
+    expect(() =>
+      parseCliArgs(["coingecko", "bitcoin", "--days", "0", "--days", "30"]),
+    ).toThrow(/Usage:/);
+    expect(() =>
+      parseCliArgs([
+        "github",
+        "owner/repo",
+        "--window-hours",
+        "0",
+        "--window-hours",
+        "24",
+      ]),
+    ).toThrow(/Usage:/);
+  });
+
+  it("preserves leading and trailing spaces in a nonblank CSV path", () => {
+    expect(parseCliArgs(["analyze", " prices.csv "])).toMatchObject({
+      source: "csv",
+      filePath: " prices.csv ",
+    });
+  });
+
   it("rejects malformed commands, positions, and source-specific options", () => {
     expect(() => parseCliArgs([])).toThrow(/Usage:/);
     expect(() => parseCliArgs(["bogus", "value"])).toThrow(/Usage:/);
