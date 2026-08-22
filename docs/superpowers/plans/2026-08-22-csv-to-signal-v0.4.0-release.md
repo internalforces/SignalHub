@@ -114,6 +114,7 @@ complete. Do not move TASK-030 to `tasks/completed.md` during candidate preparat
 **Files:**
 - Modify: `scripts/release-check.mjs` — align the explicit packed-manifest version guard with the
   approved `0.4.0` candidate identity.
+- Test: `scripts/release-check.test.mjs` — retain one package-only tarball and verify its exact path.
 - Verify: all files changed by Tasks 1-2.
 
 **Interfaces:**
@@ -152,6 +153,7 @@ publication.
 
 ```bash
 git add apps/cli/package.json apps/cli/tests/package.test.ts docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md memory/project.md memory/session.md memory/decisions.md roadmap.md tasks/active.md
+git add scripts/release-check.mjs scripts/release-check.test.mjs
 git commit -m "chore(release): prepare csv-to-signal 0.4.0"
 ```
 
@@ -178,23 +180,43 @@ PR body.
 
 Do not push a direct commit to `main`. Record the exact merge SHA after the PR is merged.
 
-- [ ] **Step 3: Verify the exact merge in a clean detached worktree**
+- [ ] **Step 3: Produce once and verify the exact tarball on Node 22 and Node 24**
 
-Run `pnpm install --frozen-lockfile`, then the Node 22 and Node 24 release checks at the merge SHA.
-
-- [ ] **Step 4: Pack and retain the exact tarball outside the repository**
+In a clean detached worktree at the merge SHA, run `pnpm install --frozen-lockfile`. Create and
+validate an explicit caller-owned artifact directory outside the repository, then run:
 
 ```bash
-pnpm --filter csv-to-signal pack --pack-destination <validated-temporary-directory>
-npm view csv-to-signal@0.4.0 version 2>&1 | rg "E404"
-npm whoami
+node --version
+pnpm release:check -- --retain-tarball <validated-caller-owned-artifact-directory>
+npx --yes --package node@24.19.0 --call \
+  'node --version && pnpm release:check -- --verify-tarball <absolute-retained-tarball-path>'
 ```
 
-Expected: the tarball contains the approved four files; the guarded version lookup matches `E404`,
-which confirms that `0.4.0` is unpublished; and the authenticated account is the package owner.
-The command must fail if the version exists (the lookup succeeds without `E404`) or if the lookup
-fails for any reason other than `E404`. Compute and retain size, SHA-1 shasum, SHA-512 integrity,
-and SHA-256 for the exact file.
+The first command must run on Node 22, produce exactly one retained `csv-to-signal-0.4.0.tgz`,
+and install and exercise it. The Node 24 command must install and exercise that same absolute path
+without packing again. Do not rebuild or replace the retained tarball after either verification.
+
+- [ ] **Step 4: Verify unpublished status, access, ownership, and artifact metadata**
+
+```bash
+if npm view csv-to-signal@0.4.0 version \
+  --registry https://registry.npmjs.org/ >version-check.out 2>version-check.err; then
+  echo "csv-to-signal@0.4.0 already exists" >&2
+  exit 1
+fi
+rg '\bE404\b' version-check.err
+npm whoami --registry https://registry.npmjs.org/
+npm access get status csv-to-signal --registry https://registry.npmjs.org/
+npm owner ls csv-to-signal --registry https://registry.npmjs.org/
+```
+
+Expected: the version lookup fails with `E404` specifically from
+`https://registry.npmjs.org/`. Stop if it succeeds or fails for any other reason. The authenticated
+account must be exactly `internalforces`, package access must permit the intended public release,
+and the owner list from that registry must contain `internalforces`. Compute size, SHA-1 shasum,
+SHA-512 integrity, and SHA-256 only after both exact-tarball verification runs succeed. Every
+checksum must be computed from `<absolute-retained-tarball-path>`, and only that path may be
+presented for approval or publication.
 
 - [ ] **Step 5: Stop for final immutable-action approval**
 
@@ -206,6 +228,11 @@ the exact intended commands. Do not tag or publish until the owner explicitly ap
 ### Task 5: Publish and Close the Release After Final Approval
 
 **Files:**
+- Modify after successful publication: `AGENTS.md`
+- Modify after successful publication: `README.md`
+- Modify after successful publication: `docs/README.ko.md`
+- Modify after successful publication: `docs/development.md`
+- Modify after successful publication: `tech-stack.md`
 - Modify after successful publication: `memory/project.md`
 - Modify after successful publication: `memory/session.md`
 - Modify after successful publication: `memory/decisions.md`
@@ -218,7 +245,32 @@ the exact intended commands. Do not tag or publish until the owner explicitly ap
   and project closeout records.
 
 - [ ] **Step 1: After final approval, create and push annotated tag `v0.4.0` at the merge SHA**
-- [ ] **Step 2: Publish the retained tarball publicly with the `latest` dist-tag**
+- [ ] **Step 2: Publish only the retained tarball with explicit public release settings**
+
+```bash
+npm publish <absolute-owner-approved-retained-tarball-path> \
+  --access public \
+  --tag latest \
+  --registry https://registry.npmjs.org/
+```
+
 - [ ] **Step 3: Verify npm metadata, integrity, clean install, execution, output, and database path**
+
+```bash
+npm view csv-to-signal@0.4.0 version dist.integrity dist.shasum dist.tarball \
+  --registry https://registry.npmjs.org/
+npm view csv-to-signal dist-tags.latest --registry https://registry.npmjs.org/
+npm install csv-to-signal@0.4.0 --registry https://registry.npmjs.org/
+```
+
+Run the install in a clean consumer directory. Confirm the registry version and `latest` dist-tag
+are `0.4.0`, the registry SHA-1 and SHA-512 values match the retained file, and the installed CLI
+preserves the approved output and local database placement.
+
 - [ ] **Step 4: Create stable GitHub Release `v0.4.0` from the exact tag**
-- [ ] **Step 5: Record verified publication in ADR-023 and close TASK-030 through a follow-up PR**
+- [ ] **Step 5: Update current-version documentation and close TASK-030 through a follow-up PR**
+
+Update the current release references in `AGENTS.md`, `README.md`, `docs/README.ko.md`,
+`docs/development.md`, `tech-stack.md`, `memory/project.md`, `memory/session.md`, and `roadmap.md`.
+Preserve historical `0.3.0` evidence, including the M6 plan links and prior release records. Record
+verified publication in ADR-023 and move TASK-030 to `tasks/completed.md`.

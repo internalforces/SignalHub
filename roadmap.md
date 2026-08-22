@@ -106,9 +106,9 @@ change CLI behavior, flags, output, database schema, package version, publicatio
 
 - Release plan: [`docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md`](docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md)
 - [x] Locked the unmerged public package identity as `csv-to-signal@0.4.0`.
-- [ ] TASK-030: verify the candidate on Node 22 and 24, complete independent review and PR merge,
-  reproduce the exact merged artifact, then obtain explicit owner approval before immutable
-  release actions.
+- [x] Verified the candidate on Node 22 and Node 24 and completed independent review.
+- [ ] TASK-030: merge through a reviewed PR, verify one exact retained artifact, obtain explicit
+  owner approval, publish, verify the registry, and create the GitHub Release.
 
 `csv-to-signal@0.3.0` remains published on npm with the `latest` dist-tag. The `0.4.0` candidate
 is not published: no `v0.4.0` tag, npm publication or dist-tag change, or GitHub Release may occur

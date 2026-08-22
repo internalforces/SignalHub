@@ -94,9 +94,11 @@ statement cleanup after the built CLI completed windowed analysis.
   `csv-to-signal@0.4.0`.
 - `csv-to-signal@0.3.0` remains the published npm `latest`; `0.4.0` is not published, tagged, or
   released on GitHub.
-- TASK-030 remains active pending complete Node 22/24 candidate verification, independent review,
-  pull-request merge, exact merged-artifact verification and owner approval, npm verification, and
-  GitHub Release verification.
+- Node 22/24 candidate verification and independent review are complete. TASK-030 remains active
+  pending pull-request merge, exact retained-artifact verification and owner approval, publication,
+  registry verification, and GitHub Release verification.
 - No tag, `npm publish`, registry/dist-tag change, or GitHub Release may occur until the exact
   merged tarball metadata is presented and the project owner explicitly approves those immutable
   actions.
+- Final review added retained-tarball producer and existing-tarball verifier modes so one exact
+  merged artifact can be installed and exercised under Node 22 and Node 24 before approval.

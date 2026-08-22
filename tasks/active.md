@@ -20,8 +20,8 @@ _Last updated: 2026-08-22_
   `csv-to-signal@0.4.0` without changing CLI behavior, flags, JSON output, shared contracts,
   SQLite schema, dependencies beyond TASK-029, or the four-file package allowlist.
 - **Definition of Done**:
-  - [ ] The `0.4.0` candidate passes the complete release check on Node 22 and Node 24.19.0.
-  - [ ] An independent reviewer confirms the semantic version, immutable-action gate, package
+  - [x] The `0.4.0` candidate passes the complete release check on Node 22 and Node 24.19.0.
+  - [x] An independent reviewer confirms the semantic version, immutable-action gate, package
     boundary, and absence of unrelated API, schema, or dependency changes.
   - [ ] A reviewed pull request is merged into `main`; no direct commit to `main` is used.
   - [ ] The exact merged artifact is reproduced, retained, and verified with its size and checksums.
