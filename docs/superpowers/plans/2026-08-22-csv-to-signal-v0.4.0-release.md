@@ -102,7 +102,7 @@ immutable-action approval gate.
 State that `0.3.0` remains npm `latest` while the reviewed `0.4.0` candidate is being prepared.
 Do not claim that `0.4.0` is published before registry verification succeeds.
 
-- [ ] **Step 4: Close candidate-preparation checkboxes only after verification**
+- [x] **Step 4: Close candidate-preparation checkboxes only after verification**
 
 Leave publication-related TASK-030 conditions active until npm and GitHub Release verification
 complete. Do not move TASK-030 to `tasks/completed.md` during candidate preparation.
@@ -112,33 +112,43 @@ complete. Do not move TASK-030 to `tasks/completed.md` during candidate preparat
 ### Task 3: Verify and Review the Release Candidate
 
 **Files:**
+- Modify: `scripts/release-check.mjs` — align the explicit packed-manifest version guard with the
+  approved `0.4.0` candidate identity.
 - Verify: all files changed by Tasks 1-2.
 
 **Interfaces:**
 - Consumes: the `0.4.0` release branch.
 - Produces: a reviewed branch whose exact package boundary passes on Node 22 and Node 24.
 
-- [ ] **Step 1: Run the complete Node 22 release check**
+**Observed RED / approved correction:** The initial Node 22 `pnpm release:check` completed the
+frozen install, nine builds, 90 tests, typecheck, and both audits, then failed with `Packed
+manifest does not match the approved release identity`. The branch manifest and package regression
+test already assert `0.4.0`; `scripts/release-check.mjs` still asserted `0.3.0`. Update only that
+stale explicit guard, verify the minimal package GREEN hypothesis with `pnpm release:package`, then
+restart the complete Node 22 and Node 24 checks below. The failed initial full Node 22 run is the
+required RED evidence; it does not complete Step 1.
+
+- [x] **Step 1: Run the complete Node 22 release check**
 
 Run: `pnpm release:check`
 
 Expected: frozen install, nine builds, 90 tests, typecheck, full/production audits, four-file
 package inspection, isolated install, and installed CLI execution pass for `0.4.0`.
 
-- [ ] **Step 2: Run the complete Node 24.19.0 release check**
+- [x] **Step 2: Run the complete Node 24.19.0 release check**
 
 Run: `npx --yes --package node@24.19.0 --call 'node --version && pnpm release:check'`
 
 Expected: the same verification passes under Node 24.19.0.
 
-- [ ] **Step 3: Verify diff hygiene and release boundaries**
+- [x] **Step 3: Verify diff hygiene and release boundaries**
 
 Run: `git diff --check`
 
 Expected: no whitespace errors, no dependency or public-interface change, no tag, and no
 publication.
 
-- [ ] **Step 4: Commit and request independent review**
+- [x] **Step 4: Commit and request independent review**
 
 ```bash
 git add apps/cli/package.json apps/cli/tests/package.test.ts docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md memory/project.md memory/session.md memory/decisions.md roadmap.md tasks/active.md
