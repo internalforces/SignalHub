@@ -548,3 +548,37 @@ observed failing before the metadata change and passing afterward. Complete Node
 release checks pass with nine builds, 90 tests, typecheck, clear full and production audits, the
 unchanged four-file tarball, isolated npm installation, and installed CLI execution. CLI behavior,
 flags, output, database schema, package version, publication, and deployment are unchanged.
+
+---
+
+### ADR-023: Prepare CSV to Signal 0.4.0 as a Gated Runtime-Support Release
+
+- **Date**: 2026-08-22
+- **Status**: Accepted
+- **Decided by**: Project owner
+
+**Context**: The reviewed M8 modernization removes the EOL Node 20 support contract and adopts
+the Node 22+ N-API SQLite runtime without changing CLI behavior, flags, JSON output, shared
+contracts, SQLite schema, dependencies beyond the already approved runtime migration, or the
+four-file package allowlist. `csv-to-signal@0.3.0` remains the published npm `latest` release.
+
+**Decision**: Prepare the unmerged candidate as `csv-to-signal@0.4.0` and, only after all release
+gates succeed, target npm registry `https://registry.npmjs.org/`, dist-tag `latest`, and annotated
+Git tag `v0.4.0`. Because this project is pre-1.0 and removal of Node 20 changes the supported
+runtime contract, release the change as the approved `0.4.0` minor version rather than silently
+altering the published `0.3.0` support promise.
+
+**Rationale**: A new minor version makes the Node 20 support removal visible to consumers while
+preserving the immutable `0.3.0` artifact and its `latest` status until the candidate is fully
+verified. Separating candidate preparation from immutable actions preserves exact artifact
+provenance.
+
+**Trade-offs**: Node 20 consumers must remain on `0.3.0`; completing the release requires a
+second verification pass after merge and an explicit approval checkpoint before tag creation,
+publication, or GitHub Release creation.
+
+**Consequences**: TASK-030 is active. Node 22/24 verification, independent review, pull-request
+merge, exact merged-tarball verification, and owner approval are required before creating or
+pushing `v0.4.0`, running `npm publish`, changing the `latest` dist-tag, or creating a GitHub
+Release. After publication, npm and GitHub Release verification must succeed before TASK-030 can
+close.

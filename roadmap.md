@@ -102,6 +102,18 @@ update runtime dependency and supported-engine metadata for compatibility.
 M8 changes runtime compatibility metadata and the existing native dependency only. It does not
 change CLI behavior, flags, output, database schema, package version, publication, or deployment.
 
+### CSV to Signal 0.4.0 Release Candidate
+
+- Release plan: [`docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md`](docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md)
+- [x] Locked the unmerged public package identity as `csv-to-signal@0.4.0`.
+- [ ] TASK-030: verify the candidate on Node 22 and 24, complete independent review and PR merge,
+  reproduce the exact merged artifact, then obtain explicit owner approval before immutable
+  release actions.
+
+`csv-to-signal@0.3.0` remains published on npm with the `latest` dist-tag. The `0.4.0` candidate
+is not published: no `v0.4.0` tag, npm publication or dist-tag change, or GitHub Release may occur
+until the exact merged tarball has been verified and explicitly approved.
+
 ## Backlog Ideas
 
 - Deterministic template-based explanations
