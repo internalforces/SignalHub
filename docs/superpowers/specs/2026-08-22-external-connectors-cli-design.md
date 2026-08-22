@@ -1,7 +1,7 @@
 # GitHub and CoinGecko CLI Integration Design
 
 **Date:** 2026-08-22  
-**Status:** Approved in chat; pending written-spec review  
+**Status:** Approved by the project owner
 **Scope:** Add CLI composition for the existing GitHub and CoinGecko connector libraries
 
 ## Goal
