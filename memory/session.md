@@ -102,3 +102,26 @@ statement cleanup after the built CLI completed windowed analysis.
   actions.
 - Final review added retained-tarball producer and existing-tarball verifier modes so one exact
   merged artifact can be installed and exercised under Node 22 and Node 24 before approval.
+
+## Session Update — 2026-08-22: v0.4.0 Publication and Closeout
+
+- **Agent Role**: Implementer / Release Manager
+- **Session Goal**: Publish the exact approved `csv-to-signal@0.4.0` artifact and close TASK-030.
+- Merged reviewed release PR #18 as
+  `9b98ec93568d7b7121d767e0b89e8cebd45ee96f` without committing directly to `main`.
+- Produced and retained one 8,902-byte tarball, then verified that exact file on Node 22.22.3 and
+  Node 24.19.0. Its SHA-256 is
+  `db1edfe4f79762ad616bdffbd53c663b81b405868ae62ddec6fdffa2130109ce`.
+- After explicit deployment approval, pushed annotated tag `v0.4.0` at the exact merge and
+  published the retained artifact to the public npm registry with the `latest` dist-tag.
+- Verified npm version and `latest` as `0.4.0`; registry SHA-1
+  `73a096381205b9a1a5f9603f7b955be902210d28` and SHA-512 integrity
+  `sha512-HEE2cDmU7Zz+NA35dzMMMliOb2y63mdKrQgGtPGyIguGn7EPbFHUKhcwG42gMUJkJ4xsRPnAoDNdG66I3cUkZQ==`
+  match the retained tarball.
+- A clean registry consumer installed and executed the CLI, emitted the expected 25% consecutive
+  and 24-hour windowed signals, created `data.db` in the consumer working directory, and placed no
+  database inside the installed package.
+- Published GitHub Release `v0.4.0` from the exact tag. No new issue, architecture change, schema
+  change, CLI surface change, or deferred feature was introduced.
+- TASK-030 is complete; no task remains active. The next milestone requires separate selection and
+  any approval required by `AGENTS.md`.

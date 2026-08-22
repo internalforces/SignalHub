@@ -23,7 +23,7 @@ _Last updated: 2026-08-22_
 | Language | TypeScript (strict, Node.js `^22.0.0 || ^24.0.0`, ESM/NodeNext) |
 | Framework | None — plain Node.js CLI, no web framework |
 | Database | SQLite (`better-sqlite3`) |
-| Infrastructure | Public CLI package `csv-to-signal@0.3.0` is published on npm; no service infrastructure is deployed |
+| Infrastructure | Public CLI package `csv-to-signal@0.4.0` is published on npm; no service infrastructure is deployed |
 | Repo Structure | Monorepo (pnpm workspaces + Turborepo) |
 | Harness Tier | Standard |
 

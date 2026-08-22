@@ -100,19 +100,20 @@ update runtime dependency and supported-engine metadata for compatibility.
   and an isolated installed execution.
 
 M8 changes runtime compatibility metadata and the existing native dependency only. It does not
-change CLI behavior, flags, output, database schema, package version, publication, or deployment.
+change CLI behavior, flags, output, or database schema.
 
-### CSV to Signal 0.4.0 Release Candidate
+### CSV to Signal 0.4.0 Release
 
 - Release plan: [`docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md`](docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md)
-- [x] Locked the unmerged public package identity as `csv-to-signal@0.4.0`.
+- [x] Locked the public package identity as `csv-to-signal@0.4.0`.
 - [x] Verified the candidate on Node 22 and Node 24 and completed independent review.
-- [ ] TASK-030: merge through a reviewed PR, verify one exact retained artifact, obtain explicit
-  owner approval, publish, verify the registry, and create the GitHub Release.
+- [x] TASK-030: merged PR #18, verified one exact retained artifact, obtained explicit owner
+  approval, published it as npm `latest`, verified a clean registry consumer, and created GitHub
+  Release `v0.4.0` from the exact merge tag.
 
-`csv-to-signal@0.3.0` remains published on npm with the `latest` dist-tag. The `0.4.0` candidate
-is not published: no `v0.4.0` tag, npm publication or dist-tag change, or GitHub Release may occur
-until the exact merged tarball has been verified and explicitly approved.
+`csv-to-signal@0.4.0` is published on npm with the `latest` dist-tag. Its registry shasum and
+integrity match the retained 8,902-byte tarball, and GitHub Release `v0.4.0` points to exact merge
+commit `9b98ec93568d7b7121d767e0b89e8cebd45ee96f`.
 
 ## Backlog Ideas
 
