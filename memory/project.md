@@ -15,9 +15,10 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Version**: `csv-to-signal@0.3.0` published and npm `latest`
-- **Phase**: M8 runtime modernization complete on its review branch; M6 remains the latest product release
-- **Next milestone**: Review and merge TASK-029 without publishing a new package version
+- **Published version**: `csv-to-signal@0.3.0` is published and npm `latest`
+- **Release candidate**: `csv-to-signal@0.4.0` is an unmerged, verified, independently reviewed candidate from the M8 runtime modernization; it is not published
+- **Phase**: TASK-030 release preparation is active; PR merge, exact-artifact approval, publication, registry verification, and GitHub Release remain required
+- **Next milestone**: Merge the reviewed candidate through a pull request, then retain and verify one exact merged tarball before approval
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -71,6 +72,8 @@ SignalHub/
 | 2026-08-17 | Completed TASK-027 remediation for PR #16's Node 24.19.0 failure: pinned better-sqlite3 12.9.0; clean Node 24.19.0 built-CLI tests, the full release check, and PR CI on Node 20/22/24 pass |
 | 2026-08-17 | Addressed PR #16 review as TASK-028 by bounding the advertised engine contract to tested Node 20/22/24 releases, matching better-sqlite3 12.9.0 instead of claiming unsupported Node 26+ compatibility; the full release check and PR matrix pass |
 | 2026-08-22 | Completed approved M8 TASK-029 on its review branch: removed EOL Node 20 from the support contract and CI, migrated to N-API-based better-sqlite3 13.0.3, and passed 90 tests, typecheck, clear audits, four-file package inspection, isolated installation, and installed execution without publishing |
+| 2026-08-22 | Locked the public `csv-to-signal@0.4.0` candidate identity and opened TASK-030 release preparation; `0.3.0` remains npm `latest`, and no `v0.4.0` tag, npm publication, dist-tag change, or GitHub Release is authorized before exact merged-artifact approval |
+| 2026-08-22 | Completed Node 22/24 candidate verification and independent review; PR merge, exact retained-artifact approval, publication, registry verification, and GitHub Release remain pending |
 
 ## Constraints
 

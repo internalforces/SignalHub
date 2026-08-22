@@ -85,3 +85,20 @@ statement cleanup after the built CLI completed windowed analysis.
   execution, database placement, and invalid-input checks.
 - No CLI behavior, flag, output, schema, package version, tag, publication, deployment, or deferred
   feature changed. Next step is independent review and merge.
+
+## Session Update — 2026-08-22: v0.4.0 Release Candidate Preparation
+
+- **Agent Role**: Implementer
+- **Session Goal**: Record the approved `csv-to-signal@0.4.0` release candidate and its immutable-action boundary.
+- The public CLI manifest and its regression test now lock the unmerged candidate identity as
+  `csv-to-signal@0.4.0`.
+- `csv-to-signal@0.3.0` remains the published npm `latest`; `0.4.0` is not published, tagged, or
+  released on GitHub.
+- Node 22/24 candidate verification and independent review are complete. TASK-030 remains active
+  pending pull-request merge, exact retained-artifact verification and owner approval, publication,
+  registry verification, and GitHub Release verification.
+- No tag, `npm publish`, registry/dist-tag change, or GitHub Release may occur until the exact
+  merged tarball metadata is presented and the project owner explicitly approves those immutable
+  actions.
+- Final review added retained-tarball producer and existing-tarball verifier modes so one exact
+  merged artifact can be installed and exercised under Node 22 and Node 24 before approval.

@@ -34,7 +34,7 @@ describe("CLI release package", () => {
     expect(rootManifest.engines?.node).toBe("^22.0.0 || ^24.0.0");
     expect(manifest).toMatchObject({
       name: "csv-to-signal",
-      version: "0.3.0",
+      version: "0.4.0",
       license: "Apache-2.0",
       engines: { node: "^22.0.0 || ^24.0.0" },
       files: ["dist/index.js", "README.md", "LICENSE"],
