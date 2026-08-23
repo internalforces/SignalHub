@@ -37,7 +37,7 @@ describe("CLI release package", () => {
     expect(rootManifest.engines?.node).toBe("^22.0.0 || ^24.0.0");
     expect(manifest).toMatchObject({
       name: "csv-to-signal",
-      version: "0.4.0",
+      version: "0.5.0",
       description:
         "Deterministic CSV, GitHub, and CoinGecko time-series signal analysis from the command line",
       keywords: [

@@ -648,3 +648,36 @@ semantics.
 **Consequences**: TASK-032 resolves ISS-023 through ISS-026 with Storage, Core, and CLI regression
 tests. No database schema, shared data shape, CLI flag/output format, dependency, package version,
 publication, deployment, or connector implementation changes.
+
+---
+
+### ADR-026: Prepare CSV to Signal 0.5.0 as the M9 Package Release
+
+- **Date**: 2026-08-23
+- **Status**: Accepted for preparation; immutable actions pending
+- **Decided by**: Project owner
+
+**Context**: PR #20 merged the approved GitHub and CoinGecko CLI commands into `main` after review
+remediation. npm `csv-to-signal@0.4.0` predates those commands, so installed users still receive
+only the earlier CSV surface even though the repository and package bundle configuration now cover
+all three sources.
+
+**Decision**: Prepare `csv-to-signal@0.5.0` with Git tag `v0.5.0`, npm registry
+`https://registry.npmjs.org/`, public access, and dist-tag `latest`. Update both the GitHub-facing
+root README and the npm-facing package README. Keep tag creation, publication, dist-tag changes,
+and GitHub Release creation blocked until a reviewed PR is merged, one exact merged tarball is
+verified on Node 22 and 24, and the owner explicitly approves its metadata and intended commands.
+
+**Rationale**: In a pre-1.0 package, the additive external-source command surface is a visible
+minor capability release. A new artifact makes those already reviewed commands available to npm
+consumers without rewriting immutable `0.4.0` history, while the exact-artifact gate preserves
+release provenance.
+
+**Trade-offs**: The public package name remains CSV-oriented, and the root README must temporarily
+distinguish current npm `latest` from the unmerged candidate. A follow-up closeout PR is required
+after successful publication to record verified checksums and current-version status.
+
+**Consequences**: TASK-033 tracks version locking, documentation, full Node 22/24 verification,
+reviewed PR merge, exact merged-artifact reproduction, final approval, npm verification, and the
+GitHub Release. No dependency, schema, shared contract, command, flag, or JSON output change is
+authorized by this decision.

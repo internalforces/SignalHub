@@ -1,8 +1,9 @@
 # csv-to-signal
 
-`csv-to-signal` is a deterministic local CLI for turning timestamped CSV observations into ranked
-JSON signals. It stores normalized observations and signals in SQLite and produces stable signal
-identities for equal inputs and detector configuration.
+`csv-to-signal` is a deterministic local CLI for turning timestamped CSV observations, GitHub
+commit history, and CoinGecko market prices into ranked JSON signals. It stores normalized
+observations and signals in SQLite and produces stable signal identities for equal inputs and
+detector configuration.
 
 ## Requirements
 
@@ -28,9 +29,12 @@ csv-to-signal coingecko <coin-id> [--vs-currency <currency>] [--days <n>] [--min
   `--days` defaults to `30`; set `COINGECKO_DEMO_API_KEY` to use a Demo key.
 - Credentials are read from the environment only and are never accepted as CLI arguments.
 
-These commands are available in the repository build. The published npm
-`csv-to-signal@0.4.0` artifact predates this integration and does not include the GitHub or
-CoinGecko commands; TASK-031 does not publish a new version.
+Example external-source commands:
+
+```bash
+csv-to-signal github internalforces/SignalHub --window-hours 24
+csv-to-signal coingecko bitcoin --vs-currency usd --days 30 --min-score 20
+```
 
 Example input:
 
@@ -74,9 +78,11 @@ the last value wins.
 
 ## Scope
 
-The repository-built CLI supports CSV analysis, GitHub commit-count analysis, CoinGecko
-market-chart analysis, consecutive percentage changes, optional upward threshold crossings,
-optional windowed changes, score filtering, SQLite persistence, and JSON output.
+The CLI supports CSV analysis, GitHub commit-count analysis, CoinGecko market-chart analysis,
+consecutive percentage changes, optional upward threshold crossings, optional windowed changes,
+score filtering, SQLite persistence, and JSON output. It does not provide scheduling, alerts, a
+REST API, a dashboard, YAML configuration, Polymarket or generic REST ingestion, or ML-style
+anomaly, trend, spike, and change-point detection.
 
 ## License
 

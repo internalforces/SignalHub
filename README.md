@@ -24,11 +24,10 @@ and persist observations and signals in SQLite.
 - GitHub commit history and CoinGecko price history through the repository-built CLI and as
   workspace libraries.
 
-CSV to Signal `0.4.0` is published on npm as
+CSV to Signal `0.4.0` is currently published on npm as
 [`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal/v/0.4.0) and supports Node.js 22 and 24.
-It includes the existing windowed CLI analysis with no CLI flag or output-format changes.
-The repository build also includes the GitHub and CoinGecko commands below; they are not part of
-the published npm `csv-to-signal@0.4.0` artifact, and TASK-031 does not publish a new version.
+The `0.5.0` release candidate adds the GitHub and CoinGecko commands to the npm package while
+preserving the existing CSV command, flags, JSON format, and Node.js support contract.
 It does not provide scheduling, alerts, a REST API,
 a dashboard, YAML configuration, Polymarket or generic REST ingestion, or ML-style anomaly,
 trend, spike, and change-point detection.
@@ -168,4 +167,6 @@ runtime dependencies of the tarball; the private analysis workspace is bundled i
   22/24 support and the N-API SQLite runtime released in `0.4.0`.
 - [CSV to Signal 0.4.0 release plan](docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md):
   exact-artifact verification, approval, publication, and closeout record.
+- [CSV to Signal 0.5.0 release plan](docs/superpowers/plans/2026-08-23-csv-to-signal-v0.5.0-release.md):
+  external-command package release, exact merged-artifact verification, and approval boundary.
 - [MVP implementation plan](docs/2026-07-27-signal-hub-mvp.md): historical task-level implementation detail.
