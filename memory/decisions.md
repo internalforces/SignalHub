@@ -651,10 +651,10 @@ publication, deployment, or connector implementation changes.
 
 ---
 
-### ADR-026: Prepare CSV to Signal 0.5.0 as the M9 Package Release
+### ADR-026: Publish CSV to Signal 0.5.0 as the M9 Package Release
 
 - **Date**: 2026-08-23
-- **Status**: Accepted for preparation; immutable actions pending
+- **Status**: Accepted and executed
 - **Decided by**: Project owner
 
 **Context**: PR #20 merged the approved GitHub and CoinGecko CLI commands into `main` after review
@@ -662,22 +662,34 @@ remediation. npm `csv-to-signal@0.4.0` predates those commands, so installed use
 only the earlier CSV surface even though the repository and package bundle configuration now cover
 all three sources.
 
-**Decision**: Prepare `csv-to-signal@0.5.0` with Git tag `v0.5.0`, npm registry
-`https://registry.npmjs.org/`, public access, and dist-tag `latest`. Update both the GitHub-facing
-root README and the npm-facing package README. Keep tag creation, publication, dist-tag changes,
-and GitHub Release creation blocked until a reviewed PR is merged, one exact merged tarball is
-verified on Node 22 and 24, and the owner explicitly approves its metadata and intended commands.
+**Decision**: Treat the annotated `v0.5.0` tag created at 2026-08-23 14:35:08 KST before final
+artifact approval as a transparent deviation from the original tag gate. Verify that it points to
+the exact merge and do not recreate or move it. After reviewed-merge and exact-tarball verification
+on Node 22 and 24, and explicit owner approval, publish `csv-to-signal@0.5.0` to
+`https://registry.npmjs.org/` with public access and the `latest` dist-tag, then create the stable
+GitHub Release. The npm registry owner account is `gilgo`; the package author and GitHub repository
+identity remain `internalforces`.
 
 **Rationale**: In a pre-1.0 package, the additive external-source command surface is a visible
 minor capability release. A new artifact makes those already reviewed commands available to npm
 consumers without rewriting immutable `0.4.0` history, while the exact-artifact gate preserves
 release provenance.
 
-**Trade-offs**: The public package name remains CSV-oriented, and the root README must temporarily
-distinguish current npm `latest` from the unmerged candidate. A follow-up closeout PR is required
-after successful publication to record verified checksums and current-version status.
+**Trade-offs**: The public package name remains CSV-oriented. The tag's pre-approval creation is a
+documented gate deviation, although it already targeted the exact merge and was never recreated or
+moved. Historical `0.4.0` records preserve the former npm `latest` state, while current-version
+records identify `0.5.0` and its verified release provenance.
 
-**Consequences**: TASK-033 tracks version locking, documentation, full Node 22/24 verification,
-reviewed PR merge, exact merged-artifact reproduction, final approval, npm verification, and the
-GitHub Release. No dependency, schema, shared contract, command, flag, or JSON output change is
-authorized by this decision.
+**Consequences**: TASK-033 is complete. PR #21 merged as
+`dffdf6a774119dd068c9f065132ffe012bb7cddb`; the exact 12,754-byte tarball passed the full
+release check on Node 22.22.3 and exact-byte verification on Node 24.19.0. Its SHA-1 is
+`adf05bc9acbc1d45647a286e4d070d29a8229f2d`, SHA-256 is
+`771ad1f31574698b6e1e07c1a9dc4d63059fdf4ae57ab84a3e2aaa5688e6245a`, and registry integrity is
+`sha512-L8NyLc9p/pz8wAJAGS6MaPR30n1/xtXcOyJVyuL8tA6Dql2JdH9zutaHM4mpEOC0c9ewpR+nnlvZmUepzSus3w==`.
+The pre-approval `v0.5.0` tag at 2026-08-23 14:35:08 KST pointed to the exact merge and was later
+verified without recreation or movement. Final approval covered the retained-artifact publication,
+the `latest` dist-tag, and GitHub Release creation.
+`csv-to-signal@0.5.0` is npm `latest`, and GitHub Release `v0.5.0` is published from the exact tag.
+A clean registry consumer confirmed deterministic CSV output, all three command usages, and
+consumer-only `data.db` placement. No dependency, schema, shared contract, command, flag, JSON
+output, or deferred feature changed during release or closeout.
