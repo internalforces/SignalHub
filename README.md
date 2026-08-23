@@ -11,8 +11,8 @@ CSV -> Core -> Detector -> Signal -> CLI
 ```
 
 Given the same stored observations and detector configuration, CSV to Signal produces the same
-signal identities and scores. The current user-facing command analyzes CSV files locally and
-persists observations and signals in SQLite.
+signal identities and scores. The repository-built commands analyze their selected source locally
+and persist observations and signals in SQLite.
 
 ## Current support
 
@@ -21,12 +21,14 @@ persists observations and signals in SQLite.
 - Optional upward threshold-crossing signals.
 - Score filtering and deterministic JSON output.
 - Optional windowed change signals through `--window-hours`.
-- GitHub commit history and CoinGecko price history as workspace libraries. These are not connected
-  to the CLI.
+- GitHub commit history and CoinGecko price history through the repository-built CLI and as
+  workspace libraries.
 
 CSV to Signal `0.4.0` is published on npm as
 [`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal/v/0.4.0) and supports Node.js 22 and 24.
 It includes the existing windowed CLI analysis with no CLI flag or output-format changes.
+The repository build also includes the GitHub and CoinGecko commands below; they are not part of
+the published npm `csv-to-signal@0.4.0` artifact, and TASK-031 does not publish a new version.
 It does not provide scheduling, alerts, a REST API,
 a dashboard, YAML configuration, Polymarket or generic REST ingestion, or ML-style anomaly,
 trend, spike, and change-point detection.
@@ -87,7 +89,15 @@ The command prints ranked JSON:
 
 ```text
 csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>] [--window-hours <n>]
+csv-to-signal github <owner>/<repo> [--min-score <n>] [--threshold <n>] [--window-hours <n>]
+csv-to-signal coingecko <coin-id> [--vs-currency <currency>] [--days <n>] [--min-score <n>] [--threshold <n>] [--window-hours <n>]
 ```
+
+- `github <owner>/<repo>` analyzes UTC daily commit counts. Public repositories need no token;
+  set `GITHUB_TOKEN` for private access.
+- `coingecko <coin-id>` analyzes market-chart prices. `--vs-currency` defaults to `usd` and
+  `--days` defaults to `30`; set `COINGECKO_DEMO_API_KEY` to use a Demo key.
+- Credentials are read from the environment only and are never accepted as CLI arguments.
 
 | Argument | Meaning |
 |---|---|

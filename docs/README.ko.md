@@ -10,8 +10,8 @@ CSV to Signal은 시간 정보가 포함된 숫자 관측값을 결정론적 신
 CSV -> Core -> Detector -> Signal -> CLI
 ```
 
-저장된 관측값과 탐지기 설정이 같으면 동일한 신호 ID와 점수를 생성합니다. 현재 사용자가
-직접 실행할 수 있는 명령은 로컬 CSV 파일을 분석하며, 관측값과 신호를 SQLite에 저장합니다.
+저장된 관측값과 탐지기 설정이 같으면 동일한 신호 ID와 점수를 생성합니다. 저장소 빌드의
+명령은 선택한 소스를 로컬에서 분석하고 관측값과 신호를 SQLite에 저장합니다.
 
 ## 현재 지원 범위
 
@@ -20,11 +20,12 @@ CSV -> Core -> Detector -> Signal -> CLI
 - 선택적 상향 임계값 통과 신호
 - `--window-hours`를 통한 선택적 윈도우 변화 신호
 - 점수 필터링과 결정론적 JSON 출력
-- 워크스페이스 라이브러리 형태의 GitHub 커밋 기록과 CoinGecko 가격 기록
+- 저장소 빌드 CLI와 워크스페이스 라이브러리 형태의 GitHub 커밋 기록과 CoinGecko 가격 기록
 
-GitHub와 CoinGecko는 현재 CLI에 연결되어 있지 않습니다. Node.js 22와 24를 지원하고
-기존 윈도우 CLI 분석을 유지하는 CSV to Signal `0.4.0`은 npm에 `csv-to-signal`로
-공개됐습니다. CLI 플래그와 출력 형식은 변경되지 않았습니다. 스케줄링, 알림, REST API,
+Node.js 22와 24를 지원하고 기존 윈도우 CLI 분석을 유지하는 CSV to Signal `0.4.0`은
+npm에 `csv-to-signal`로 공개됐습니다. 아래 GitHub와 CoinGecko 명령은 저장소 빌드에
+포함되며, 공개된 npm `csv-to-signal@0.4.0` 아티팩트에는 포함되지 않습니다. TASK-031은
+새 npm 버전을 공개하지 않습니다. 스케줄링, 알림, REST API,
 대시보드, YAML 설정, Polymarket 또는 범용 REST
 수집, ML 방식의 이상·추세·스파이크·변화점 탐지는 제공하지 않습니다.
 
@@ -84,7 +85,15 @@ demo.price,2026-08-03T00:00:00Z,100
 
 ```text
 csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>] [--window-hours <n>]
+csv-to-signal github <owner>/<repo> [--min-score <n>] [--threshold <n>] [--window-hours <n>]
+csv-to-signal coingecko <coin-id> [--vs-currency <currency>] [--days <n>] [--min-score <n>] [--threshold <n>] [--window-hours <n>]
 ```
+
+- `github <owner>/<repo>`는 UTC 날짜별 커밋 수를 분석합니다. 공개 저장소는 토큰 없이
+  사용할 수 있고, 비공개 저장소는 `GITHUB_TOKEN`을 설정합니다.
+- `coingecko <coin-id>`는 시장 가격 기록을 분석합니다. `--vs-currency` 기본값은 `usd`,
+  `--days` 기본값은 `30`이며 Demo 키는 `COINGECKO_DEMO_API_KEY`로 전달합니다.
+- 인증정보는 환경변수에서만 읽으며 명령 인수로 받지 않습니다.
 
 | 인자 | 설명 |
 |---|---|

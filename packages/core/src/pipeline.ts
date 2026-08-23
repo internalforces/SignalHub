@@ -6,6 +6,9 @@ import type { Connector, Detector, Signal } from "@signal-hub/types";
 export interface PipelineOptions {
   detectors: Detector[];
   minScore?: number;
+  refreshDataPoints?: boolean;
+  analyzeFetchedOnly?: boolean;
+  persistenceNamespace?: string;
 }
 
 export async function runPipeline(
@@ -16,12 +19,20 @@ export async function runPipeline(
   const minScore = options.minScore ?? 0;
   const rawPoints = await connector.fetch();
   const validPoints = rawPoints.filter(isValidDataPoint);
-  storage.dataPoints.insertMany(validPoints);
+  if (options.refreshDataPoints) {
+    storage.dataPoints.replaceMany(validPoints, options.persistenceNamespace);
+  } else {
+    storage.dataPoints.insertMany(validPoints, options.persistenceNamespace);
+  }
 
   const metricIds = [...new Set(validPoints.map((point) => point.metricId))];
   const rawSignals: Signal[] = [];
   for (const metricId of metricIds) {
-    const series = storage.dataPoints.getByMetric(metricId);
+    const series = options.analyzeFetchedOnly
+      ? validPoints
+          .filter((point) => point.metricId === metricId)
+          .sort((first, second) => first.timestamp.localeCompare(second.timestamp))
+      : storage.dataPoints.getByMetric(metricId, options.persistenceNamespace);
     for (const detector of options.detectors) {
       rawSignals.push(...detector.detect(series));
     }
@@ -31,6 +42,6 @@ export async function runPipeline(
     .filter((signal) => signal.score >= minScore)
     .sort((first, second) => second.score - first.score);
 
-  storage.signals.insertMany(scoredSignals);
+  storage.signals.insertMany(scoredSignals, options.persistenceNamespace);
   return scoredSignals;
 }

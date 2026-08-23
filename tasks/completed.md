@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Completed Tasks — Signal Hub
 
-_Last updated: 2026-08-22_
+_Last updated: 2026-08-23_
 
 | ID | Task | Completed | Owner | Notes |
 |----|------|-----------|-------|-------|
@@ -44,3 +44,5 @@ _Last updated: 2026-08-22_
 | TASK-028 | Align Public Node Engine Contract | 2026-08-17 | Implementer | Addressed PR #16 review by bounding root and CLI engines to the tested Node 20/22/24 releases supported by better-sqlite3 12.9.0; full release check and PR CI pass |
 | TASK-029 | Modernize the Supported Node Runtime | 2026-08-22 | Implementer | Removed EOL Node 20 from engines and CI, pinned N-API-based better-sqlite3 13.0.3, aligned Node types and bundle target, and passed the complete release check with 90 tests, clear audits, four-file package inspection, isolated installation, and installed execution; no publication performed |
 | TASK-030 | CSV to Signal 0.4.0 Release | 2026-08-22 | Implementer / Release Manager | Merged reviewed PR #18 as `9b98ec9`, retained and verified the exact 8,902-byte artifact on Node 22/24, obtained explicit owner approval, tagged and published `csv-to-signal@0.4.0` as npm `latest`, matched registry checksums, verified clean consumer execution and database placement, and published GitHub Release `v0.4.0` |
+| TASK-031 | GitHub and CoinGecko CLI Integration | 2026-08-22 | Implementer | Added backward-compatible external-source commands with environment-only optional credentials, shared detector composition, mocked-network CLI coverage, documentation, and complete package verification; npm `csv-to-signal@0.4.0` remains `latest` and no publication occurred |
+| TASK-032 | Address PR #20 review findings | 2026-08-23 | Implementer | Refreshes mutable external snapshots, scopes both external detectors to the current fetch, and namespaces external persistence away from arbitrary CSV identifiers; preserves CSV, schema, and default Core/Storage behavior; 116 tests, typecheck, audits, packaging, and isolated execution pass |

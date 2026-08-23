@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Known Issues — Signal Hub
 
-_Last updated: 2026-08-22_
+_Last updated: 2026-08-23_
 
 ## Active Bugs
 
@@ -65,6 +65,10 @@ No active bugs.
 | DEBT-004 | GitHub Actions v4 embedded the deprecated Node 20 action runtime | 2026-08-17 | Upgraded checkout/setup-node to v6 and added a weekly plus manually triggered full dependency audit after explicit infrastructure approval |
 | DEBT-003 | `better-sqlite3@12.9.0` retained deprecated `prebuild-install@7.1.3` to preserve Node 20 support | 2026-08-22 | Removed EOL Node 20 from the contract and pinned N-API-based `better-sqlite3` 13.0.3, which has no `prebuild-install` dependency path |
 | DEBT-005 | The public CLI advertised EOL Node 20, blocking adoption of the maintained N-API SQLite runtime | 2026-08-22 | TASK-029 narrowed engines and CI to Node 22/24 and passed the complete release check without changing product behavior or publishing |
+| ISS-023 | Repeated GitHub CLI runs retained an earlier daily count when more commits appeared at the same metric/timestamp | 2026-08-23 | Added an explicit snapshot replacement path for external CLI sources while preserving default idempotent inserts |
+| ISS-024 | CoinGecko `--days` requests analyzed older observations already present in the shared database | 2026-08-23 | Scoped CoinGecko detection to the validated points returned by the current fetch while continuing to persist observations |
+| ISS-025 | A GitHub history rewrite could leave a vanished UTC day in persisted detector input | 2026-08-23 | Scoped GitHub detection to the validated points returned by the current provider snapshot |
+| ISS-026 | Provider-shaped CSV metric identifiers could collide with and be overwritten by external snapshot persistence | 2026-08-23 | Added source namespaces to internal external-source data-point and signal keys while preserving returned identifiers and the SQLite schema |
 | — | — | — | — |
 
 ## Issue Template

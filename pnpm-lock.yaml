@@ -33,9 +33,15 @@ importers:
       '@signal-hub/analysis':
         specifier: 0.1.0
         version: link:../../packages/analysis
+      '@signal-hub/connector-coingecko':
+        specifier: 0.1.0
+        version: link:../../connectors/coingecko
       '@signal-hub/connector-csv':
         specifier: 0.1.0
         version: link:../../connectors/csv
+      '@signal-hub/connector-github':
+        specifier: 0.1.0
+        version: link:../../connectors/github
       '@signal-hub/core':
         specifier: 0.1.0
         version: link:../../packages/core

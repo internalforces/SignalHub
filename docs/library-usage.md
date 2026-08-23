@@ -1,9 +1,10 @@
 # Library usage
 
-The GitHub and CoinGecko connectors and `WindowedChangeDetector` are implemented workspace
-libraries. The connectors are not wired into the `csv-to-signal analyze` CLI. Windowed analysis is
-available in the CLI through `--window-hours` and can also be composed directly in TypeScript or
-JavaScript.
+The GitHub and CoinGecko connectors can be composed directly as private workspace libraries and
+are also available through the repository-built `csv-to-signal github` and
+`csv-to-signal coingecko` commands. The published npm `0.4.0` artifact predates these commands.
+`WindowedChangeDetector` is available in the CLI through `--window-hours` and can also be composed
+directly in TypeScript or JavaScript.
 
 Build the workspace before using the generated packages:
 

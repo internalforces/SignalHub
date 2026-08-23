@@ -1,7 +1,7 @@
 {
   "name": "csv-to-signal",
   "version": "0.4.0",
-  "description": "Deterministic CSV time-series signal analysis from the command line",
+  "description": "Deterministic CSV, GitHub, and CoinGecko time-series signal analysis from the command line",
   "license": "Apache-2.0",
   "author": "internalforces",
   "repository": {
@@ -16,6 +16,8 @@
   "keywords": [
     "cli",
     "csv",
+    "github",
+    "coingecko",
     "signals",
     "sqlite",
     "time-series"
@@ -46,7 +48,9 @@
   },
   "devDependencies": {
     "@signal-hub/analysis": "0.1.0",
+    "@signal-hub/connector-coingecko": "0.1.0",
     "@signal-hub/connector-csv": "0.1.0",
+    "@signal-hub/connector-github": "0.1.0",
     "@signal-hub/core": "0.1.0",
     "@signal-hub/storage": "0.1.0",
     "@signal-hub/types": "0.1.0",

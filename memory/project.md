@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Project: Signal Hub
 
-_Last updated: 2026-08-22_
+_Last updated: 2026-08-23_
 
 ## Summary
 
@@ -16,9 +16,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 ## Current State
 
 - **Published version**: `csv-to-signal@0.4.0` is published and npm `latest`
-- **Release candidate**: None — the reviewed M8 runtime modernization is released
-- **Phase**: TASK-030 and the CSV to Signal 0.4.0 release are complete
-- **Next milestone**: Select and explicitly approve the next focused maintenance or product milestone
+- **Release candidate**: None — TASK-031 does not change the package version or publish a release
+- **Phase**: M9 TASK-032 PR review remediation complete; 0.4.0 remains the latest published release
+- **Next milestone**: Re-review and merge PR #20, then separately approve any release
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -38,7 +38,7 @@ SignalHub/
 ├── docs/2026-07-29-signal-hub-m2-plan.md                  # M2 GitHub connector plan
 ├── packages/{types,connector-sdk,storage,analysis,core}/ # shared pipeline packages
 ├── connectors/{csv,github,coingecko}/                      # local and external connectors
-└── apps/cli/                                               # CSV analysis CLI
+└── apps/cli/                                               # CSV, GitHub, and CoinGecko analysis CLI
 ```
 
 ## Recent Changes
@@ -75,13 +75,16 @@ SignalHub/
 | 2026-08-22 | Locked the public `csv-to-signal@0.4.0` candidate identity and opened TASK-030 release preparation; `0.3.0` remains npm `latest`, and no `v0.4.0` tag, npm publication, dist-tag change, or GitHub Release is authorized before exact merged-artifact approval |
 | 2026-08-22 | Completed Node 22/24 candidate verification and independent review; PR merge, exact retained-artifact approval, publication, registry verification, and GitHub Release remain pending |
 | 2026-08-22 | Merged release PR #18 as `9b98ec9`, retained and verified one 8,902-byte tarball on Node 22/24, received explicit deployment approval, tagged the exact merge as `v0.4.0`, published `csv-to-signal@0.4.0` as npm `latest`, matched registry shasum/integrity, verified clean consumer execution and database placement, and published GitHub Release `v0.4.0` |
+| 2026-08-22 | Completed M9 TASK-031: repository builds expose backward-compatible `github <owner>/<repo>` and `coingecko <coin-id>` commands with environment-only optional credentials, mocked-network coverage, and complete package verification; npm `csv-to-signal@0.4.0` remains `latest` and no publication occurred |
+| 2026-08-23 | Addressed PR #20 review as TASK-032: external-source snapshots can refresh matching stored points, and CoinGecko detection is scoped to the current requested history while CSV and Core defaults remain unchanged |
+| 2026-08-23 | Addressed PR #20 follow-up review: GitHub detection now excludes observations absent from the latest provider snapshot, and source-namespaced persistence prevents arbitrary CSV metric identifiers from colliding with GitHub or CoinGecko records |
 
 ## Constraints
 
 - Only `percentage-change` and `threshold` detectors ship in the MVP — no spike/anomaly/trend/change-point detection
 - No YAML config loader (`config` package) without a separate focused plan and human approval
-- GitHub commit ingestion is available as a connector package; CLI integration remains deferred because it changes the public CLI surface
-- CoinGecko ingestion is available as a library package; Polymarket, generic REST, and CoinGecko CLI integration remain deferred
+- Repository builds expose GitHub and CoinGecko ingestion through additive CLI commands; npm `csv-to-signal@0.4.0` remains the latest published release and predates TASK-031, so it does not include those commands
+- Polymarket and generic REST connectors remain deferred
 - Windowed change analysis is available from `@signal-hub/analysis` and the published CLI's `--window-hours`; Core defaults remain unchanged
-- Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, analysis, storage, types` (CLI composes these dependencies but contains no pipeline logic)
+- Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, connectors/github, connectors/coingecko, analysis, storage, types` (CLI composes these dependencies but contains no pipeline logic)
 - Timestamps must be normalized to ISO 8601 UTC by connectors before returning `DataPoint`s

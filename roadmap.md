@@ -115,6 +115,18 @@ change CLI behavior, flags, output, or database schema.
 integrity match the retained 8,902-byte tarball, and GitHub Release `v0.4.0` points to exact merge
 commit `9b98ec93568d7b7121d767e0b89e8cebd45ee96f`.
 
+### M9 — External Connector CLI Integration
+
+- Design: [`docs/superpowers/specs/2026-08-22-external-connectors-cli-design.md`](docs/superpowers/specs/2026-08-22-external-connectors-cli-design.md)
+- Plan: [`docs/superpowers/plans/2026-08-22-external-connectors-cli.md`](docs/superpowers/plans/2026-08-22-external-connectors-cli.md)
+- [x] TASK-031: preserved `analyze <file.csv>` and added repository-built `github <owner>/<repo>`
+  and `coingecko <coin-id>` commands through the unchanged Core pipeline.
+- [x] Added environment-only optional credentials, strict source-specific validation, mocked-network
+  CLI coverage, and bundled private connector workspaces without adding a registry dependency.
+
+npm `csv-to-signal@0.4.0` remains `latest` and predates the M9 commands. M9 does not publish,
+tag, deploy, change the database schema, or change shared connector/Core contracts.
+
 ## Backlog Ideas
 
 - Deterministic template-based explanations

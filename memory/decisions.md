@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-08-17_
+_Last updated: 2026-08-23_
 
 ## Template
 
@@ -587,3 +587,64 @@ on Node 22 and 24 before explicit owner approval. Annotated tag `v0.4.0` points 
 match the retained artifact. A clean registry consumer produced the expected percentage and
 windowed signals and created `data.db` outside the installed package. GitHub Release `v0.4.0` was
 published from the exact tag.
+
+---
+
+### ADR-024: Add Backward-Compatible External Connector CLI Commands
+
+- **Date**: 2026-08-22
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner
+
+**Context**: GitHub and CoinGecko connectors were complete private workspace libraries, but users
+of the CLI could analyze only CSV files. Replacing the existing `analyze <file.csv>` shape would
+break published scripts, while connector-specific normalization already belongs in the libraries.
+
+**Decision**: Preserve `analyze <file.csv>` and add sibling `github <owner>/<repo>` and
+`coingecko <coin-id>` commands. Reuse the existing detector options and Core pipeline. Read optional
+credentials only from `GITHUB_TOKEN` and `COINGECKO_DEMO_API_KEY`, bundle both private connectors,
+and keep `better-sqlite3` as the sole registry runtime dependency.
+
+**Rationale**: Additive commands provide clear source-specific validation without changing shared
+contracts, schema, output, or existing CSV invocations.
+
+**Trade-offs**: The public package name remains CSV-oriented, connector diagnostics remain internal,
+and the repository feature is not available from npm until a separately approved release.
+
+**Consequences**: M9 TASK-031 exposes both existing connectors through the repository-built CLI
+with mocked-network regression coverage. npm `csv-to-signal@0.4.0` remains `latest` and predates
+these commands. No package version, publication, deployment, schema, Core, or connector
+implementation changed.
+
+---
+
+### ADR-025: Refresh External Snapshots and Scope Requested History
+
+- **Date**: 2026-08-23
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner through PR review-fix authorization
+
+**Context**: PR #20 review identified two stateful rerun defects. GitHub daily counts can increase
+while retaining the same metric and UTC timestamp, but idempotent inserts kept the earlier value.
+CoinGecko's `--days` option limited the HTTP request while Core still analyzed all older points
+already stored for that metric.
+
+**Decision**: Keep idempotent insertion as the Storage and Core default. Add source-namespaced
+snapshot replacement used by GitHub and CoinGecko CLI runs, and use current-fetch analysis for
+both external sources. Encode the namespace only in internal data-point and signal storage keys,
+while preserving returned identifiers, the SQLite schema, connector implementations, CSV behavior,
+and default `runPipeline` behavior.
+
+**Rationale**: Mutable provider snapshots must refresh without weakening the established CSV
+deduplication contract or overwriting a CSV metric that happens to use a provider-shaped identifier.
+The latest provider response must define detector input so removed GitHub dates and CoinGecko
+observations outside the requested history cannot leak into the invocation.
+
+**Trade-offs**: Older external points and previously generated signals remain persisted in their
+source namespace for audit and idempotency, but are excluded from later command output unless
+returned by the current fetch. Core and Storage gain opt-in internal workspace interfaces for these
+semantics.
+
+**Consequences**: TASK-032 resolves ISS-023 through ISS-026 with Storage, Core, and CLI regression
+tests. No database schema, shared data shape, CLI flag/output format, dependency, package version,
+publication, deployment, or connector implementation changes.

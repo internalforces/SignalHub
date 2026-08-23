@@ -11,6 +11,8 @@ interface PackEntry {
 interface PackageManifest {
   name: string;
   version: string;
+  description?: string;
+  keywords?: string[];
   private?: boolean;
   license?: string;
   engines?: { node?: string };
@@ -19,6 +21,7 @@ interface PackageManifest {
   scripts?: Record<string, string>;
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
+  publishConfig?: { access?: string; registry?: string };
 }
 
 const cliDirectory = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -35,11 +38,30 @@ describe("CLI release package", () => {
     expect(manifest).toMatchObject({
       name: "csv-to-signal",
       version: "0.4.0",
+      description:
+        "Deterministic CSV, GitHub, and CoinGecko time-series signal analysis from the command line",
+      keywords: [
+        "cli",
+        "csv",
+        "github",
+        "coingecko",
+        "signals",
+        "sqlite",
+        "time-series",
+      ],
       license: "Apache-2.0",
       engines: { node: "^22.0.0 || ^24.0.0" },
       files: ["dist/index.js", "README.md", "LICENSE"],
       dependencies: { "better-sqlite3": "13.0.3" },
       bin: { "csv-to-signal": "./dist/index.js" },
+      publishConfig: {
+        access: "public",
+        registry: "https://registry.npmjs.org/",
+      },
+    });
+    expect(manifest.devDependencies).toMatchObject({
+      "@signal-hub/connector-coingecko": "0.1.0",
+      "@signal-hub/connector-github": "0.1.0",
     });
     expect(manifest.scripts?.build).toContain("--target=node22");
     expect(manifest.private).not.toBe(true);

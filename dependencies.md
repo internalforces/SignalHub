@@ -37,8 +37,8 @@ _Last updated: 2026-08-22_
 
 | Service | Purpose | Auth | Notes |
 |---------|---------|------|-------|
-| GitHub REST API | GitHub commit time-series ingestion | Optional caller-supplied token | Available through `@signal-hub/connector-github`; not exposed through the CLI |
-| CoinGecko Demo API | Market-chart price ingestion | Caller-supplied Demo API key | Available through `@signal-hub/connector-coingecko`; not exposed through the CLI |
+| GitHub REST API | GitHub commit time-series ingestion | Optional `GITHUB_TOKEN` supplied by the CLI or explicit library constructor option | Public repositories can be queried without authentication; CLI integration is available in the repository build |
+| CoinGecko public/Demo API | Market-chart price ingestion | Optional `COINGECKO_DEMO_API_KEY` supplied by the CLI or explicit library constructor option | Keyless public access and Demo-key access are supported; CLI integration is available in the repository build |
 
 ## Version Policy
 

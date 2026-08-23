@@ -18,7 +18,19 @@ npm install --global csv-to-signal
 
 ```text
 csv-to-signal analyze <file.csv> [--min-score <n>] [--threshold <n>] [--window-hours <n>]
+csv-to-signal github <owner>/<repo> [--min-score <n>] [--threshold <n>] [--window-hours <n>]
+csv-to-signal coingecko <coin-id> [--vs-currency <currency>] [--days <n>] [--min-score <n>] [--threshold <n>] [--window-hours <n>]
 ```
+
+- `github <owner>/<repo>` analyzes UTC daily commit counts. Public repositories need no token;
+  set `GITHUB_TOKEN` for private access.
+- `coingecko <coin-id>` analyzes market-chart prices. `--vs-currency` defaults to `usd` and
+  `--days` defaults to `30`; set `COINGECKO_DEMO_API_KEY` to use a Demo key.
+- Credentials are read from the environment only and are never accepted as CLI arguments.
+
+These commands are available in the repository build. The published npm
+`csv-to-signal@0.4.0` artifact predates this integration and does not include the GitHub or
+CoinGecko commands; TASK-031 does not publish a new version.
 
 Example input:
 
@@ -62,10 +74,9 @@ the last value wins.
 
 ## Scope
 
-The CLI surface contains CSV analysis, consecutive percentage changes, optional upward threshold
-crossings, optional windowed changes, score filtering, SQLite persistence, and JSON output. The
-repository also contains GitHub and CoinGecko connectors, but those are private workspace
-libraries and are not CLI commands.
+The repository-built CLI supports CSV analysis, GitHub commit-count analysis, CoinGecko
+market-chart analysis, consecutive percentage changes, optional upward threshold crossings,
+optional windowed changes, score filtering, SQLite persistence, and JSON output.
 
 ## License
 

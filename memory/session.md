@@ -7,6 +7,8 @@ Harness Version: 1.1
 
 # Current Session — Signal Hub
 
+_Last updated: 2026-08-22_
+
 ## Session Info
 
 - **Date**: 2026-08-17
@@ -125,3 +127,25 @@ statement cleanup after the built CLI completed windowed analysis.
   change, CLI surface change, or deferred feature was introduced.
 - TASK-030 is complete; no task remains active. The next milestone requires separate selection and
   any approval required by `AGENTS.md`.
+
+## 2026-08-22 (External connector CLI implementation)
+
+- M9 TASK-031 completed the approved GitHub and CoinGecko CLI integration.
+- Existing CSV behavior, JSON output, SQLite schema, Core pipeline, and connector implementations remain unchanged.
+- Optional credentials are environment-only and were covered with synthetic, redaction-safe tests.
+- Frozen install, build, all tests, typecheck, both audits, package inspection, and release check pass.
+- npm `csv-to-signal@0.4.0` remains `latest` and predates these repository-built commands; no tag, publication, deployment, or live provider API request occurred.
+
+## Session Update — 2026-08-23: PR #20 Review Remediation
+
+- **Agent Role**: Implementer / Reviewer
+- **Session Goal**: Validate and address both unresolved PR #20 review threads.
+- Reproduced the GitHub stale-daily-count defect and CoinGecko stored-history leakage with mocked-network CLI integration tests before implementation.
+- Added opt-in external snapshot replacement while preserving the established default first-write deduplication behavior.
+- Added opt-in current-fetch detector scope for CoinGecko so `--days` controls the analyzed series even when `data.db` contains older points.
+- Added focused Storage and Core regression tests; CSV behavior, schema, connector implementations, dependencies, CLI flags/output, and package version remain unchanged.
+- The complete release check passes with nine builds, 111 tests, typecheck, clear full and production audits, the four-file package boundary, isolated installation, and installed execution.
+- TASK-032 records the review remediation; no tag, publication, deployment, or live provider request was performed.
+- Follow-up review reproduced a vanished GitHub day leaking into detection and an arbitrary CSV metric identifier being overwritten by provider persistence.
+- GitHub now shares CoinGecko's current-fetch detector scope, and external data points and signals use source-namespaced internal storage keys without changing returned identifiers or the schema.
+- Five added regressions cover GitHub history rewrites and namespaced Storage/Core/CLI behavior; the complete suite now contains 116 tests.

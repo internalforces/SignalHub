@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Architecture — Signal Hub
 
-_Last updated: 2026-08-22_
+_Last updated: 2026-08-23_
 
 ## System Overview
 
@@ -19,7 +19,7 @@ A CLI-based system built to achieve: a minimal, deterministic time-series → si
 
 ```
 signal-hub/
-├── apps/cli/                 # csv-to-signal analyze <file> — the only user-facing interface
+├── apps/cli/                 # csv-to-signal analyze <file> | github <owner>/<repo> | coingecko <coin-id>
 ├── packages/
 │   ├── types/                # DataPoint, Signal, Detector, Connector interfaces (the shared contract)
 │   ├── connector-sdk/        # isValidDataPoint() + re-exported Connector/DataPoint
@@ -38,8 +38,8 @@ signal-hub/
 CSV file, GitHub commits endpoint, or CoinGecko market chart
   → connector.fetch()                  (raw input → DataPoint[], ISO 8601 UTC timestamps)
   → isValidDataPoint() filter       (connector-sdk; drops malformed points)
-  → SqliteStorage.dataPoints        (insert + dedupe by `${metricId}::${timestamp}`)
-  → per metric: Detector.detect()   (percentage, threshold, or windowed change — stateless)
+  → SqliteStorage.dataPoints        (default CSV keys; source-namespaced external snapshot keys)
+  → per metric: Detector.detect()   (stored series by default; current fetch for external CLI sources)
   → scoreSignals()                  (score = clamp(round(abs(changePercent) * 2), 0, 100); deterministic signal IDs)
   → filter by minScore, sort desc
   → SqliteStorage.signals           (persist)
@@ -62,13 +62,15 @@ CSV file, GitHub commits endpoint, or CoinGecko market chart
 | CLI release topology | Publish one bundled CLI artifact; keep internal workspaces private and `better-sqlite3` external | 2026-08-06 |
 | Windowed CLI composition | Add `WindowedChangeDetector` only when `--window-hours` supplies a positive finite duration | 2026-08-08 |
 | Runtime modernization | Support Node 22/24 and use N-API-based `better-sqlite3` 13.0.3 without changing the data model or CLI behavior | 2026-08-22 |
+| External connector CLI commands | Preserve `analyze <file.csv>` and add sibling GitHub and CoinGecko commands with environment-only optional credentials | 2026-08-22 |
+| External snapshot analysis | Namespace GitHub/CoinGecko persistence and scope their detection to the current fetch; preserve CSV and Core defaults | 2026-08-23 |
 
 ## Architecture Constraints
 
 - `connectors/*` may import only `connector-sdk` and `types` — never `core`
 - `storage` may import only `types` — never `analysis`
 - Only `core` may import `storage`, `analysis`, and `connector-sdk` together
-- `apps/cli` may import `core`, `connectors/csv`, `analysis`, `storage`, and `types` to compose a pipeline, but it must not contain pipeline logic
+- `apps/cli` may import `core`, `connectors/csv`, `connectors/github`, `connectors/coingecko`, `analysis`, `storage`, and `types` to compose a pipeline, but it must not contain pipeline logic
 - Detectors are stateless: `detect(series: DataPoint[]): Signal[]`, no side effects, no I/O
 - Signal IDs are derived deterministically from detector configuration and signal inputs, so repeated analysis is stable and persisted signals are idempotent
 - All persisted state lives in one SQLite file (`data.db`); no other storage mechanism is permitted in the MVP
@@ -77,10 +79,10 @@ CSV file, GitHub commits endpoint, or CoinGecko market chart
 ## Release Packaging Boundary
 
 The source workspace dependency direction remains unchanged. For npm distribution only, the CLI
-bundles the JavaScript reached through `analysis`, `connector-csv`, `core`, `storage`,
-`connector-sdk`, and `types`. Those workspaces remain private build/test dependencies and are not
-registry runtime dependencies. `better-sqlite3` stays external because it is a native module and is
-declared directly by the CLI package.
+bundles the JavaScript reached through `analysis`, `connector-csv`, `connector-github`,
+`connector-coingecko`, `core`, `storage`, `connector-sdk`, and `types`. Those workspaces remain
+private build/test dependencies and are not registry runtime dependencies. `better-sqlite3` stays
+external because it is a native module and is declared directly by the CLI package.
 
 The release tarball allowlist is `dist/index.js`, `package.json`, `README.md`, and `LICENSE`.
 Packaging must never include SQLite databases, source, tests, caches, logs, configuration, or
@@ -97,8 +99,11 @@ Do not implement without a new plan and human approval:
 - Dashboard, alert system, marketplace, MCP server, distributed/multi-node scheduling
 - Multi-provider LLM explanation (MVP explanation, if ever added, is template-only)
 
-The CoinGecko connector was separately planned and approved as TASK-017. That approval does not
-extend to CLI integration, persistence changes, or the remaining deferred connectors.
+TASK-031 separately approved and completed repository-built CLI integration for the existing
+GitHub and CoinGecko connectors. TASK-032 separately authorizes the targeted review remediation:
+source-namespaced snapshot replacement in Storage/Core and current-fetch detection for both
+external sources. Neither task authorizes publication, schema changes, connector implementation
+changes, or the remaining deferred connectors.
 
 TASK-024 separately approved windowed-analysis CLI integration only. It does not authorize other
 detectors, connector commands, schema changes, or any item on the DEFER list.
