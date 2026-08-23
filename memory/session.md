@@ -146,3 +146,6 @@ statement cleanup after the built CLI completed windowed analysis.
 - Added focused Storage and Core regression tests; CSV behavior, schema, connector implementations, dependencies, CLI flags/output, and package version remain unchanged.
 - The complete release check passes with nine builds, 111 tests, typecheck, clear full and production audits, the four-file package boundary, isolated installation, and installed execution.
 - TASK-032 records the review remediation; no tag, publication, deployment, or live provider request was performed.
+- Follow-up review reproduced a vanished GitHub day leaking into detection and an arbitrary CSV metric identifier being overwritten by provider persistence.
+- GitHub now shares CoinGecko's current-fetch detector scope, and external data points and signals use source-namespaced internal storage keys without changing returned identifiers or the schema.
+- Five added regressions cover GitHub history rewrites and namespaced Storage/Core/CLI behavior; the complete suite now contains 116 tests.

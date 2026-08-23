@@ -136,4 +136,40 @@ describe("runPipeline", () => {
     ]);
     storage.close();
   });
+
+  it("isolates persisted points and signals when a namespace is provided", async () => {
+    const storage = new SqliteStorage(":memory:");
+    const metricId = "github:octocat/Hello-World:commits";
+    storage.dataPoints.insertMany([
+      { metricId, timestamp: "2026-08-01T00:00:00.000Z", value: 100 },
+      { metricId, timestamp: "2026-08-02T00:00:00.000Z", value: 200 },
+    ]);
+
+    await runPipeline(
+      fakeConnector([
+        { metricId, timestamp: "2026-08-01T00:00:00.000Z", value: 1 },
+        { metricId, timestamp: "2026-08-02T00:00:00.000Z", value: 2 },
+      ]),
+      storage,
+      {
+        detectors: [new PercentageChangeDetector()],
+        refreshDataPoints: true,
+        analyzeFetchedOnly: true,
+        persistenceNamespace: "github",
+      },
+    );
+
+    expect(storage.dataPoints.getByMetric(metricId).map((point) => point.value)).toEqual([
+      100,
+      200,
+    ]);
+    expect(
+      storage.dataPoints.getByMetric(metricId, "github").map((point) => point.value),
+    ).toEqual([1, 2]);
+    expect(storage.signals.getAll()).toEqual([]);
+    expect(storage.signals.getAll("github")).toEqual([
+      expect.objectContaining({ metricId, value: 2, changePercent: 100 }),
+    ]);
+    storage.close();
+  });
 });

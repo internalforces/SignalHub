@@ -38,8 +38,8 @@ signal-hub/
 CSV file, GitHub commits endpoint, or CoinGecko market chart
   → connector.fetch()                  (raw input → DataPoint[], ISO 8601 UTC timestamps)
   → isValidDataPoint() filter       (connector-sdk; drops malformed points)
-  → SqliteStorage.dataPoints        (default insert/dedupe; explicit snapshot refresh for external CLI sources)
-  → per metric: Detector.detect()   (stored series by default; current fetch for CoinGecko CLI)
+  → SqliteStorage.dataPoints        (default CSV keys; source-namespaced external snapshot keys)
+  → per metric: Detector.detect()   (stored series by default; current fetch for external CLI sources)
   → scoreSignals()                  (score = clamp(round(abs(changePercent) * 2), 0, 100); deterministic signal IDs)
   → filter by minScore, sort desc
   → SqliteStorage.signals           (persist)
@@ -63,7 +63,7 @@ CSV file, GitHub commits endpoint, or CoinGecko market chart
 | Windowed CLI composition | Add `WindowedChangeDetector` only when `--window-hours` supplies a positive finite duration | 2026-08-08 |
 | Runtime modernization | Support Node 22/24 and use N-API-based `better-sqlite3` 13.0.3 without changing the data model or CLI behavior | 2026-08-22 |
 | External connector CLI commands | Preserve `analyze <file.csv>` and add sibling GitHub and CoinGecko commands with environment-only optional credentials | 2026-08-22 |
-| External snapshot analysis | Refresh matching GitHub/CoinGecko points and scope CoinGecko detection to the current fetch; preserve CSV and Core defaults | 2026-08-23 |
+| External snapshot analysis | Namespace GitHub/CoinGecko persistence and scope their detection to the current fetch; preserve CSV and Core defaults | 2026-08-23 |
 
 ## Architecture Constraints
 
@@ -101,9 +101,9 @@ Do not implement without a new plan and human approval:
 
 TASK-031 separately approved and completed repository-built CLI integration for the existing
 GitHub and CoinGecko connectors. TASK-032 separately authorizes the targeted review remediation:
-explicit snapshot replacement in Storage/Core and current-fetch detection for CoinGecko. Neither
-task authorizes publication, schema changes, connector implementation changes, or the remaining
-deferred connectors.
+source-namespaced snapshot replacement in Storage/Core and current-fetch detection for both
+external sources. Neither task authorizes publication, schema changes, connector implementation
+changes, or the remaining deferred connectors.
 
 TASK-024 separately approved windowed-analysis CLI integration only. It does not authorize other
 detectors, connector commands, schema changes, or any item on the DEFER list.

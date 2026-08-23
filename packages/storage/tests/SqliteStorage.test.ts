@@ -53,6 +53,21 @@ describe("SqliteStorage", () => {
     expect(storage.dataPoints.getByMetric("m1")).toEqual([{ ...point, value: 2 }]);
   });
 
+  it("isolates matching data points by persistence namespace", () => {
+    const point: DataPoint = {
+      metricId: "github:octocat/Hello-World:commits",
+      timestamp: "2026-08-01T00:00:00.000Z",
+      value: 100,
+    };
+    storage.dataPoints.insertMany([point]);
+    storage.dataPoints.replaceMany([{ ...point, value: 2 }], "github");
+
+    expect(storage.dataPoints.getByMetric(point.metricId)).toEqual([point]);
+    expect(storage.dataPoints.getByMetric(point.metricId, "github")).toEqual([
+      { ...point, value: 2 },
+    ]);
+  });
+
   it("returns an empty array for an unknown metric", () => {
     expect(storage.dataPoints.getByMetric("unknown")).toEqual([]);
   });
@@ -84,5 +99,23 @@ describe("SqliteStorage", () => {
     storage.signals.insertMany(signals);
 
     expect(storage.signals.getAll().map((signal) => signal.id)).toEqual(["s2", "s1"]);
+  });
+
+  it("isolates matching signals by persistence namespace", () => {
+    const signal: Signal = {
+      id: "same-id",
+      metricId: "github:octocat/Hello-World:commits",
+      type: "increase",
+      score: 100,
+      direction: "up",
+      timestamp: "2026-08-02T00:00:00.000Z",
+      value: 200,
+      changePercent: 100,
+    };
+    storage.signals.insertMany([signal]);
+    storage.signals.insertMany([{ ...signal, value: 2 }], "github");
+
+    expect(storage.signals.getAll()).toEqual([signal]);
+    expect(storage.signals.getAll("github")).toEqual([{ ...signal, value: 2 }]);
   });
 });

@@ -77,6 +77,7 @@ SignalHub/
 | 2026-08-22 | Merged release PR #18 as `9b98ec9`, retained and verified one 8,902-byte tarball on Node 22/24, received explicit deployment approval, tagged the exact merge as `v0.4.0`, published `csv-to-signal@0.4.0` as npm `latest`, matched registry shasum/integrity, verified clean consumer execution and database placement, and published GitHub Release `v0.4.0` |
 | 2026-08-22 | Completed M9 TASK-031: repository builds expose backward-compatible `github <owner>/<repo>` and `coingecko <coin-id>` commands with environment-only optional credentials, mocked-network coverage, and complete package verification; npm `csv-to-signal@0.4.0` remains `latest` and no publication occurred |
 | 2026-08-23 | Addressed PR #20 review as TASK-032: external-source snapshots can refresh matching stored points, and CoinGecko detection is scoped to the current requested history while CSV and Core defaults remain unchanged |
+| 2026-08-23 | Addressed PR #20 follow-up review: GitHub detection now excludes observations absent from the latest provider snapshot, and source-namespaced persistence prevents arbitrary CSV metric identifiers from colliding with GitHub or CoinGecko records |
 
 ## Constraints
 

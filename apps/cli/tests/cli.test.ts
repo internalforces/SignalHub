@@ -184,6 +184,73 @@ describe("runCli", () => {
     ]);
   });
 
+  it("excludes GitHub days that disappear from a later provider snapshot", async () => {
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce(
+        jsonResponse([
+          commit("first", "2026-08-01T12:00:00Z"),
+          commit("second", "2026-08-01T13:00:00Z"),
+          commit("third", "2026-08-02T12:00:00Z"),
+          commit("fourth", "2026-08-03T12:00:00Z"),
+        ]),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse([
+          commit("third", "2026-08-02T12:00:00Z"),
+          commit("fourth", "2026-08-03T12:00:00Z"),
+          commit("fifth", "2026-08-03T13:00:00Z"),
+        ]),
+      );
+    vi.stubGlobal("fetch", fetch);
+
+    await runCli(["github", "octocat/Hello-World"]);
+    const signals = JSON.parse(
+      await runCli(["github", "octocat/Hello-World"]),
+    ) as Array<{ timestamp: string; value: number; changePercent: number }>;
+
+    expect(signals).toEqual([
+      expect.objectContaining({
+        timestamp: "2026-08-03T00:00:00.000Z",
+        value: 2,
+        changePercent: 100,
+      }),
+    ]);
+  });
+
+  it("keeps external snapshots isolated from matching CSV metric identifiers", async () => {
+    writeCsv(
+      "metricId,timestamp,value",
+      "github:octocat/Hello-World:commits,2026-08-01T00:00:00.000Z,100",
+      "github:octocat/Hello-World:commits,2026-08-02T00:00:00.000Z,200",
+    );
+    await runCli(["analyze", "data.csv"]);
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        jsonResponse([
+          commit("first", "2026-08-01T12:00:00Z"),
+          commit("second", "2026-08-02T12:00:00Z"),
+          commit("third", "2026-08-02T13:00:00Z"),
+        ]),
+      ),
+    );
+    await runCli(["github", "octocat/Hello-World"]);
+
+    const signals = JSON.parse(
+      await runCli(["analyze", "data.csv"]),
+    ) as Array<{ timestamp: string; value: number; changePercent: number }>;
+
+    expect(signals).toEqual([
+      expect.objectContaining({
+        timestamp: "2026-08-02T00:00:00.000Z",
+        value: 200,
+        changePercent: 100,
+      }),
+    ]);
+  });
+
   it("omits GitHub authorization when the environment token is blank", async () => {
     const fetch = vi.fn().mockResolvedValue(jsonResponse([]));
     vi.stubGlobal("fetch", fetch);

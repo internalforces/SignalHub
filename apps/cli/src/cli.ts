@@ -31,7 +31,8 @@ export async function runCli(
       detectors,
       minScore: command.minScore,
       refreshDataPoints: command.source !== "csv",
-      analyzeFetchedOnly: command.source === "coingecko",
+      analyzeFetchedOnly: command.source !== "csv",
+      persistenceNamespace: command.source === "csv" ? undefined : command.source,
     });
     return formatSignals(signals);
   } finally {

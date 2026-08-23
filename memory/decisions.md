@@ -629,19 +629,22 @@ while retaining the same metric and UTC timestamp, but idempotent inserts kept t
 CoinGecko's `--days` option limited the HTTP request while Core still analyzed all older points
 already stored for that metric.
 
-**Decision**: Keep idempotent insertion as the Storage and Core default. Add an explicit snapshot
-replacement path used by GitHub and CoinGecko CLI runs, and add an explicit current-fetch analysis
-scope used by CoinGecko. Preserve the SQLite schema, connector implementations, CSV behavior, and
-default `runPipeline` behavior.
+**Decision**: Keep idempotent insertion as the Storage and Core default. Add source-namespaced
+snapshot replacement used by GitHub and CoinGecko CLI runs, and use current-fetch analysis for
+both external sources. Encode the namespace only in internal data-point and signal storage keys,
+while preserving returned identifiers, the SQLite schema, connector implementations, CSV behavior,
+and default `runPipeline` behavior.
 
 **Rationale**: Mutable provider snapshots must refresh without weakening the established CSV
-deduplication contract. A requested CoinGecko history range must define the detector input for that
-invocation even when the shared database contains older observations.
+deduplication contract or overwriting a CSV metric that happens to use a provider-shaped identifier.
+The latest provider response must define detector input so removed GitHub dates and CoinGecko
+observations outside the requested history cannot leak into the invocation.
 
-**Trade-offs**: Older CoinGecko points and previously generated signals remain persisted for audit
-and idempotency, but they are excluded from later CoinGecko command output unless returned by the
-current fetch. Core and Storage gain opt-in internal workspace interfaces for these semantics.
+**Trade-offs**: Older external points and previously generated signals remain persisted in their
+source namespace for audit and idempotency, but are excluded from later command output unless
+returned by the current fetch. Core and Storage gain opt-in internal workspace interfaces for these
+semantics.
 
-**Consequences**: TASK-032 resolves ISS-023 and ISS-024 with storage, Core, and CLI regression
+**Consequences**: TASK-032 resolves ISS-023 through ISS-026 with Storage, Core, and CLI regression
 tests. No database schema, shared data shape, CLI flag/output format, dependency, package version,
 publication, deployment, or connector implementation changes.
