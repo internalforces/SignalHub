@@ -59,7 +59,7 @@ Even if the user explicitly requests them, ask for confirmation first:
 - [ ] Committing directly to `main` / `master`
 - [ ] Implementing anything from the DEFER list in `memory/architecture.md` (spike/anomaly/trend/change-point detectors, GitHub/CoinGecko/Polymarket/REST connectors, YAML `config` package, dashboard, alerting, LLM explainer, MCP server, distributed scheduling) without a dedicated follow-up plan and explicit human approval — see the [MVP plan](docs/2026-07-27-signal-hub-mvp.md)
 - [ ] Violating the package dependency direction: connectors may only import `connector-sdk`/`types`; `storage` must never import `analysis`; only `core` may import `storage` + `analysis` + `connector-sdk` together
-- [ ] `npm publish` of the public CLI package, currently `csv-to-signal` (always requires HUMAN APPROVAL — see Release Workflow)
+- [ ] `npm publish` of the public CLI package, currently `csv-to-signal` (always requires HUMAN APPROVAL — follow [`docs/release-runbook.md`](docs/release-runbook.md))
 
 ---
 
@@ -86,6 +86,8 @@ At the start of every session, read these files in order:
 5. The `prompts/*.md` file matching your role
 6. The implementation plan at [`docs/2026-07-27-signal-hub-mvp.md`](docs/2026-07-27-signal-hub-mvp.md) for exact file paths, code, and test steps
 7. `memory/reuse-candidates.md` before implementing anything beyond the MVP (M2+) — check whether the prior project `internalforces/Future-Signal` already solved it
+8. [`docs/release-runbook.md`](docs/release-runbook.md) in full before any release authentication,
+   tag, registry, dist-tag, publication, or GitHub Release work
 
 ---
 

@@ -115,3 +115,8 @@ and local databases from entering the tarball.
 into an isolated consumer project, exercises valid and invalid CLI paths, prints artifact metadata,
 and deletes the temporary files. Any npm publish, registry access change, tag, release, or deployment
 still requires separate explicit human approval.
+
+For a real release, follow [`release-runbook.md`](release-runbook.md). It defines the shared AI and
+manual procedure for retaining one exact tarball, verifying the same bytes on Node 22/24, handling
+npm browser authentication, obtaining final approval, publishing, validating registry integrity and
+a clean consumer, creating the GitHub Release, and closing the release through a reviewed PR.

@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Current Session — Signal Hub
 
-_Last updated: 2026-08-22_
+_Last updated: 2026-08-23_
 
 ## Session Info
 
@@ -196,3 +196,22 @@ statement cleanup after the built CLI completed windowed analysis.
   is `gilgo`; the package author and GitHub repository identity remain `internalforces`.
 - TASK-033 is complete. No schema, dependency, shared contract, CLI flag, JSON output, or deferred
   feature changed during publication or closeout.
+
+## Session Update — 2026-08-23: Canonical Release Runbook
+
+- **Agent Role**: Documenter / Release Manager
+- **Session Goal**: Make the verified deployment procedure reusable by future AI agents and human
+  developers.
+- Added `docs/release-runbook.md` as the single command-level authority for npm releases, covering
+  the exact merged-artifact gate, Node 22/24 verification, checksum presentation, explicit final
+  approval, npm/GitHub identity checks, browser authentication, registry propagation, clean-consumer
+  verification, GitHub Release creation, closeout PRs, and failure recovery.
+- Recorded the operational lessons from v0.5.0: npm owner `gilgo` differs from GitHub/package author
+  `internalforces`; login and publish may each open a web flow without a 2FA-code prompt; successful
+  publication may briefly return E404; the retained tarball must never be repacked; and tags must
+  not be created before final exact-artifact approval.
+- Linked the runbook from `AGENTS.md`, `ORCHESTRATOR.md`, `commands.md`, and
+  `docs/development.md` so future release sessions load it while quick references avoid duplicating
+  the full procedure.
+- This documentation-only task performed no authentication, tag, registry/dist-tag change,
+  publication, GitHub Release, dependency, schema, implementation, or public-interface change.
