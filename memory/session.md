@@ -170,5 +170,7 @@ statement cleanup after the built CLI completed windowed analysis.
   allowlist change; release-identity guards and current-versus-candidate documentation agree.
 - npm currently reports `latest` as `0.4.0` and returns registry E404 for `0.5.0`, confirming the
   candidate version is not yet published.
+- Committed the candidate as `11cb2b3`, pushed `codex/release-0.5.0`, and opened PR #21 against
+  `main`. Hosted Node 22 and Node 24 checks pass; independent review and merge remain required.
 - `csv-to-signal@0.4.0` remains npm `latest`. No tag, publication, dist-tag change, GitHub Release,
   dependency, schema, shared contract, flag, or JSON output change has occurred.

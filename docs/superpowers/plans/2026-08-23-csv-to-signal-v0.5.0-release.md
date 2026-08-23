@@ -203,7 +203,7 @@ git add scripts/release-check.mjs
 git commit -m "chore(release): prepare csv-to-signal 0.5.0"
 ```
 
-- [ ] **Step 5: Push and create the PR against `main`**
+- [x] **Step 5: Push and create the PR against `main`**
 
 Use title `chore(release): prepare csv-to-signal 0.5.0`. The PR body must list Node 22/24 checks,
 the four-file package boundary, both README updates, and the final immutable-action gate.
@@ -211,6 +211,7 @@ the four-file package boundary, both README updates, and the final immutable-act
 - [ ] **Step 6: Wait for hosted CI and review before merge**
 
 Do not self-merge before the required review sign-off. Merge only when all required checks pass.
+PR #21 passes hosted Node 22 and Node 24 CI; independent review and merge remain pending.
 
 ---
 
