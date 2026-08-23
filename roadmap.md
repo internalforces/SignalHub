@@ -127,6 +127,17 @@ commit `9b98ec93568d7b7121d767e0b89e8cebd45ee96f`.
 npm `csv-to-signal@0.4.0` remains `latest` and predates the M9 commands. M9 does not publish,
 tag, deploy, change the database schema, or change shared connector/Core contracts.
 
+### CSV to Signal 0.5.0 Release Candidate
+
+- Release plan: [`docs/superpowers/plans/2026-08-23-csv-to-signal-v0.5.0-release.md`](docs/superpowers/plans/2026-08-23-csv-to-signal-v0.5.0-release.md)
+- [x] Selected `csv-to-signal@0.5.0` for the additive M9 command release.
+- [ ] TASK-033: verify Node 22/24, merge through a reviewed PR, reproduce one exact merged
+  artifact, obtain final approval, publish and verify npm, then create GitHub Release `v0.5.0`.
+
+`csv-to-signal@0.4.0` remains npm `latest`. No `v0.5.0` tag, npm publication, dist-tag change, or
+GitHub Release is authorized until the exact merged tarball has been verified and explicitly
+approved.
+
 ## Backlog Ideas
 
 - Deterministic template-based explanations

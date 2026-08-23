@@ -22,10 +22,10 @@ CSV -> Core -> Detector -> Signal -> CLI
 - 점수 필터링과 결정론적 JSON 출력
 - 저장소 빌드 CLI와 워크스페이스 라이브러리 형태의 GitHub 커밋 기록과 CoinGecko 가격 기록
 
-Node.js 22와 24를 지원하고 기존 윈도우 CLI 분석을 유지하는 CSV to Signal `0.4.0`은
-npm에 `csv-to-signal`로 공개됐습니다. 아래 GitHub와 CoinGecko 명령은 저장소 빌드에
-포함되며, 공개된 npm `csv-to-signal@0.4.0` 아티팩트에는 포함되지 않습니다. TASK-031은
-새 npm 버전을 공개하지 않습니다. 스케줄링, 알림, REST API,
+Node.js 22와 24를 지원하는 CSV to Signal `0.4.0`은 현재 npm에 `csv-to-signal`로
+공개돼 있습니다. `0.5.0` 릴리스 후보는 기존 CSV 명령, 플래그, JSON 형식, Node.js 지원
+범위를 유지하면서 아래 GitHub와 CoinGecko 명령을 npm 패키지에 추가합니다. 스케줄링,
+알림, REST API,
 대시보드, YAML 설정, Polymarket 또는 범용 REST
 수집, ML 방식의 이상·추세·스파이크·변화점 탐지는 제공하지 않습니다.
 
@@ -146,4 +146,6 @@ CLI를 실행할 때마다 입력 CSV의 위치가 아닌 현재 작업 디렉�
   공개된 Node.js 22/24 지원과 N-API SQLite 런타임(영문)
 - [CSV to Signal 0.4.0 릴리스 계획](superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md):
   정확한 아티팩트 검증, 승인, 게시, 종료 기록(영문)
+- [CSV to Signal 0.5.0 릴리스 계획](superpowers/plans/2026-08-23-csv-to-signal-v0.5.0-release.md):
+  외부 소스 명령 패키지 공개, 병합 아티팩트 검증, 최종 승인 경계(영문)
 - [MVP 구현 계획](2026-07-27-signal-hub-mvp.md): 작업 단위의 과거 구현 기록(영문)

@@ -16,9 +16,9 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 ## Current State
 
 - **Published version**: `csv-to-signal@0.4.0` is published and npm `latest`
-- **Release candidate**: None — TASK-031 does not change the package version or publish a release
-- **Phase**: M9 TASK-032 PR review remediation complete; 0.4.0 remains the latest published release
-- **Next milestone**: Re-review and merge PR #20, then separately approve any release
+- **Release candidate**: `csv-to-signal@0.5.0` is being prepared from merged M9 work
+- **Phase**: TASK-033 release preparation is active; no tag or publication is authorized yet
+- **Next milestone**: Verify and merge the release PR, then reproduce one exact merged tarball
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -78,12 +78,13 @@ SignalHub/
 | 2026-08-22 | Completed M9 TASK-031: repository builds expose backward-compatible `github <owner>/<repo>` and `coingecko <coin-id>` commands with environment-only optional credentials, mocked-network coverage, and complete package verification; npm `csv-to-signal@0.4.0` remains `latest` and no publication occurred |
 | 2026-08-23 | Addressed PR #20 review as TASK-032: external-source snapshots can refresh matching stored points, and CoinGecko detection is scoped to the current requested history while CSV and Core defaults remain unchanged |
 | 2026-08-23 | Addressed PR #20 follow-up review: GitHub detection now excludes observations absent from the latest provider snapshot, and source-namespaced persistence prevents arbitrary CSV metric identifiers from colliding with GitHub or CoinGecko records |
+| 2026-08-23 | Opened TASK-033 to release the merged M9 CLI as `csv-to-signal@0.5.0`; package identity and README updates are in progress, while `0.4.0` remains npm `latest` and immutable actions remain gated |
 
 ## Constraints
 
 - Only `percentage-change` and `threshold` detectors ship in the MVP — no spike/anomaly/trend/change-point detection
 - No YAML config loader (`config` package) without a separate focused plan and human approval
-- Repository builds expose GitHub and CoinGecko ingestion through additive CLI commands; npm `csv-to-signal@0.4.0` remains the latest published release and predates TASK-031, so it does not include those commands
+- Repository builds expose GitHub and CoinGecko ingestion through additive CLI commands; the `0.5.0` candidate packages them for npm while published `0.4.0` remains unchanged
 - Polymarket and generic REST connectors remain deferred
 - Windowed change analysis is available from `@signal-hub/analysis` and the published CLI's `--window-hours`; Core defaults remain unchanged
 - Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, connectors/github, connectors/coingecko, analysis, storage, types` (CLI composes these dependencies but contains no pipeline logic)

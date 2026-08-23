@@ -149,3 +149,26 @@ statement cleanup after the built CLI completed windowed analysis.
 - Follow-up review reproduced a vanished GitHub day leaking into detection and an arbitrary CSV metric identifier being overwritten by provider persistence.
 - GitHub now shares CoinGecko's current-fetch detector scope, and external data points and signals use source-namespaced internal storage keys without changing returned identifiers or the schema.
 - Five added regressions cover GitHub history rewrites and namespaced Storage/Core/CLI behavior; the complete suite now contains 116 tests.
+
+## Session Update — 2026-08-23: v0.5.0 Release Candidate Preparation
+
+- **Agent Role**: Implementer / Release Manager
+- **Session Goal**: Prepare `csv-to-signal@0.5.0` from the latest merged M9 `main`.
+- Created `codex/release-0.5.0` from `origin/main` merge `0234500` in an isolated worktree and
+  confirmed the 116-test baseline.
+- Recorded TASK-033, ADR-026, and the exact-artifact release plan.
+- Observed the package regression test fail with expected `0.5.0` versus actual `0.4.0`, then
+  changed only the public CLI version and confirmed it passes.
+- Observed the exact-tarball test fail because the release checker still required `0.4.0`, then
+  aligned the guard to `0.5.0` and confirmed retained-byte verification passes.
+- Updated the GitHub-facing root README and npm-facing package README for the GitHub and CoinGecko
+  commands, with the root documentation retaining the truthful `0.4.0` npm-latest boundary.
+- Complete Node 22.22.3 and Node 24.19.0 release checks pass with nine forced builds, 116 tests,
+  typecheck, clear full and production audits, the four-file package boundary, isolated tarball
+  installation, installed execution, database placement, and invalid-input checks.
+- Diff review found no dependency, lockfile, source-code, schema, workflow, credential, or package
+  allowlist change; release-identity guards and current-versus-candidate documentation agree.
+- npm currently reports `latest` as `0.4.0` and returns registry E404 for `0.5.0`, confirming the
+  candidate version is not yet published.
+- `csv-to-signal@0.4.0` remains npm `latest`. No tag, publication, dist-tag change, GitHub Release,
+  dependency, schema, shared contract, flag, or JSON output change has occurred.

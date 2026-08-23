@@ -107,7 +107,7 @@ function assertManifest(manifest, context) {
   }
   if (
     manifest.name !== "csv-to-signal" ||
-    manifest.version !== "0.4.0" ||
+    manifest.version !== "0.5.0" ||
     manifest.license !== "Apache-2.0" ||
     manifest.bin?.["csv-to-signal"] !== "./dist/index.js"
   ) {
