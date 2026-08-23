@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # commands.md — Signal Hub Quick Reference
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-08-23_
 
 ## Setup
 
@@ -33,8 +33,13 @@ node apps/cli/dist/index.js analyze <file.csv>                 # Run the built C
 
 ```bash
 pnpm -r build             # Build every package/connector/app in dependency order
-# ⚠️ npm publish of the `csv-to-signal` CLI package: HUMAN APPROVAL required
+pnpm release:check        # Full local release verification; never publishes
+pnpm release:package      # Faster package-only verification; never publishes
 ```
+
+`npm publish`, release tags, dist-tag changes, and GitHub Releases require exact-artifact human
+approval. Do not improvise publication commands from this quick reference. Follow the complete
+[`docs/release-runbook.md`](docs/release-runbook.md).
 
 ## Database
 
