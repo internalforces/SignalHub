@@ -15,10 +15,11 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 
 ## Current State
 
-- **Published version**: `csv-to-signal@0.4.0` is published and npm `latest`
-- **Release candidate**: `csv-to-signal@0.5.0` is being prepared from merged M9 work
-- **Phase**: TASK-033 release preparation is active; no tag or publication is authorized yet
-- **Next milestone**: Verify and merge the release PR, then reproduce one exact merged tarball
+- **Published version**: `csv-to-signal@0.5.0` is published and npm `latest`
+- **Release provenance**: exact merge `dffdf6a774119dd068c9f065132ffe012bb7cddb`, tag `v0.5.0`,
+  and [GitHub Release v0.5.0](https://github.com/internalforces/SignalHub/releases/tag/v0.5.0)
+- **Phase**: v0.5.0 release and TASK-033 closeout are complete; no active task
+- **Next milestone**: Select a separately approved maintenance or product milestone
 - **Overall health**: 🟢 Good — full and production dependency audits report no known vulnerabilities
 
 ## Tech Summary
@@ -27,7 +28,7 @@ A minimal, deterministic time-series → signal transformation engine: `CSV → 
 |-------|-------|
 | Language | TypeScript (strict, Node.js `^22.0.0 || ^24.0.0`) |
 | Framework | None — plain Node.js CLI |
-| Infrastructure | `csv-to-signal@0.4.0` published on npm; no service infrastructure deployed |
+| Infrastructure | `csv-to-signal@0.5.0` published on npm; no service infrastructure deployed |
 | Repo Structure | Monorepo (pnpm workspaces + Turborepo) |
 
 ## Key Paths
@@ -79,12 +80,13 @@ SignalHub/
 | 2026-08-23 | Addressed PR #20 review as TASK-032: external-source snapshots can refresh matching stored points, and CoinGecko detection is scoped to the current requested history while CSV and Core defaults remain unchanged |
 | 2026-08-23 | Addressed PR #20 follow-up review: GitHub detection now excludes observations absent from the latest provider snapshot, and source-namespaced persistence prevents arbitrary CSV metric identifiers from colliding with GitHub or CoinGecko records |
 | 2026-08-23 | Opened TASK-033 to release the merged M9 CLI as `csv-to-signal@0.5.0`; package identity and README updates are in progress, while `0.4.0` remains npm `latest` and immutable actions remain gated |
+| 2026-08-23 | Merged PR #21 as `dffdf6a`, retained and verified one 12,754-byte `csv-to-signal@0.5.0` tarball on Node 22.22.3 and Node 24.19.0, published it as npm `latest`, verified a clean registry consumer including CSV output and all three commands, and published GitHub Release `v0.5.0` |
 
 ## Constraints
 
 - Only `percentage-change` and `threshold` detectors ship in the MVP — no spike/anomaly/trend/change-point detection
 - No YAML config loader (`config` package) without a separate focused plan and human approval
-- Repository builds expose GitHub and CoinGecko ingestion through additive CLI commands; the `0.5.0` candidate packages them for npm while published `0.4.0` remains unchanged
+- The published `0.5.0` CLI exposes GitHub and CoinGecko ingestion through additive commands while preserving CSV compatibility
 - Polymarket and generic REST connectors remain deferred
 - Windowed change analysis is available from `@signal-hub/analysis` and the published CLI's `--window-hours`; Core defaults remain unchanged
 - Package dependency direction is fixed: `connectors/* → connector-sdk, types`; `storage → types` only; `analysis → types` only; `core → types, storage, analysis, connector-sdk`; `apps/cli → core, connectors/csv, connectors/github, connectors/coingecko, analysis, storage, types` (CLI composes these dependencies but contains no pipeline logic)

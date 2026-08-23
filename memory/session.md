@@ -174,3 +174,25 @@ statement cleanup after the built CLI completed windowed analysis.
   `main`. Hosted Node 22 and Node 24 checks pass; independent review and merge remain required.
 - `csv-to-signal@0.4.0` remains npm `latest`. No tag, publication, dist-tag change, GitHub Release,
   dependency, schema, shared contract, flag, or JSON output change has occurred.
+
+## Session Update — 2026-08-23: v0.5.0 Publication and Closeout
+
+- **Agent Role**: Implementer / Release Manager
+- **Session Goal**: Publish the exact approved `csv-to-signal@0.5.0` artifact and close TASK-033.
+- Merged reviewed PR #21 as `dffdf6a774119dd068c9f065132ffe012bb7cddb`, then retained one
+  12,754-byte tarball and verified those exact bytes on Node 22.22.3 and Node 24.19.0.
+- The retained tarball SHA-1 is `adf05bc9acbc1d45647a286e4d070d29a8229f2d`, SHA-256 is
+  `771ad1f31574698b6e1e07c1a9dc4d63059fdf4ae57ab84a3e2aaa5688e6245a`, and SHA-512 integrity is
+  `sha512-L8NyLc9p/pz8wAJAGS6MaPR30n1/xtXcOyJVyuL8tA6Dql2JdH9zutaHM4mpEOC0c9ewpR+nnlvZmUepzSus3w==`.
+- Annotated tag `v0.5.0` was already created at 2026-08-23 14:35:08 KST before final artifact
+  approval, deviating from the original tag gate. It pointed to the exact merge and was later
+  verified, not recreated or moved.
+- Final approval covered publication of the retained tarball, the npm `latest` dist-tag, and the
+  GitHub Release. A clean registry consumer installed `0.5.0`, exposed CSV, GitHub, and CoinGecko
+  usage, preserved deterministic CSV output, and created `data.db` only in the consumer working
+  directory.
+- GitHub Release `v0.5.0` is published at
+  https://github.com/internalforces/SignalHub/releases/tag/v0.5.0. The npm registry owner account
+  is `gilgo`; the package author and GitHub repository identity remain `internalforces`.
+- TASK-033 is complete. No schema, dependency, shared contract, CLI flag, JSON output, or deferred
+  feature changed during publication or closeout.

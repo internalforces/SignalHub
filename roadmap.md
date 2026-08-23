@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # roadmap.md — Signal Hub Roadmap
 
-_Last updated: 2026-08-22_
+_Last updated: 2026-08-23_
 
 ## Goal
 
@@ -124,19 +124,23 @@ commit `9b98ec93568d7b7121d767e0b89e8cebd45ee96f`.
 - [x] Added environment-only optional credentials, strict source-specific validation, mocked-network
   CLI coverage, and bundled private connector workspaces without adding a registry dependency.
 
-npm `csv-to-signal@0.4.0` remains `latest` and predates the M9 commands. M9 does not publish,
-tag, deploy, change the database schema, or change shared connector/Core contracts.
+npm `csv-to-signal@0.4.0` originally predated the M9 commands. M9 itself did not change the
+database schema or shared connector/Core contracts; its separately approved package release is
+recorded below.
 
-### CSV to Signal 0.5.0 Release Candidate
+### CSV to Signal 0.5.0 Release
 
 - Release plan: [`docs/superpowers/plans/2026-08-23-csv-to-signal-v0.5.0-release.md`](docs/superpowers/plans/2026-08-23-csv-to-signal-v0.5.0-release.md)
 - [x] Selected `csv-to-signal@0.5.0` for the additive M9 command release.
-- [ ] TASK-033: verify Node 22/24, merge through a reviewed PR, reproduce one exact merged
-  artifact, obtain final approval, publish and verify npm, then create GitHub Release `v0.5.0`.
+- [x] TASK-033: merged reviewed PR #21 as `dffdf6a`, retained and verified one exact tarball on
+  Node 22.22.3 and Node 24.19.0, obtained final approval, published and verified npm `latest`,
+  and created GitHub Release `v0.5.0`.
 
-`csv-to-signal@0.4.0` remains npm `latest`. No `v0.5.0` tag, npm publication, dist-tag change, or
-GitHub Release is authorized until the exact merged tarball has been verified and explicitly
-approved.
+`csv-to-signal@0.5.0` is published on npm with the `latest` dist-tag. Its registry SHA-1
+`adf05bc9acbc1d45647a286e4d070d29a8229f2d` and SHA-512 integrity
+`sha512-L8NyLc9p/pz8wAJAGS6MaPR30n1/xtXcOyJVyuL8tA6Dql2JdH9zutaHM4mpEOC0c9ewpR+nnlvZmUepzSus3w==`
+match the retained 12,754-byte tarball. GitHub Release `v0.5.0` points to exact merge commit
+`dffdf6a774119dd068c9f065132ffe012bb7cddb`.
 
 ## Backlog Ideas
 

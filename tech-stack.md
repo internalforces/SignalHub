@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # tech-stack.md — Signal Hub Technology Stack
 
-_Last updated: 2026-08-22_
+_Last updated: 2026-08-23_
 
 Versions below reflect the current lockfile and verified local toolchain. Manifest ranges are
 shown where they define the supported contract.
@@ -25,7 +25,7 @@ shown where they define the supported contract.
 | Test runner | Vitest | 4.1.10 | TypeScript tests and in-memory SQLite coverage |
 | Test build dependency | Vite | 6.4.3 | Explicit patched Vite version for the Vitest stack |
 | CI | GitHub Actions v6 | Node 22/24 PR matrix; Node 24 weekly audit | Pull requests run frozen install, production audit, build, tests, typecheck, and release verification; scheduled/manual workflow runs the full dependency audit |
-| Distribution | npm | `csv-to-signal@0.4.0` | Public CLI package; no service infrastructure is deployed |
+| Distribution | npm | `csv-to-signal@0.5.0` | Public CLI package; no service infrastructure is deployed |
 
 ## Workspace Structure
 
@@ -46,8 +46,8 @@ dependency ordering ensures package entry points exist before consumers build or
   packages; the CLI composes Core with CSV, Analysis, Storage, and Types.
 - **Storage access**: repository pattern through `DataPointRepository` and `SignalRepository`.
   No package outside Storage talks directly to SQLite.
-- **Interfaces**: the CSV CLI is the only user-facing interface. GitHub and CoinGecko remain
-  library-only APIs; windowed analysis is available both as a library and through `--window-hours`.
+- **Interfaces**: the CLI supports CSV, GitHub, and CoinGecko sources. Windowed analysis is
+  available both as a library and through `--window-hours`.
 - **State**: detectors are stateless. The CLI persists points and signals to `data.db` in its
   current working directory.
 - **Build**: internal workspaces emit ESM/NodeNext targeting ES2022; the public CLI release uses
@@ -62,4 +62,4 @@ dependency ordering ensures package entry points exist before consumers build or
 | Pull-request CI | Verification on Node 22 and 24 | GitHub Actions workflow in `.github/workflows/ci.yml` |
 | Scheduled audit | Weekly and manual full dependency audit on Node 24 | GitHub Actions workflow in `.github/workflows/dependency-audit.yml` |
 | Staging | Not defined | — |
-| npm distribution | Published public CLI `csv-to-signal@0.4.0`; no service deployment | npm registry and GitHub Release `v0.4.0` |
+| npm distribution | Published public CLI `csv-to-signal@0.5.0`; no service deployment | npm registry and GitHub Release `v0.5.0` |

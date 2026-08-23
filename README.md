@@ -21,13 +21,14 @@ and persist observations and signals in SQLite.
 - Optional upward threshold-crossing signals.
 - Score filtering and deterministic JSON output.
 - Optional windowed change signals through `--window-hours`.
-- GitHub commit history and CoinGecko price history through the repository-built CLI and as
+- GitHub commit history and CoinGecko price history through the `csv-to-signal` CLI and as
   workspace libraries.
 
-CSV to Signal `0.4.0` is currently published on npm as
-[`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal/v/0.4.0) and supports Node.js 22 and 24.
-The `0.5.0` release candidate adds the GitHub and CoinGecko commands to the npm package while
-preserving the existing CSV command, flags, JSON format, and Node.js support contract.
+CSV to Signal `0.5.0` is currently published on npm as
+[`csv-to-signal`](https://www.npmjs.com/package/csv-to-signal/v/0.5.0) and supports Node.js 22 and 24.
+It includes the GitHub and CoinGecko commands while preserving the existing CSV command, flags,
+JSON format, and Node.js support contract. The stable GitHub release is
+[`v0.5.0`](https://github.com/internalforces/SignalHub/releases/tag/v0.5.0).
 It does not provide scheduling, alerts, a REST API,
 a dashboard, YAML configuration, Polymarket or generic REST ingestion, or ML-style anomaly,
 trend, spike, and change-point detection.
@@ -168,5 +169,5 @@ runtime dependencies of the tarball; the private analysis workspace is bundled i
 - [CSV to Signal 0.4.0 release plan](docs/superpowers/plans/2026-08-22-csv-to-signal-v0.4.0-release.md):
   exact-artifact verification, approval, publication, and closeout record.
 - [CSV to Signal 0.5.0 release plan](docs/superpowers/plans/2026-08-23-csv-to-signal-v0.5.0-release.md):
-  external-command package release, exact merged-artifact verification, and approval boundary.
+  external-command package release, exact merged-artifact verification, and closeout record.
 - [MVP implementation plan](docs/2026-07-27-signal-hub-mvp.md): historical task-level implementation detail.

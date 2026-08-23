@@ -106,11 +106,10 @@ The CLI creates `data.db` in its current working directory. Tests that use stora
 SQLite's `:memory:` path.
 
 The workspace root and internal libraries remain private. The Node 22/24
-`csv-to-signal@0.4.0` CLI with windowed CSV analysis is currently published on npm. The `0.5.0`
-release candidate additionally bundles the private GitHub and CoinGecko connector workspaces into
-the CLI JavaScript while keeping `better-sqlite3` as the only external runtime dependency. A strict
-file allowlist prevents source, tests, caches, logs, configuration, and local databases from
-entering the tarball.
+`csv-to-signal@0.5.0` CLI is published on npm and bundles the private GitHub and CoinGecko
+connector workspaces into the CLI JavaScript while keeping `better-sqlite3` as the only external
+runtime dependency. A strict file allowlist prevents source, tests, caches, logs, configuration,
+and local databases from entering the tarball.
 
 `pnpm release:check` creates package artifacts only in a temporary directory, installs the tarball
 into an isolated consumer project, exercises valid and invalid CLI paths, prints artifact metadata,
