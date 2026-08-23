@@ -4,6 +4,7 @@ import { SCHEMA_SQL } from "./schema.js";
 
 export interface DataPointRepository {
   insertMany(points: DataPoint[]): void;
+  replaceMany(points: DataPoint[]): void;
   getByMetric(metricId: string): DataPoint[];
 }
 
@@ -24,6 +25,11 @@ export class SqliteStorage {
     const insertPointStmt = this.db.prepare(
       "INSERT OR IGNORE INTO data_points (id, metric_id, timestamp, value) VALUES (@id, @metric_id, @timestamp, @value)",
     );
+    const replacePointStmt = this.db.prepare(
+      `INSERT INTO data_points (id, metric_id, timestamp, value)
+       VALUES (@id, @metric_id, @timestamp, @value)
+       ON CONFLICT(id) DO UPDATE SET value = excluded.value`,
+    );
     const getByMetricStmt = this.db.prepare(
       "SELECT metric_id as metricId, timestamp, value FROM data_points WHERE metric_id = ? ORDER BY timestamp ASC",
     );
@@ -32,6 +38,19 @@ export class SqliteStorage {
         const transaction = this.db.transaction((rows: DataPoint[]) => {
           for (const point of rows) {
             insertPointStmt.run({
+              id: `${point.metricId}::${point.timestamp}`,
+              metric_id: point.metricId,
+              timestamp: point.timestamp,
+              value: point.value,
+            });
+          }
+        });
+        transaction(points);
+      },
+      replaceMany: (points) => {
+        const transaction = this.db.transaction((rows: DataPoint[]) => {
+          for (const point of rows) {
+            replacePointStmt.run({
               id: `${point.metricId}::${point.timestamp}`,
               metric_id: point.metricId,
               timestamp: point.timestamp,

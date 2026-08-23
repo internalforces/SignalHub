@@ -7,7 +7,7 @@ Harness Version: 1.1
 
 # Decision Log — Signal Hub
 
-_Last updated: 2026-08-22_
+_Last updated: 2026-08-23_
 
 ## Template
 
@@ -615,3 +615,33 @@ and the repository feature is not available from npm until a separately approved
 with mocked-network regression coverage. npm `csv-to-signal@0.4.0` remains `latest` and predates
 these commands. No package version, publication, deployment, schema, Core, or connector
 implementation changed.
+
+---
+
+### ADR-025: Refresh External Snapshots and Scope Requested History
+
+- **Date**: 2026-08-23
+- **Status**: Accepted and implemented
+- **Decided by**: Project owner through PR review-fix authorization
+
+**Context**: PR #20 review identified two stateful rerun defects. GitHub daily counts can increase
+while retaining the same metric and UTC timestamp, but idempotent inserts kept the earlier value.
+CoinGecko's `--days` option limited the HTTP request while Core still analyzed all older points
+already stored for that metric.
+
+**Decision**: Keep idempotent insertion as the Storage and Core default. Add an explicit snapshot
+replacement path used by GitHub and CoinGecko CLI runs, and add an explicit current-fetch analysis
+scope used by CoinGecko. Preserve the SQLite schema, connector implementations, CSV behavior, and
+default `runPipeline` behavior.
+
+**Rationale**: Mutable provider snapshots must refresh without weakening the established CSV
+deduplication contract. A requested CoinGecko history range must define the detector input for that
+invocation even when the shared database contains older observations.
+
+**Trade-offs**: Older CoinGecko points and previously generated signals remain persisted for audit
+and idempotency, but they are excluded from later CoinGecko command output unless returned by the
+current fetch. Core and Storage gain opt-in internal workspace interfaces for these semantics.
+
+**Consequences**: TASK-032 resolves ISS-023 and ISS-024 with storage, Core, and CLI regression
+tests. No database schema, shared data shape, CLI flag/output format, dependency, package version,
+publication, deployment, or connector implementation changes.

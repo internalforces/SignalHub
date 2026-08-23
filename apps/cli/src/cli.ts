@@ -30,6 +30,8 @@ export async function runCli(
     const signals = await runPipeline(connector, storage, {
       detectors,
       minScore: command.minScore,
+      refreshDataPoints: command.source !== "csv",
+      analyzeFetchedOnly: command.source === "coingecko",
     });
     return formatSignals(signals);
   } finally {

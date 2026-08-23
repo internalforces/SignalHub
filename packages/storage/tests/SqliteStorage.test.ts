@@ -41,6 +41,18 @@ describe("SqliteStorage", () => {
     expect(result[0].value).toBe(1);
   });
 
+  it("replaces an existing data point only when explicitly requested", () => {
+    const point: DataPoint = {
+      metricId: "m1",
+      timestamp: "2026-07-27T01:00:00.000Z",
+      value: 1,
+    };
+    storage.dataPoints.insertMany([point]);
+    storage.dataPoints.replaceMany([{ ...point, value: 2 }]);
+
+    expect(storage.dataPoints.getByMetric("m1")).toEqual([{ ...point, value: 2 }]);
+  });
+
   it("returns an empty array for an unknown metric", () => {
     expect(storage.dataPoints.getByMetric("unknown")).toEqual([]);
   });

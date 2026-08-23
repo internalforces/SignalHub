@@ -135,3 +135,14 @@ statement cleanup after the built CLI completed windowed analysis.
 - Optional credentials are environment-only and were covered with synthetic, redaction-safe tests.
 - Frozen install, build, all tests, typecheck, both audits, package inspection, and release check pass.
 - npm `csv-to-signal@0.4.0` remains `latest` and predates these repository-built commands; no tag, publication, deployment, or live provider API request occurred.
+
+## Session Update — 2026-08-23: PR #20 Review Remediation
+
+- **Agent Role**: Implementer / Reviewer
+- **Session Goal**: Validate and address both unresolved PR #20 review threads.
+- Reproduced the GitHub stale-daily-count defect and CoinGecko stored-history leakage with mocked-network CLI integration tests before implementation.
+- Added opt-in external snapshot replacement while preserving the established default first-write deduplication behavior.
+- Added opt-in current-fetch detector scope for CoinGecko so `--days` controls the analyzed series even when `data.db` contains older points.
+- Added focused Storage and Core regression tests; CSV behavior, schema, connector implementations, dependencies, CLI flags/output, and package version remain unchanged.
+- The complete release check passes with nine builds, 111 tests, typecheck, clear full and production audits, the four-file package boundary, isolated installation, and installed execution.
+- TASK-032 records the review remediation; no tag, publication, deployment, or live provider request was performed.

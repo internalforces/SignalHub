@@ -152,6 +152,38 @@ describe("runCli", () => {
     });
   });
 
+  it("refreshes a GitHub daily count when a later run sees more commits", async () => {
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce(
+        jsonResponse([
+          commit("first", "2026-08-01T12:00:00Z"),
+          commit("second", "2026-08-02T12:00:00Z"),
+        ]),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse([
+          commit("first", "2026-08-01T12:00:00Z"),
+          commit("second", "2026-08-02T12:00:00Z"),
+          commit("third", "2026-08-02T13:00:00Z"),
+        ]),
+      );
+    vi.stubGlobal("fetch", fetch);
+
+    await runCli(["github", "octocat/Hello-World"]);
+    const signals = JSON.parse(
+      await runCli(["github", "octocat/Hello-World"]),
+    ) as Array<{ timestamp: string; value: number; changePercent: number }>;
+
+    expect(signals).toEqual([
+      expect.objectContaining({
+        timestamp: "2026-08-02T00:00:00.000Z",
+        value: 2,
+        changePercent: 100,
+      }),
+    ]);
+  });
+
   it("omits GitHub authorization when the environment token is blank", async () => {
     const fetch = vi.fn().mockResolvedValue(jsonResponse([]));
     vi.stubGlobal("fetch", fetch);
@@ -186,6 +218,40 @@ describe("runCli", () => {
     expect(fetch.mock.calls[0][1]?.headers).toMatchObject({
       "x-cg-demo-api-key": "demo-key",
     });
+  });
+
+  it("analyzes only the CoinGecko history returned for the current day range", async () => {
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce(
+        jsonResponse({
+          prices: [
+            [Date.parse("2026-07-01T00:00:00.000Z"), 50],
+            [Date.parse("2026-07-02T00:00:00.000Z"), 100],
+          ],
+        }),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse({
+          prices: [
+            [Date.parse("2026-08-01T00:00:00.000Z"), 100],
+            [Date.parse("2026-08-02T00:00:00.000Z"), 125],
+          ],
+        }),
+      );
+    vi.stubGlobal("fetch", fetch);
+
+    await runCli(["coingecko", "bitcoin", "--days", "30"]);
+    const signals = JSON.parse(
+      await runCli(["coingecko", "bitcoin", "--days", "7"]),
+    ) as Array<{ timestamp: string; changePercent: number }>;
+
+    expect(signals).toEqual([
+      expect.objectContaining({
+        timestamp: "2026-08-02T00:00:00.000Z",
+        changePercent: 25,
+      }),
+    ]);
   });
 
   it("uses CoinGecko keyless access when the Demo key is blank", async () => {

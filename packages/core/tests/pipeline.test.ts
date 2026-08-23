@@ -90,4 +90,50 @@ describe("runPipeline", () => {
     expect(storage.signals.getAll()).toHaveLength(1);
     storage.close();
   });
+
+  it("refreshes fetched snapshots when explicitly requested", async () => {
+    const storage = new SqliteStorage(":memory:");
+    const timestamp = "2026-07-27T00:00:00.000Z";
+
+    await runPipeline(
+      fakeConnector([{ metricId: "m1", timestamp, value: 1 }]),
+      storage,
+      { detectors: [new PercentageChangeDetector()] },
+    );
+    await runPipeline(
+      fakeConnector([{ metricId: "m1", timestamp, value: 2 }]),
+      storage,
+      { detectors: [new PercentageChangeDetector()], refreshDataPoints: true },
+    );
+
+    expect(storage.dataPoints.getByMetric("m1")).toEqual([
+      { metricId: "m1", timestamp, value: 2 },
+    ]);
+    storage.close();
+  });
+
+  it("limits detection to the current fetch when explicitly requested", async () => {
+    const storage = new SqliteStorage(":memory:");
+    storage.dataPoints.insertMany([
+      { metricId: "m1", timestamp: "2026-07-01T00:00:00.000Z", value: 50 },
+      { metricId: "m1", timestamp: "2026-07-02T00:00:00.000Z", value: 100 },
+    ]);
+
+    const signals = await runPipeline(
+      fakeConnector([
+        { metricId: "m1", timestamp: "2026-08-02T00:00:00.000Z", value: 125 },
+        { metricId: "m1", timestamp: "2026-08-01T00:00:00.000Z", value: 100 },
+      ]),
+      storage,
+      { detectors: [new PercentageChangeDetector()], analyzeFetchedOnly: true },
+    );
+
+    expect(signals).toEqual([
+      expect.objectContaining({
+        timestamp: "2026-08-02T00:00:00.000Z",
+        changePercent: 25,
+      }),
+    ]);
+    storage.close();
+  });
 });
